@@ -1,7 +1,9 @@
 const { Item, Image, Tag, Item_Tag } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
 const { findAllTags, findTag } = require('../api/tagApi')
-const { usePostItemTag, useFindItemTag, useChangeItemTag, postItemTag } = require('../api/itemTagApi')
+const { postItemTag } = require('../api/itemTagApi')
+const tagApi = require('../api/tagApi')
+const itemTagApi = require('../api/itemTagApi')
 
 const itemController = {
   addItemPage: async (req, res, next) => {
@@ -36,7 +38,6 @@ const itemController = {
       })
       if (!item) throw new Error(`Can not find item id ${itemId}`)
       const itemData = item.toJSON()
-      console.log('item', itemData)
 
       // create .cover
       itemData.images.forEach(image => {
@@ -50,7 +51,10 @@ const itemController = {
           }
         }
       })
+      // get tags for the page
       const tagsData = await findAllTags()
+      console.log('get item:', itemData)
+
       // response
       res.render('itemPage', { item: itemData, tags: tagsData, page: 'edit' })
     } catch (err) {
@@ -104,7 +108,7 @@ const itemController = {
   putItem: async (req, res, next) => {
     try {
       const itemId = req.params.itemId
-      const { name, description, price, amount, tag } = req.body
+      const { name, description, price, amount, tags } = req.body
 
       if (!itemId) throw new Error('Missing item id for update item')
       if (price && price < 0)
@@ -127,12 +131,18 @@ const itemController = {
       await item.save()
 
       // change tag (itemTag)
-      if (tag && typeof tag === 'string' && tag !== '') {
+      // delete all old itemTags
+      await itemTagApi.deleteAllItemTag(item.id)
 
-
-
+      // create all new itemTags
+      if (tags) {
+        const tagsIdArray = JSON.parse(tags)
+        if (tagsIdArray.length !== 0) {
+          for (let i = 0; i < tagsIdArray.length; i++) {
+            await itemTagApi.postItemTag(item.id, tagsIdArray[i])
+          }
+        }
       }
-
 
       // response
       res.redirect(`/items/${itemId}`)
@@ -145,7 +155,7 @@ const itemController = {
   // files : cover[0] , picture
   postItem: async (req, res, next) => {
     try {
-      const { name, description, price, tagId } = req.body
+      const { name, description, price, tags } = req.body
       const files = req.files
       const coverImage = files.cover[0]
       const pictureImages = files.picture
@@ -156,20 +166,22 @@ const itemController = {
       }
       if (!coverImage) throw new Error('No cover image for post item')
 
+      // create item
       const item = await Item.create({
         name,
         description,
         price,
       })
 
-      // cover
+      // create cover
       const cover = await Image.create({
         imageData: coverImage.buffer,
         itemId: item.id,
         isCover: true,
       })
+      if (!cover) throw new Error('Cover can not be created')
 
-      // pictures
+      // create pictures
       if (pictureImages) {
         const pictureData = pictureImages.map(image => {
           return {
@@ -183,10 +195,17 @@ const itemController = {
       }
 
       // create new tagItem
-      if (tagId) {
-        // find tag with name
-        const itemTag = await postItemTag(item.id, tagId)
-        if (!itemTag) throw new Error(`Can not create new itemTag`)
+      if (tags !== undefined && tags !== '') {
+        const tagsArray = JSON.parse(tags)
+        const itemTagsSeed = tagsArray.map(tagId => {
+          return {
+            itemId: item.id,
+            tagId
+          }
+        })
+        if (itemTagsSeed.length !== 0) {
+          Item_Tag.bulkCreate(itemTagsSeed)
+        }
       }
 
       // response
@@ -198,7 +217,6 @@ const itemController = {
   },
   // params : itemId
   deleteItem: async (req, res) => {
-    console.log('---------delete item')
     try {
       const itemId = req.params.itemId
       if (!itemId) throw new Error('No id for item delete')

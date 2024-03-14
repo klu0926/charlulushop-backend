@@ -33,11 +33,9 @@
     </div>
     <!--tags-->
     <div class="inputGroup">
-      <label for="tag"> 標籤 </label>
-      <div class="tagsContainer">
-        {{#each tags}}
-       <button class="tagButton" type="button" data-tagid="{{id}}">{{name}}</button>
-        {{/each}}
+      <label for="tag"> 標籤 &#40;<span id="tagsCount">0</span>&#41; </label>
+      <div id="tagsContainer" class="tagsContainer">
+        <!--insert tags  here-->
       </div>
     </div>
     <!--des-->
@@ -55,17 +53,41 @@
       <button id="submit" type="submit">Create</button>
       <button class="secondary" id="reset" type="reset">Reset</button>
     </div>
+    <!--HIDDEN: tags array (use stringify)-->
+    <div class="d-none">
+      <input id="tagsInput" type="text" name="tags" value="">
+    </div>
   </form>
 </div>
 
-<script>
+
+<!--template tag-->
+<div class="d-none">
+<label class="tagLabel">
+  <input class="tagCheckbox" type="checkbox" id="myCheckbox">
+  <span class="tagSpan">Tag Name here</span>
+</label>
+</div>
+
+
+
+<script type="module">
+  import TagClass from '/js/TagClass.js'
+
+  // cover
   const imageInput = document.body.querySelector('#imageInput');
   const imageDisplay = document.body.querySelector('#imageDisplay');
+  // picture
   const pictureInput = document.body.querySelector('.pictureInput');
   const newPictureInput = pictureInput.cloneNode(true);
   const pictureInputGroup = document.body.querySelector('#pictureInputGroup');
   const addPictureBtn = document.body.querySelector('#addPicture');
   const deletePictureBtns = document.body.querySelectorAll('.deleteInput');
+  // tags
+  const tagsContainer = document.querySelector('#tagsContainer')
+  const tagLabelTemp = document.querySelector('.tagLabel') 
+  const tagsCount = document.querySelector('#tagsCount')
+  const tagsInput = document.querySelector('#tagsInput')
 
   function handleAddPicture() {
     if (newPictureInput || pictureInputGroup) {
@@ -92,10 +114,15 @@
     }
   }
 
+  // Init
+  const fetchTag = new TagClass(tagsContainer, tagLabelTemp, tagsInput , tagsCount)
+  fetchTag.renderAllTags()
+
+  // Action
   imageInput.onchange = handleImageChange;
   addPictureBtn.onclick = handleAddPicture;
-
   deletePictureBtns.forEach((b) => {
     b.onclick = handleDeletePicture;
   });
+
 </script>

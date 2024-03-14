@@ -2,17 +2,30 @@ const { Item_Tag, Item, Tag } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
 
 
-async function findItemTag(itemId, tagId) {
+async function findItemTag(itemTagId) {
   try {
-    if (itemId === undefined || tagId === undefined) {
-      throw new Error('Missing itemId, tagId')
-    }
-    console.log('itemId', itemId)
-    console.log('tagId', tagId)
-    const itemTag = await Item_Tag.findOne({ where: { itemId, tagId } })
+    if (itemTagId === undefined) throw new Error('Missing itemId, tagId')
+    const itemTag = await Item_Tag.findOne({
+      where: { id: itemTagId },
+      attributes: ['id', 'tagId', 'itemId'],
+      raw: true,
+    })
     if (!itemTag) throw new Error('Can not find itemTag')
-    const itemTagData = itemTag.toJSON()
-    return itemTagData
+    return itemTag
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+async function findAllItemTags() {
+  try {
+    const itemTags = await Item_Tag.findAll({
+      attributes: ['id', 'tagId', 'itemId'],
+      raw: true
+    })
+    if (!itemTags) throw new Error('Can not find itemTags')
+    return itemTags
   } catch (err) {
     console.error(err)
     throw err
@@ -50,44 +63,85 @@ async function deleteItemTag(itemTagId) {
     if (itemTagId === undefined) {
       throw new Error('Missing itemTag id')
     }
-    const deletedRecordCount = await Item_Tag.destroy({ where: { id: itemTagId } })
-    return deletedRecordCount
+    const deletedCount = await Item_Tag.destroy({ where: { id: itemTagId } })
+    if (deletedCount === 0) throw new Error('Can not delete itemTag with id :' + itemTagId)
+
+    return deletedCount
   } catch (err) {
     console.error(err)
     throw err
   }
 }
 
+async function deleteAllItemTag(itemId) {
+  try {
+    if (itemId === undefined) throw new Error('Missing itemId')
+    const deleteCount = await Item_Tag.destroy({ where: { itemId } })
+    return true
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
 
-
-// CONTROLLER
+// API
 const itemTagApi = {
+  getItemTags: async (req, res, next) => {
+    try {
+      const itemTags = await findAllItemTags()
+      res.status(200).json(responseJSON(true, 'GET', itemTags, 'GET itemTags completed'))
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'GET', null, 'Fail GET itemTags', err))
+
+    }
+  },
+  getItemTag: async (req, res, next) => {
+    try {
+      const itemTagId = req.params.itemTagId
+      const itemTag = await findItemTag(itemTagId)
+      res.status(200).json(responseJSON(true, 'GET', itemTag, 'GET itemTag completed'))
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'GET', null, 'Fail GET itemTag', err))
+    }
+  },
   postItemTag: async (req, res, next) => {
     try {
       const { itemId, tagId } = req.body
       const itemTagData = await postItemTag(itemId, tagApi)
-      res
-        .status(200)
-        .json(
-          responseJSON(
-            true,
-            'POST',
-            itemTagData,
-            'POST itemTag completed',
-            null,
-          ),
-        )
+      res.status(200).json(responseJSON(true, 'POST', itemTagData, 'POST itemTag completed'));
     } catch (err) {
       console.error(err)
-      res
-        .status(500)
-        .json(responseJSON(false, 'POST', null, 'Fail to post itemTag', err))
+      res.status(500).json(responseJSON(false, 'POST', null, 'Fail to post itemTag', err))
     }
   },
-}
+  deleteItemTag: async (req, res, next) => {
+    try {
+      const { itemTagId } = req.body
+      await deleteItemTag(itemTagId)
+      res.status(200).json(responseJSON(true, 'DELETE', null, 'DELETE itemTag completed'));
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'DELETE', null, 'Fail to DELETE itemTag', err))
+    }
+  },
+  deleteAllItemTag: async (req, res, next) => {
+    try {
+      const { itemId } = req.body
+      const deleteCount = await deleteAllItemTag(itemId)
+      res.status(200).json(responseJSON(true, 'DELETE', null, `DELETE item id:${itemId}'s all ${deleteCount} itemTags completed`));
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'DELETE', null, 'Fail to DELETE itemTag', err))
 
+    }
+  }
+}
 
 module.exports = itemTagApi
 module.exports.findItemTag = findItemTag
+module.exports.findAllItemTags = findAllItemTags
 module.exports.postItemTag = postItemTag
 module.exports.deleteItemTag = deleteItemTag
+module.exports.deleteAllItemTag = deleteAllItemTag

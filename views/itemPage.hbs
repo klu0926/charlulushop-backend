@@ -37,11 +37,10 @@
       </div>
         <!--tags-->
      <div class="inputGroup">
-      <label for="tag"> 標籤 </label>
-      <div class="tagsContainer">
-        
+      <label for="tag"> 標籤 &#40;<span id="tagsCount">0</span>&#41; </label>
+      <input class="d-none" id="tagsInput" type="text" name="tags" value="{{stringify item.tags}}">
+      <div id="tagsContainer" class="tagsContainer">
       </div>
-
     </div>
       <!--des-->
       <div class="inputGroup">
@@ -89,27 +88,39 @@
   <input type="text" name="itemId" value="{{item.id}}" />
 </form>
 
-<script>
+<!--template tag-->
+<div class="d-none">
+<label class="tagLabel">
+  <input class="tagCheckbox" type="checkbox" id="myCheckbox">
+  <span class="tagSpan">Tag Name here</span>
+</label>
+</div>
+
+
+<script type="module">
+  import TagClass from  '/js/TagClass.js'
+
   // display
   const imageDisplay = document.body.querySelector('#imageDisplay');
-
   // picture
   const pictureInputForm = document.body.querySelector('#pictureInputForm');
   const pictureInput = document.body.querySelector('#pictureInput');
   const addPictureBtn = document.body.querySelector('#addPicture');
-
   // cover
   const coverInputForm = document.body.querySelector('#coverInputForm');
   const coverInput = document.body.querySelector('#coverInput');
-
   // buttons
   const deletePictureInputBtns = document.body.querySelectorAll('.deleteInput');
   const deletePictureBtns = document.querySelectorAll('.deleteImage');
   const deleteItemBtn = document.querySelector('#delete');
-
   // body from
   const itemPutForm = document.body.querySelector('#itemPutForm');
   const itemPutSubmit = document.querySelector('#itemSubmit');
+  // tags
+  const tagsContainer = document.querySelector('#tagsContainer')
+  const tagLabelTemp = document.querySelector('.tagLabel') 
+  const tagsCount = document.querySelector('#tagsCount')
+  const tagsInput = document.querySelector('#tagsInput')
 
   function imageDisplayInit() {
     const id = imageDisplay.dataset.id;
@@ -201,7 +212,12 @@
     }
   }
 
+  // Init
+  const fetchTag = new TagClass(tagsContainer, tagLabelTemp, tagsInput, tagsCount)
+  fetchTag.renderAllTags()
   imageDisplayInit();
+
+  // Action
   pictureInput.onchange = handlePictureChange;
   coverInput.onchange = handleCoverChange;
   addPictureBtn.onclick = () => {

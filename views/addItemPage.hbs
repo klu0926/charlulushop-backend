@@ -1,0 +1,101 @@
+<div class="page addItemPage">
+  <!--speech-->
+  <div class="speech">
+    <img class="icon" src="/images/cry.png" alt="icon" />
+    <div>
+      <p class="info">填寫物件資料後在最下方點擊<span>Create</span></p>
+      <p class="info">除了<span>補充照片</span>以外其他資料都是<span>必須</span>的</p>
+    </div>
+  </div>
+  <!--form start-->
+  <form action="/items" method="post" enctype="multipart/form-data">
+    <!--cover-->
+    <label for="imageInput"> 封面 </label>
+    <div class="imageDisplay" id="imageDisplay">
+      <label class="imageDisplay-label" for="imageInput">上傳封面</label>
+    </div>
+    <input id="imageInput" class="d-none" type="file" name="cover" required />
+    <!--pictures-->
+    <div class="pictureInputWrapper">
+      <label> 補充照片 </label>
+      <div id="pictureInputGroup" class="pictureInputGroup">
+        <div class="pictureInput">
+          <input name="picture" type="file" />
+          <button type="button" class="deleteInput">x</button>
+        </div>
+      </div>
+      <button id="addPicture" class="addPicture" type="button">+</button>
+    </div>
+    <!--name-->
+    <div class="inputGroup">
+      <label for="name"> 名字 </label>
+      <input id="name" name="name" type="text" placeholder="商品名稱..." required />
+    </div>
+    <!--tags-->
+    <div class="inputGroup">
+      <label for="tag"> 標籤 </label>
+      <div class="tagsContainer">
+        {{#each tags}}
+       <button class="tagButton" type="button" data-tagid="{{id}}">{{name}}</button>
+        {{/each}}
+      </div>
+    </div>
+    <!--des-->
+    <div class="inputGroup">
+      <label for="description"> 介紹 </label>
+      <textarea name="description" id="description" cols="30" rows="5" placeholder="商品介紹..." required></textarea>
+    </div>
+    <!--price-->
+    <div class="inputGroup">
+      <label for="price"> 價錢 </label>
+      <input type="number" name="price" id="price" min="0" required />
+    </div>
+    <!--buttons-->
+    <div class="buttonContainer">
+      <button id="submit" type="submit">Create</button>
+      <button class="secondary" id="reset" type="reset">Reset</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const imageInput = document.body.querySelector('#imageInput');
+  const imageDisplay = document.body.querySelector('#imageDisplay');
+  const pictureInput = document.body.querySelector('.pictureInput');
+  const newPictureInput = pictureInput.cloneNode(true);
+  const pictureInputGroup = document.body.querySelector('#pictureInputGroup');
+  const addPictureBtn = document.body.querySelector('#addPicture');
+  const deletePictureBtns = document.body.querySelectorAll('.deleteInput');
+
+  function handleAddPicture() {
+    if (newPictureInput || pictureInputGroup) {
+      const newInput = newPictureInput.cloneNode(true);
+      newInput.querySelector('.deleteInput').onclick = handleDeletePicture;
+      pictureInputGroup.appendChild(newInput);
+    }
+  }
+
+  function handleDeletePicture() {
+    this.parentElement.remove();
+  }
+
+  function handleImageChange(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        imageDisplay.style.backgroundImage = `url(${e.target.result})`;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      console.error('No image file selected');
+    }
+  }
+
+  imageInput.onchange = handleImageChange;
+  addPictureBtn.onclick = handleAddPicture;
+
+  deletePictureBtns.forEach((b) => {
+    b.onclick = handleDeletePicture;
+  });
+</script>

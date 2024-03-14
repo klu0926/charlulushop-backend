@@ -1,0 +1,224 @@
+<div class="page">
+  <!--speech-->
+  <div class="speech">
+    <img class="icon" src="/images/note.png" alt="icon" />
+    <div>
+      <p class="info">照片類型修改後會<span>直接存擋</span></p>
+      <p class="info">文字類型需要再下點選<span> Save </span>才會存擋</p>
+    </div>
+  </div>
+  <div class="itemPage">
+    <!--cover-->
+    <label for="imageInput"> 封面 </label>
+    <div class="imageDisplay" id="imageDisplay" data-id="{{item.cover.id}}">
+      <label class="imageDisplay-label" for="coverInput">上傳封面</label>
+    </div>
+    <!--pictures-->
+    <div class="inputGroup">
+      <label> 補充照片 &#40;{{item.pictures.length}}&#41; </label>
+      <!--picture display-->
+      <div class="picturesDisplayGroup">
+        {{#each item.pictures}}
+        <div class="pictureGroup" data-id="{{id}}">
+          <img class="picture" src="/images/{{id}}" alt="picture" />
+          <button type="button" class="deleteImage">x</button>
+        </div>
+        {{/each}}
+      </div>
+      <!--input-->
+      <button id="addPicture" class="addPicture" type="button">+</button>
+    </div>
+    <!--item put form-->
+    <form id="itemPutForm" action="/items/{{item.id}}?_method=PUT" method="POST">
+      <!--name-->
+      <div class="inputGroup">
+        <label for="name"> 名字 </label>
+        <input id="name" name="name" type="text" placeholder="商品名稱..." value="{{item.name}}" required />
+      </div>
+        <!--tags-->
+     <div class="inputGroup">
+      <label for="tag"> 標籤 </label>
+      <div class="tagsContainer">
+        
+      </div>
+
+    </div>
+      <!--des-->
+      <div class="inputGroup">
+        <label for="description"> 介紹 </label>
+        <textarea name="description" id="description" cols="30" rows="10" placeholder="商品介紹..." required>
+{{item.description}}</textarea
+        >
+      </div>
+      <!--price and amount-->
+      <div class="price-amount-div">
+        <!--price-->
+        <div class="inputGroup">
+          <label for="price"> 價錢 </label>
+          <input type="number" name="price" id="price" value="{{item.price}}" required />
+        </div>
+        <!--amount-->
+        <div class="inputGroup">
+          <label for="amount"> 件數 </label>
+          <input type="number" name="amount" id="amount" value="{{item.amount}}" min="0" max="3" required />
+        </div>
+      </div>
+      <!--buttons-->
+      <div class="buttonContainer">
+        <button id="itemSubmit" type="button">Save</button>
+        <button class="secondary" id="reset" type="reset">Reset</button>
+        <p class="info">如是已經<span>售完</span>的物件<span>請勿刪除</span>會影響訂單</p>
+        <button class="secondary" id="delete" type="button" data-name="{{item.name}}" data-id="{{item.id}}">
+          Delete
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--hidden picture input-->
+<!--cover (link from cover display label)-->
+<form id="coverInputForm" action="/images" method="POST" class="d-none" enctype="multipart/form-data">
+  <input id="coverInput" name="cover" type="file" class="d-none" />
+  <input type="text" name="itemId" value="{{item.id}}" />
+</form>
+
+<!--picture-->
+<form id="pictureInputForm" action="/images" method="POST" class="d-none" enctype="multipart/form-data">
+  <input id="pictureInput" name="picture" type="file" class="d-none" />
+  <input type="text" name="itemId" value="{{item.id}}" />
+</form>
+
+<script>
+  // display
+  const imageDisplay = document.body.querySelector('#imageDisplay');
+
+  // picture
+  const pictureInputForm = document.body.querySelector('#pictureInputForm');
+  const pictureInput = document.body.querySelector('#pictureInput');
+  const addPictureBtn = document.body.querySelector('#addPicture');
+
+  // cover
+  const coverInputForm = document.body.querySelector('#coverInputForm');
+  const coverInput = document.body.querySelector('#coverInput');
+
+  // buttons
+  const deletePictureInputBtns = document.body.querySelectorAll('.deleteInput');
+  const deletePictureBtns = document.querySelectorAll('.deleteImage');
+  const deleteItemBtn = document.querySelector('#delete');
+
+  // body from
+  const itemPutForm = document.body.querySelector('#itemPutForm');
+  const itemPutSubmit = document.querySelector('#itemSubmit');
+
+  function imageDisplayInit() {
+    const id = imageDisplay.dataset.id;
+    imageDisplay.style.backgroundImage = `url(/images/${id})`;
+  }
+
+  function handleDeletePictureInput() {
+    this.parentElement.remove();
+  }
+
+  function handleDeletePicture(e) {
+    const imageId = e.target.parentElement.dataset.id;
+    if (!imageId) return;
+
+    const isConfirmed = confirm(`Do you want to delete image ${imageId}`);
+    if (!isConfirmed) return;
+
+    fetch(`/images/${imageId}`, { method: 'DELETE' })
+      .then((response) => {
+        if (!response.ok) throw new Error('Fail to delete');
+        window.location.reload();
+      })
+      .catch((error) => {
+        alert('Error deleting items', error.message);
+        window.location.reload();
+      });
+  }
+
+  // post picture
+  async function postImage() {
+    try {
+      const url = '/images';
+      const formData = new FormData(pictureInputForm);
+      const response = await fetch(url, { method: 'POST', body: formData });
+      const json = await response.json();
+      if (!json.ok) throw new Error(json.message);
+    } catch (err) {
+      alert(err);
+    }
+    window.location.reload();
+  }
+
+  // update cover
+  async function putCover(imageId) {
+    try {
+      const url = `/images/${imageId}`;
+      const formData = new FormData(coverInputForm);
+      const response = await fetch(url, { method: 'PUT', body: formData });
+      const json = await response.json();
+      if (!json.ok) throw new Error(json.message);
+    } catch (err) {
+      alert(err);
+    }
+    window.location.reload();
+  }
+
+  function handlePictureChange(e) {
+    postImage()
+  }
+
+  function handleCoverChange(e) {
+    const coverImageId = imageDisplay.dataset.id;
+    if (!coverImageId) return;
+    putCover(coverImageId)
+  }
+
+  async function handleDeleteItem(e) {
+    const isConfirm = confirm(`你要刪除掉物件:『${e.target.dataset.name}』?`);
+    const itemId = e.target.dataset.id;
+    if (!isConfirm || !itemId) return;
+
+    try {
+      const url = `/items/${itemId}`;
+      const response = await fetch(url, { method: 'DELETE' });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}, Text: ${response.statusText}`);
+      }
+
+      const json = await response.json();
+      console.log('json', json);
+
+      if (!json.ok) throw new Error(json.message);
+
+      window.location.href = '/items';
+    } catch (err) {
+      alert(err);
+      window.location.reload();
+    }
+  }
+
+  imageDisplayInit();
+  pictureInput.onchange = handlePictureChange;
+  coverInput.onchange = handleCoverChange;
+  addPictureBtn.onclick = () => {
+    pictureInput.click();
+  };
+
+  deletePictureInputBtns.forEach((b) => {
+    b.onclick = handleDeletePictureInput;
+  });
+
+  deletePictureBtns.forEach((b) => {
+    b.onclick = handleDeletePicture;
+  });
+
+  itemPutSubmit.onclick = (e) => {
+    itemPutForm.submit();
+  };
+
+  deleteItemBtn.onclick = handleDeleteItem;
+</script>

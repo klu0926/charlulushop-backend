@@ -1,0 +1,103 @@
+{{#if (checkLength items.length 0)}}
+<div class="page">
+  <!--speech-->
+  <div class="speech">
+    <img class="icon" src="/images/idea.png" alt="icon" />
+    <div>
+      <p class="info">點擊物件進入各物件頁面可以<span>修改物件</span></p>
+      <p class="info">點擊物件的右上角<span> X </span>可以<span>刪除物件</span></p>
+    </div>
+  </div>
+  <!--page--->
+  <div class="itemsPage"> 
+  <!-- tags -->
+  <div class="tagsSlider">
+    <a class="tag active">
+       全部
+    </a>
+    {{#each tags}}
+    <a class="tag">
+       {{name}}
+    </a>
+    {{/each}}
+  </div>
+  <div class="itemsPageGrid">
+    {{#each items}}
+    <a class="itemLink" href="/items/{{id}}">
+      <div class="item flash {{#isSold amount}}sold{{/isSold}}">
+        {{#isSold amount}} {{else}}
+        <button type="button" class="itemDelete" data-id="{{../id}}" data-name="{{../name}}"></button>
+        {{/isSold}}
+        <img class="itemImage" src="/images/{{cover.id}}" alt="{{name}}" loading="lazy" />
+        <div class="itemInfoDiv">
+          <span class="itemName"> {{name}} </span>
+          <div class="item-price-stock">
+            <span class="itemPrice">{{price}} </span>
+            <span class="itemStock">{{#isSold amount}}售完{{else}}有貨{{/isSold}}</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    {{/each}}
+  </div>
+</div>
+</div>
+{{else}}
+<div class="error-info">
+  <p class="info">目前沒有東西唷！</p>
+  <p class="info">去<span>新增</span>加入新物件吧～</p>
+</div>
+{{/if}}
+
+<script type="module">
+  import sweetAlert from './js/sweetAlert.js'
+  const itemImages = document.querySelectorAll('.itemImage')
+  const itemDeletes = document.querySelectorAll('.itemDelete')
+
+  function handleItemImageLoaded() {
+    itemImages.forEach((image) => {
+      if (image.complete) {
+        image.parentElement.classList.remove('flash')
+      } else {
+        image.onload = () => {
+          image.parentElement.classList.remove('flash')
+        }
+      }
+    })
+  }
+
+  async function deleteItem(itemId) {
+    try {
+      if (!itemId) throw new Error('No item id')
+      const url = `/items/${itemId}`
+      const response = await fetch(url, { method: 'DELETE' })
+      const json = await response.json()
+      if (!json.ok) throw new Error(json.message)
+      window.location.reload()
+    } catch (err) {
+      alert(err)
+      window.location.reload()
+    }
+  }
+
+  async function handleDelete() {
+    itemDeletes.forEach((b) => {
+      const itemName = b.dataset.name
+
+      b.onclick = async (e) => {
+        e.preventDefault() // stop parent <a>
+        e.stopPropagation()
+        // confirm
+       //const isConfirm = confirm('刪除物件')
+        const isConfirm = await sweetAlert.confirm(`你確定要刪除: ${itemName}？`)
+        console.log('isConfirm', isConfirm)
+        if (!isConfirm) return
+        const itemId = b.dataset.id
+        console.log('itemId', itemId)
+        deleteItem(itemId)
+      }
+    })
+  }
+  handleItemImageLoaded()
+  handleDelete()
+</script>

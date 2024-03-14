@@ -1,0 +1,7 @@
+<nav class="navbar">
+  <a href="/items/add" class={{isCurrentPage page 'add'}}>新增</a>
+  <a href="/items" class={{isCurrentPage page 'items'}}>全部</a>
+  {{#if (isCurrentPage page 'edit')}}
+    <a href="/items" class={{isCurrentPage page 'edit'}}>修改</a>
+  {{/if}}
+</nav>

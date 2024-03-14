@@ -1,0 +1,4 @@
+# Exclude build artifacts
+node_modules/
+build/
+dist/

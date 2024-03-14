@@ -1,0 +1,11 @@
+Charlulu's gives away shop app
+
+// server
+database: 
+- Item: id, name, description, price, amount
+- Image: id, name, imageDate, description
+- Order: id, BuyerName, BuyerEmail, BuyerIG, orderItemId,
+
+(加強)
+- Brand ? table for item Brand
+- Tag ? table for type of items, 膠帶，筆...

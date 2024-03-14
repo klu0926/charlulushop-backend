@@ -1,0 +1,29 @@
+{
+  "name": "charlulushop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
+    "imgur": "^1.0.2",
+    "method-override": "^3.0.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.9.2",
+    "sequelize": "^6.37.1",
+    "sequelize-cli": "^6.6.2",
+    "sharp": "^0.32.6"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.0"
+  }
+}

@@ -163,7 +163,7 @@ textarea {
   overflow-x: auto;
 }
 
-.tag {
+.tag-link {
   display: inline-block;
   justify-content: center;
   align-items: center;
@@ -176,8 +176,12 @@ textarea {
   border: 1px solid var(--grey);
   cursor: pointer;
 }
+.tag-link:hover {
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
 
-.tag.active {
+.tag-link.active {
   background-color: var(--primary);
   color: white;
   border: none;
@@ -578,6 +582,8 @@ button.secondary {
 @media screen and (min-width: 1200px) {
   .tagsSlider {
     width: var(--max-width);
+    height: auto;
+    flex-wrap: wrap;
   }
   .itemsPage {
     width: var(--max-width);

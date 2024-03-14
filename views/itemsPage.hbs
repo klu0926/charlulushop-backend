@@ -12,11 +12,11 @@
   <div class="itemsPage"> 
   <!-- tags -->
   <div class="tagsSlider">
-    <a class="tag active">
+    <a class="tag-link active">
        全部
     </a>
     {{#each tags}}
-    <a class="tag">
+    <a class="tag-link" href="/items?tag={{name}}">
        {{name}}
     </a>
     {{/each}}

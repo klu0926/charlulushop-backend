@@ -64,10 +64,10 @@
       </div>
       <!--buttons-->
       <div class="buttonContainer">
-        <button id="itemSubmit" type="button">Save</button>
-        <button class="secondary" id="reset" type="reset">Reset</button>
+        <button class="w-80" id="itemSubmit" type="button">Save</button>
+        <button class="secondary w-80" id="reset" type="reset">Reset</button>
         <p class="info">如是已經<span>售完</span>的物件<span>請勿刪除</span>會影響訂單</p>
-        <button class="secondary" id="delete" type="button" data-name="{{item.name}}" data-id="{{item.id}}">
+        <button class="secondary w-80" id="delete" type="button" data-name="{{item.name}}" data-id="{{item.id}}">
           Delete
         </button>
       </div>
@@ -99,6 +99,7 @@
 
 <script type="module">
   import TagClass from  '/js/TagClass.js'
+  import sweetAlert from '/js/sweetAlert.js'
 
   // display
   const imageDisplay = document.body.querySelector('#imageDisplay');
@@ -131,11 +132,10 @@
     this.parentElement.remove();
   }
 
-  function handleDeletePicture(e) {
+  async function handleDeletePicture(e) {
     const imageId = e.target.parentElement.dataset.id;
     if (!imageId) return;
-
-    const isConfirmed = confirm(`Do you want to delete image ${imageId}`);
+    const isConfirmed = await sweetAlert.confirm(`Do you want to delete image ${imageId}`)
     if (!isConfirmed) return;
 
     fetch(`/images/${imageId}`, { method: 'DELETE' })
@@ -188,7 +188,7 @@
   }
 
   async function handleDeleteItem(e) {
-    const isConfirm = confirm(`你要刪除掉物件:『${e.target.dataset.name}』?`);
+    const isConfirm = await sweetAlert.confirm(`你要刪除掉物件:『${e.target.dataset.name}』?`);
     const itemId = e.target.dataset.id;
     if (!isConfirm || !itemId) return;
 
@@ -213,8 +213,8 @@
   }
 
   // Init
-  const fetchTag = new TagClass(tagsContainer, tagLabelTemp, tagsInput, tagsCount)
-  fetchTag.renderAllTags()
+  const tagClass = new TagClass(tagsContainer, tagLabelTemp, tagsInput, tagsCount)
+  tagClass.renderAllTags()
   imageDisplayInit();
 
   // Action

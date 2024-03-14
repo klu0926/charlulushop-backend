@@ -31,11 +31,11 @@ async function findAllTags() {
 
 async function postTag(tagName, tagDescription, tagIcon) {
   try {
-    if (!tagName) throw new Error('No tag name')
+    if (!tagName) throw new Error('沒有標籤名稱')
 
     // check if a tag with the same name exist
     const oldTag = await Tag.findOne({ where: { name: tagName } })
-    if (oldTag) throw new Error('Tag with same name ready exist, name: ' + tagName)
+    if (oldTag) throw new Error('標籤名稱已經存在了: ' + tagName)
 
     // create tag
     const tag = await Tag.create({
@@ -43,7 +43,7 @@ async function postTag(tagName, tagDescription, tagIcon) {
       description: tagDescription || '',
       icon: tagIcon || null
     })
-    if (!tag) throw new Error('Can not create new tag:' + tagName)
+    if (!tag) throw new Error('標籤新增失敗: ' + tagName)
     return tag
   } catch (err) {
     console.error(err)
@@ -88,6 +88,9 @@ const tagApi = {
       res.status(500).json(responseJSON(false, 'GET', null, 'Fail to get Tag', err))
     }
   },
+  putTag: async (req, res, next) => {
+
+  },
   postTag: async (req, res, next) => {
     try {
       const { tagName, tagDescription } = req.body
@@ -95,7 +98,7 @@ const tagApi = {
       const tag = await postTag(tagName, tagDescription)
       res.status(200).json(responseJSON(true, 'POST', tag, 'POST tag completed'))
     } catch (err) {
-      console.error(err)
+      console.error('second erro', err)
       res.status(500).json(responseJSON(false, 'POST', null, 'Fail to post Tag', err))
     }
   },
@@ -110,8 +113,13 @@ const tagApi = {
   }
 }
 
+
+const services = {
+  findTag,
+  findAllTags,
+  postTag,
+  deleteTag
+}
 module.exports = tagApi
-module.exports.findTag = findTag
-module.exports.findAllTags = findAllTags
-module.exports.postTag = postTag
-module.exports.deleteTag = deleteTag
+module.exports.services = services
+

@@ -25,6 +25,11 @@ router.put('/images/:imageId', upload, resize, imageController.putImage)
 router.post('/images', upload, resize, imageController.postImage)
 router.delete('/images/:imageId', imageController.deleteImage)
 
+// Tags
+router.get('/tags/add', (req, res) => {
+  res.render('addTagsPage', { page: 'tags' })
+})
+
 
 // -------------------- API --------------------- //
 // Tags api

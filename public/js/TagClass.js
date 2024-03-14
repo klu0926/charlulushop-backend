@@ -17,8 +17,8 @@ class TagClass {
   constructor(tagsContainer, tagItemTemplate, tagsInput, tagsCount, clickHandler) {
     this.tagsContainer = tagsContainer
     this.tagItemTemplate = tagItemTemplate
-    this.tagsInput = tagsInput
-    this.tagCount = tagsCount
+    this.tagsInput = tagsInput || null
+    this.tagCount = tagsCount || null
     this.clickHandler = clickHandler || this.handleCheckBoxClick
     this.tagsIdArray = []
     this.init()
@@ -28,12 +28,12 @@ class TagClass {
     if (!this.tagsIdArray) throw new Error('Missing tagsIdArray')
     if (!this.tagsContainer) throw new Error('Missing tagsContainer')
     if (!this.tagItemTemplate) throw new Error('Missing tagItemTemplate')
-    if (!this.tagsInput) throw new Error('Missing tagsInput')
-    if (!this.tagCount) throw new Error('Missing tagCount')
+    if (this.tagsInput === undefined) throw new Error('Missing tagsInput')
+    if (!this.tagCount === undefined) throw new Error('Missing tagCount')
     if (!this.clickHandler) throw new Error('Missing clickHandler')
 
     // init tagsIdArray from tag input
-    if (this.tagsInput.value) {
+    if (this.tagsInput?.value) {
       const inputArray = JSON.parse(this.tagsInput.value)
       this.tagsIdArray = Array.from(inputArray, (obj) => obj.id.toString())
       // set tagsInput to ['id', 'id'...] as this.tagsIdArray
@@ -56,6 +56,26 @@ class TagClass {
       const url = '/api/tags'
       const response = await fetch(url)
       const json = await response.json()
+      return json
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  }
+  async postTag(tagName) {
+    try {
+      if (!tagName) return
+      const url = '/api/tags'
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({ tagName })
+      })
+      console.log('response', response)
+      const json = await response.json()
+      console.log('json', json)
       return json
     } catch (err) {
       console.error(err)

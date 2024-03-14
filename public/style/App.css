@@ -1,5 +1,6 @@
 :root {
   --primary: rgb(247, 100, 125);
+  --primary-light: rgb(246, 139, 156);
   --secondary: rgb(56, 148, 241);
   --light: rgb(240, 240, 240);
   --border: rgb(181, 181, 181);
@@ -30,10 +31,6 @@ a {
   padding: 0;
 }
 
-a.current {
-  border-bottom: 3px solid var(--primary);
-}
-
 h1,
 h2,
 h3,
@@ -57,10 +54,26 @@ h4 {
   width: 100%;
   min-height: 50px;
   text-align: center;
-  gap: 20px;
+  gap: 30px;
   box-shadow: 0px 1px 6px 2px var(--shadow);
   background-color: white;
   z-index: 100;
+}
+
+.nav-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  color: var(--primary);
+}
+
+.nav-link:not(.current):hover {
+  color: var(--primary-light);
+}
+
+.nav-link.current {
+  border-bottom: 3px solid var(--primary);
 }
 
 .speech {
@@ -284,10 +297,17 @@ textarea {
 
 .inputGroup {
   display: flex;
-  flex: 1;
   flex-direction: column;
   gap: 5px;
   margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.inputGroupGrid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 9px;
+  margin-top: 10px;
   margin-bottom: 15px;
 }
 
@@ -311,13 +331,25 @@ button {
   background-color: var(--primary);
   color: white;
   border: none;
-  width: 80%;
   padding: 5px 10px;
   font-size: 1.1rem;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
+
+button.w-100 {
+  width: 100%;
+}
+
+button.w-80 {
+  width: 80%;
+}
+
+button.w-50 {
+  width: 50%;
+}
+
 button:hover {
   filter: brightness(1.1);
   transform: scale(1.02);
@@ -547,6 +579,21 @@ button.secondary {
   width: 30px;
   border-radius: 2px;
   cursor: pointer;
+}
+
+/* add tags page */
+.addTagsPage {
+  max-width: var(--min-width);
+}
+
+.tagsEditContainer {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  align-items: center;
+  justify-content: start;
+  gap: 5px;
+  border-top: 3px solid var(--primary);
+  padding-top: 15px;
 }
 
 /* sweet alert 2 */

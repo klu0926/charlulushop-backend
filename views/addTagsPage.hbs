@@ -1,0 +1,112 @@
+<div class="page">
+  <!--speech-->
+  <div class="speech">
+    <img class="icon" src="/images/idea.png" alt="icon" />
+    <div>
+      <p class="info">在下方加入想要新增的<span>標籤</span></p>
+      <p class="info">點擊想要<span>修改</span>或<span>刪除</span>的標籤會<span>跳出修改選項</span></p>
+    </div>
+  </div>
+  <!--page--->
+  <div class="addTagsPage"> 
+      <!--tags-->
+    <label>標籤</label>
+    <div class="inputGroupGrid">
+      <input id="tagInput" type="text" placeholder="新增標籤..." autocomplete="off">
+      <button id="addBtn" type="button">新增</button>
+    </div>
+     <div class="inputGroup">
+      <div id="tagsContainer" class="tagsContainer">
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <button id="test" type="button">TEST</button>
+
+
+  <!--template tag-->
+<div class="d-none">
+<label class="tagLabel">
+  <input class="tagCheckbox" type="checkbox" id="myCheckbox">
+  <span class="tagSpan">Tag Name here</span>
+</label>
+</div>
+
+
+  <script type="module">
+  import TagClass from '/js/TagClass.js'
+  import swal from '/js/sweetAlert.js'
+
+  // tags
+  const tagsContainer = document.querySelector('#tagsContainer')
+  const tagLabelTemp = document.querySelector('.tagLabel')
+  const tagsCount = document.querySelector('#tagsCount')
+  const tagInput = document.querySelector('#tagInput')
+  const addButton = document.querySelector('#addBtn')
+
+  // overwrite TagClass click handler
+  async function  tagClickHandler(e){
+    e.preventDefault()
+    const checkbox = e.target
+    if (!checkbox.classList.contains('tagCheckbox')) return
+    const label = checkbox.parentElement
+    const tagId = label.dataset.id
+    const tagName = label.querySelector('.tagSpan').innerText
+    await editTag(tagId, tagName)
+  }
+
+  async function editTag(tagId, tagName){
+    try{
+      if(!tagId || !tagName) return
+      const result  = await swal.editTagInput('修改標籤', tagName, '要修改的名稱...')
+      if (result.isConfirmed){
+        // put tag name
+        swal.notice('成功修改標題', 'success')
+      }
+
+      if (result.isDenied){
+        // delete tag
+        const isConfirm = await swal.confirm('你確定要刪除嗎？')
+        if (!isConfirm) return
+        console.log('Tag Deleted')
+      }
+    
+    }catch(err){
+      console.error(err)
+    }
+ 
+  }
+
+
+  async function addButtonClickHandler(e){
+    try{
+    if (tagInput.value){
+      console.log('tagInput value', tagInput.value)
+      const json = await tagClass.postTag(tagInput.value)
+      if(!json.ok) throw new Error(json.err)
+      window.location.reload()
+    }
+    }catch(err) {
+      swal.error('新增失敗', err)
+    }
+  }
+
+
+  // Init
+  const tagClass = new TagClass(tagsContainer, tagLabelTemp, null, tagsCount, tagClickHandler)
+  tagClass.renderAllTags()
+
+  // Action
+  addButton.onclick = addButtonClickHandler
+
+
+  const test = document.querySelector('#test')
+  test.onclick=async  () => {
+    const value = await swal.input('修改', '要修改的名稱')
+    console.log('value:', value)
+    }
+
+
+
+  </script>

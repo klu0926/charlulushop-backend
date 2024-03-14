@@ -1,11 +1,11 @@
-function responseJSON( ok, action, data = null, message, err ) {
+function responseJSON(ok, action, data, message, err) {
   if (ok !== true) {
     return {
       ok: false,
       action,
       data: null,
       message: message || 'action failed',
-      err: null
+      err: typeof err === 'object' ? err.message : err
     }
   } else {
     return {
@@ -13,7 +13,7 @@ function responseJSON( ok, action, data = null, message, err ) {
       action,
       data,
       message: message || 'action successfully completed',
-      err: err || ''
+      err: null
     }
   }
 }

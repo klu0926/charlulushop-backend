@@ -1,6 +1,6 @@
 const { Item, Image, Tag, Item_Tag } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
-const { findAllTags, findTag } = require('../api/tagApi')
+const { findAllTags, findTag } = require('../api/tagApi').services
 const { postItemTag } = require('../api/itemTagApi')
 const tagApi = require('../api/tagApi')
 const itemTagApi = require('../api/itemTagApi')

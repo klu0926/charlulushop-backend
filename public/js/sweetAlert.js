@@ -1,19 +1,41 @@
 const sweetAlert = {
-  notice: (title, icon) => {
-    Swal.fire({
-      title: title || "成功",
-      icon: icon || "info",
-      confirmButtonText: '是的',
-      confirmButtonColor: '#3894F1',
-      customClass: {
-        title: 'swal-title',
-      }
-    });
+  success: (title, text) => {
+    return new Promise((resolve, reject) => {
+      Swal.fire({
+        title: title || "成功",
+        icon: "success",
+        text: text || '',
+        showConfirmButton: false,
+        timer: 1500,
+        customClass: {
+          title: 'swal-title',
+        }
+      }).then(result => {
+        return resolve(result)
+      })
+    })
   },
-  confirm: (title) => {
+  notice: (title, icon, text) => {
+    return new Promise((resolve, reject) => {
+      Swal.fire({
+        title: title || "成功",
+        icon: icon || "info",
+        text: text || '',
+        confirmButtonText: '是的',
+        confirmButtonColor: '#3894F1',
+        customClass: {
+          title: 'swal-title',
+        }
+      }).then(result => {
+        return resolve(result)
+      })
+    })
+  },
+  confirm: (title, text) => {
     return new Promise((resolve, reject) => {
       Swal.fire({
         title: title,
+        text: text || '',
         showDenyButton: true,
         confirmButtonText: '是的',
         confirmButtonColor: '#3894F1',
@@ -23,20 +45,24 @@ const sweetAlert = {
           title: 'swal-title',
         }
       }).then(result => {
-        return resolve(result.value)
+        return resolve(result)
       })
     })
   },
   error: (title, text) => {
-    Swal.fire({
-      title: title || '失敗',
-      icon: "error",
-      text: text || '',
-      confirmButtonText: '好吧',
-      confirmButtonColor: '#F7647D',
-      customClass: {
-        title: 'swal-title',
-      }
+    return new Promise((resolve, reject) => {
+      Swal.fire({
+        title: title || '失敗',
+        icon: "error",
+        text: text || '',
+        confirmButtonText: '好吧',
+        confirmButtonColor: '#F7647D',
+        customClass: {
+          title: 'swal-title',
+        }
+      }).then(result => {
+        return resolve(result)
+      })
     })
   },
   editTagInput: (title, inputValue, placeholder, inputType) => {

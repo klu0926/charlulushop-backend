@@ -1,4 +1,4 @@
-const { Tag } = require('../../models')
+const { Tag, Item_Tag } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
 
 async function findTag(tagId) {
@@ -9,6 +9,11 @@ async function findTag(tagId) {
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       raw: true,
     })
+
+    // find ItemTag count
+    const count = await Item_Tag.count({ where: { tagId } })
+    tag.itemsCount = count
+
     return tag
   } catch (err) {
     console.error(err)
@@ -22,7 +27,26 @@ async function findAllTags() {
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       raw: true
     })
+    if (tags) {
+      for (const tag of tags) {
+        const count = await Item_Tag.count({ where: { tagId: tag.id } })
+        tag.itemsCount = count
+      }
+    }
     return tags
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
+async function putTag(tagId, newTagName) {
+  try {
+    if (!newTagName) throw new Error('沒有新標籤名稱')
+    if (tagId === undefined) throw new Error('沒有標籤ID')
+    const updateCount = await Tag.update(
+      { name: newTagName }, { where: { id: tagId } })
+    return updateCount
   } catch (err) {
     console.error(err)
     throw err
@@ -53,10 +77,10 @@ async function postTag(tagName, tagDescription, tagIcon) {
 
 async function deleteTag(tagId) {
   try {
-    if (tagId === undefined) throw new Error('Tag id is undefined')
+    if (tagId === undefined) throw new Error('沒有標籤ID')
     const deletedCount = await Tag.destroy({ where: { id: tagId } })
 
-    if (deletedCount === 0) throw new Error('Can not delete Tag with id: ', tagId)
+    if (deletedCount === 0) throw new Error('刪除標籤失敗，標籤ID: ', tagId)
     return deletedCount
   } catch (err) {
     console.error(err)
@@ -89,7 +113,20 @@ const tagApi = {
     }
   },
   putTag: async (req, res, next) => {
+    try {
+      const { tagName } = req.body
+      console.log('body', req.body)
+      const tagId = req.params.tagId
 
+      console.log('tagName', tagName)
+      console.log('tagId', tagId)
+
+      await putTag(tagId, tagName)
+      res.status(200).json(responseJSON(true, 'PUT', null, 'PUT tag completed'))
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'PUT', null, 'Fail to PUT Tag', err))
+    }
   },
   postTag: async (req, res, next) => {
     try {

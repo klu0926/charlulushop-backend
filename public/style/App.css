@@ -1,6 +1,7 @@
 :root {
   --primary: rgb(247, 100, 125);
   --primary-light: rgb(246, 139, 156);
+  --primary-light2: rgb(252, 204, 212);
   --secondary: rgb(56, 148, 241);
   --light: rgb(240, 240, 240);
   --border: rgb(181, 181, 181);
@@ -130,13 +131,37 @@ label {
   margin-top: 5px;
 }
 
-input:not([type="file"]):not([type="checkbox"]) {
+input:not([type="file"]):not([type="checkbox"]):not(.resetInput) {
   height: 40px;
   border-radius: 5px;
   appearance: none;
   border: 1px solid var(--border);
   padding: 5px;
   font-size: 0.9rem;
+}
+
+.resetInputGroup {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.resetInputGroup form {
+  flex: 1;
+  display: flex;
+}
+
+.resetInputGroup .resetInput {
+  appearance: none;
+  flex: 1;
+  outline: none;
+  border: none;
+}
+.resetInputGroup .resetButton {
+  display: inline;
+  background-color: white;
+  color: var(--grey);
 }
 
 select {
@@ -215,10 +240,13 @@ textarea {
 /* tagLabel hold checkbox and a span */
 .tagLabel {
   position: relative;
-  display: inline-block;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   padding: 3px 10px;
-  cursor: pointer;
   margin: 1px;
+  gap: 2px;
+  cursor: pointer;
 }
 
 .tagLabel .tagSpan {
@@ -251,10 +279,31 @@ textarea {
 .tagLabel .tagCheckbox:checked {
   background-color: var(--primary);
   border: none;
+  box-shadow: 1px 1.5px 3px var(--border);
 }
 .tagLabel .tagCheckbox:checked + .tagSpan {
   color: white;
 }
+
+.tagItemsCount {
+  display: inline-block;
+  background-color: var(--border);
+  color: white;
+  margin: auto 2px;
+  padding: 0px 6px;
+  border-radius: 4px;
+  font-size: 0.76rem;
+}
+
+.tagLabel:hover .tagItemsCount {
+  background-color: var(--primary);
+}
+
+.tagLabel .tagCheckbox:checked ~ .tagItemsCount {
+  background-color: var(--primary-light2);
+  color: var(--primary);
+}
+
 /* itemPage */
 .itemPage {
   max-width: var(--min-width);

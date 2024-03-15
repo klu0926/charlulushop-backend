@@ -12,7 +12,12 @@
       <!--tags-->
     <label>標籤</label>
     <div class="inputGroupGrid">
-      <input id="tagInput" type="text" placeholder="新增標籤..." autocomplete="off">
+      <div class="resetInputGroup">
+        <form class="" disabled="true">
+           <input class="resetInput" id="tagInput" type="text" placeholder="新增標籤..." autocomplete="off">
+          <button class="resetButton" type="reset">x</button>
+        </form>
+      </div>
       <button id="addBtn" type="button">新增</button>
     </div>
      <div class="inputGroup">
@@ -22,14 +27,12 @@
   </div>
   </div>
 
-  <button id="test" type="button">TEST</button>
-
-
   <!--template tag-->
 <div class="d-none">
 <label class="tagLabel">
   <input class="tagCheckbox" type="checkbox" id="myCheckbox">
   <span class="tagSpan">Tag Name here</span>
+    <span class="tagItemsCount">0</span>
 </label>
 </div>
 
@@ -60,35 +63,59 @@
     try{
       if(!tagId || !tagName) return
       const result  = await swal.editTagInput('修改標籤', tagName, '要修改的名稱...')
-      if (result.isConfirmed){
-        // put tag name
-        swal.notice('成功修改標題', 'success')
-      }
+      const newName = result.value
+       // --- 修改標籤
+      if (result.isConfirmed || newName){
+        const url = `/api/tags/${tagId}`
+        const response = await fetch(url, {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: "PUT",
+          body: JSON.stringify({tagName : newName})
+        })
+        const json = await response.json()
+        if (!json.ok) throw new Error(json.err)
+        // 修改成功
+        await swal.success('成功修改標題',newName)
+        window.location.reload()
+      } 
 
+      // ---- 刪除標籤
       if (result.isDenied){
-        // delete tag
-        const isConfirm = await swal.confirm('你確定要刪除嗎？')
-        if (!isConfirm) return
-        console.log('Tag Deleted')
+        // 再次確認
+        const result = await swal.confirm('你確定要刪除嗎？', `${tagName}`)
+        if (!result.value) {
+          return
+        }
+        // 刪除
+        const url = `/api/tags/${tagId}`
+        const response = await fetch(url, {
+          method: 'DELETE'
+        })
+        // 刪除成功
+        const json = await response.json()
+        if (!json.ok) throw new Error(json.err)
+        await swal.notice('刪除成功', 'success', `${tagName}`)
+        window.location.reload()
+        return
       }
-    
     }catch(err){
-      console.error(err)
+      await swal.error('失敗', err.message)
+       window.location.reload()
     }
- 
   }
-
 
   async function addButtonClickHandler(e){
     try{
     if (tagInput.value){
-      console.log('tagInput value', tagInput.value)
       const json = await tagClass.postTag(tagInput.value)
       if(!json.ok) throw new Error(json.err)
+      await swal.success('新增成功', tagInput.value)
       window.location.reload()
     }
     }catch(err) {
-      swal.error('新增失敗', err)
+      await swal.error('新增失敗', err)
     }
   }
 
@@ -99,14 +126,5 @@
 
   // Action
   addButton.onclick = addButtonClickHandler
-
-
-  const test = document.querySelector('#test')
-  test.onclick=async  () => {
-    const value = await swal.input('修改', '要修改的名稱')
-    console.log('value:', value)
-    }
-
-
 
   </script>

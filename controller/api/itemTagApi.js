@@ -84,6 +84,9 @@ async function deleteAllItemTag(itemId) {
   }
 }
 
+
+
+
 // API
 const itemTagApi = {
   getItemTags: async (req, res, next) => {
@@ -139,9 +142,15 @@ const itemTagApi = {
   }
 }
 
+const services = {
+  findItemTag,
+  findAllItemTags,
+  postItemTag,
+  deleteItemTag,
+  deleteAllItemTag,
+}
+
+
 module.exports = itemTagApi
-module.exports.findItemTag = findItemTag
-module.exports.findAllItemTags = findAllItemTags
-module.exports.postItemTag = postItemTag
-module.exports.deleteItemTag = deleteItemTag
-module.exports.deleteAllItemTag = deleteAllItemTag
+module.exports.services = services
+

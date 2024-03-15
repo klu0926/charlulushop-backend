@@ -36,6 +36,7 @@ router.get('/tags/add', (req, res) => {
 router.get('/api/tags', tagApi.getTags)
 router.get('/api/tags/:tagId', tagApi.getTag)
 router.post('/api/tags', tagApi.postTag)
+router.put('/api/tags/:tagId', tagApi.putTag)
 router.delete('/api/tags/:tagId', tagApi.deleteTag)
 
 // ItemTags api

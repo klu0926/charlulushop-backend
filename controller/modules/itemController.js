@@ -1,9 +1,7 @@
 const { Item, Image, Tag, Item_Tag } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
-const { findAllTags, findTag } = require('../api/tagApi').services
-const { postItemTag } = require('../api/itemTagApi')
-const tagApi = require('../api/tagApi')
-const itemTagApi = require('../api/itemTagApi')
+const { findAllTags } = require('../api/tagApi').services
+const { postItemTag, deleteAllItemTag } = require('../api/itemTagApi').services
 
 const itemController = {
   addItemPage: async (req, res, next) => {
@@ -132,14 +130,14 @@ const itemController = {
 
       // change tag (itemTag)
       // delete all old itemTags
-      await itemTagApi.deleteAllItemTag(item.id)
+      await deleteAllItemTag(item.id)
 
       // create all new itemTags
       if (tags) {
         const tagsIdArray = JSON.parse(tags)
         if (tagsIdArray.length !== 0) {
           for (let i = 0; i < tagsIdArray.length; i++) {
-            await itemTagApi.postItemTag(item.id, tagsIdArray[i])
+            await postItemTag(item.id, tagsIdArray[i])
           }
         }
       }

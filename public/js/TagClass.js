@@ -39,6 +39,10 @@ class TagClass {
       // set tagsInput to ['id', 'id'...] as this.tagsIdArray
       this.tagsInput.value = JSON.stringify(this.tagsIdArray)
     }
+    // init count
+    if (this.tagCount) {
+      this.tagCount.innerText = this.tagsIdArray.length || 0
+    }
   }
   async fetchTag() {
     try {
@@ -143,9 +147,13 @@ class TagClass {
         const newTagLabel = this.tagItemTemplate.cloneNode(true)
         const newTagSpan = newTagLabel.querySelector('.tagSpan')
         const newTagCheckbox = newTagLabel.querySelector('.tagCheckbox')
+        const newTagItemsCount = newTagLabel.querySelector('.tagItemsCount')
 
         newTagLabel.dataset.id = tags[i].id
         newTagSpan.innerText = tags[i].name
+        if (newTagItemsCount) {
+          newTagItemsCount.innerText = tags[i].itemsCount
+        }
         // onclick
         if (this.clickHandler) {
           newTagCheckbox.onclick = (e) => { this.clickHandler(e) }

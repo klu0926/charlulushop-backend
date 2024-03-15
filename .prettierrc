@@ -6,15 +6,6 @@
     "tabWidth": 2,
     "semi": false,
     "arrowParens": "avoid",
-    "proseWrap": "preserve",
-    "overrides": [
-      {
-        "files": ["*.hbs", "*.handlebars"],
-        "options": {
-          "singleQuote": false,
-          "parser": "handlebars"
-        }
-      }
-    ]
+    "proseWrap": "preserve"
   }
 }

@@ -1,7 +1,8 @@
 const { Item, Image, Tag, Item_Tag } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
-const { findAllTags } = require('../api/tagApi').services
+const { findAllTags, countAllTags } = require('../api/tagApi').services
 const { postItemTag, deleteAllItemTag } = require('../api/itemTagApi').services
+const { Op } = require('sequelize')
 
 const itemController = {
   addItemPage: async (req, res, next) => {
@@ -62,7 +63,16 @@ const itemController = {
   },
   getItems: async (req, res, next) => {
     try {
+      let { queryTag, search } = req.query
+      if (queryTag === 'all') {
+        queryTag = ''
+      }
+      const whereOptions = {
+        queryTag: queryTag ? { name: queryTag } : null,
+        search: search ? { name: { [Op.like]: '%' + search + '%' } } : null
+      }
       const items = await Item.findAll({
+        where: whereOptions.search,
         attributes: {
           exclude: ['createdAt', 'updatedAt'],
         },
@@ -71,7 +81,17 @@ const itemController = {
             model: Image,
             as: 'images',
             attributes: ['id', 'isCover'],
+
           },
+          {
+            model: Tag,
+            as: 'tags',
+            attributes: ['id', 'name'],
+            where: whereOptions.queryTag,
+            through: {
+              attributes: []
+            }
+          }
         ],
         order: [['id', 'DESC']],
         distinct: true,
@@ -94,6 +114,8 @@ const itemController = {
         items: itemsData,
         tags: tagsData,
         page: 'items',
+        queryTag: queryTag || 'all',
+        search: search || ''
       })
     } catch (err) {
       console.error(err)

@@ -1,4 +1,3 @@
-{{#if (checkLength items.length 0)}}
 <div class="page">
   <!--speech-->
   <div class="speech">
@@ -10,17 +9,33 @@
   </div>
   <!--page--->
   <div class="itemsPage"> 
+    {{> searchBar queryTag=queryTag search=search}}
   <!-- tags -->
   <div class="tagsSlider">
-    <a class="tag-link active">
+    <a class="tag-link {{#if (isSame 'all' queryTag)}}active{{/if}}"  href="/items?queryTag=all">
        全部
     </a>
     {{#each tags}}
-    <a class="tag-link" href="/items?tag={{name}}">
+    <a class="tag-link {{#if (isSame name ../queryTag)}}active{{/if}}" href="/items?queryTag={{name}}">
        {{name}}
+       <span class="tagItemsCount">{{itemsCount}}</span>
     </a>
     {{/each}}
   </div>
+  <div class="current-tag">
+    搜尋 [
+   {{#if (isSame queryTag 'all')}}
+    <span>全部</span>
+    {{else}}
+    <span>{{queryTag}}</span>
+    {{/if}}
+    {{#if search}}
+    <span>+ {{search}} </span>
+    {{/if}}
+    <span>] 搜尋結果：<span class="color-primary fw-bold">{{items.length}}</span> 個物件</span>
+  </div>
+ 
+  {{#if (checkLength items.length 0)}}
   <div class="itemsPageGrid">
     {{#each items}}
     <a class="itemLink" href="/items/{{id}}">
@@ -44,8 +59,8 @@
 </div>
 {{else}}
 <div class="error-info">
-  <p class="info">目前沒有東西唷！</p>
-  <p class="info">去<span>新增</span>加入新物件吧～</p>
+  <p class="info"><span>{{queryTag}}</span> 目前沒有東西唷！</p>
+  <p class="info">加入新物件吧～</p>
 </div>
 {{/if}}
 
@@ -75,8 +90,7 @@
       if (!json.ok) throw new Error(json.message)
       window.location.reload()
     } catch (err) {
-      alert(err)
-      window.location.reload()
+      await sweetAlert.error('刪除失敗', err)
     }
   }
 
@@ -87,17 +101,18 @@
       b.onclick = async (e) => {
         e.preventDefault() // stop parent <a>
         e.stopPropagation()
-        // confirm
+      // confirm
        //const isConfirm = confirm('刪除物件')
-        const isConfirm = await sweetAlert.confirm(`你確定要刪除: ${itemName}？`)
-        console.log('isConfirm', isConfirm)
-        if (!isConfirm) return
+        const result = await sweetAlert.confirm(`你確定要刪除: ${itemName}？`)        
+        if (result.isConfirmed) {
         const itemId = b.dataset.id
-        console.log('itemId', itemId)
         deleteItem(itemId)
+        }
+        return
       }
     })
   }
+  // Action
   handleItemImageLoaded()
   handleDelete()
 </script>

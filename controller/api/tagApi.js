@@ -40,6 +40,17 @@ async function findAllTags() {
   }
 }
 
+async function countAllTags(){
+  try {
+    const count = await Tag.count()
+
+    return count
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
+
 async function putTag(tagId, newTagName) {
   try {
     if (!newTagName) throw new Error('沒有新標籤名稱')
@@ -155,7 +166,8 @@ const services = {
   findTag,
   findAllTags,
   postTag,
-  deleteTag
+  deleteTag,
+  countAllTags
 }
 module.exports = tagApi
 module.exports.services = services

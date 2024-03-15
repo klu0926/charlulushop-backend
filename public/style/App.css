@@ -46,6 +46,14 @@ h4 {
   padding-bottom: 100px;
 }
 
+.color-primary {
+  color: var(--primary) !important;
+}
+
+.fw-bold {
+  font-weight: bold;
+}
+
 /* navbar */
 .navbar {
   position: fixed;
@@ -123,6 +131,15 @@ h4 {
     transform: translateY(0px);
   }
 }
+/* search bar */
+.searchBar {
+  width: var(--min-width);
+  height: 30px;
+  border: 1px solid red;
+  margin: 4px 0px;
+}
+
+/* */
 
 label {
   color: var(--primary);
@@ -142,14 +159,23 @@ input:not([type="file"]):not([type="checkbox"]):not(.resetInput) {
 
 .resetInputGroup {
   flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0px;
+  width: 100%;
+  max-width: var(--min-width);
+}
+
+.resetInputGroup .inputContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
   border: 1px solid var(--border);
   border-radius: 5px;
   padding-left: 10px;
-}
-
-.resetInputGroup form {
-  flex: 1;
-  display: flex;
 }
 
 .resetInputGroup .resetInput {
@@ -194,7 +220,6 @@ textarea {
   width: var(--min-width);
   height: 40px;
   margin: 5px auto;
-  margin-bottom: 20px;
   gap: 10px;
   padding: 0px 5px;
   white-space: nowrap;
@@ -202,7 +227,7 @@ textarea {
 }
 
 .tag-link {
-  display: inline-block;
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 30px;
@@ -212,6 +237,7 @@ textarea {
   background-color: white;
   color: var(--grey);
   border: 1px solid var(--grey);
+  gap: 2px;
   cursor: pointer;
 }
 .tag-link:hover {
@@ -223,6 +249,26 @@ textarea {
   background-color: var(--primary);
   color: white;
   border: none;
+  box-shadow: 1px 1.5px 3px var(--border);
+}
+
+.tag-link:hover .tagItemsCount {
+  background-color: var(--primary);
+}
+
+.tag-link.active .tagItemsCount {
+  background-color: white;
+  color: var(--primary);
+}
+
+.current-tag {
+  display: flex;
+  width: 100%;
+  margin: 5px 0px;
+  font-size: 0.9rem;
+  color: var(--grey);
+  padding: 2px 5px;
+  gap: 5px;
 }
 
 /* addItem page / item page*/
@@ -352,6 +398,10 @@ textarea {
   margin-bottom: 15px;
 }
 
+.inputGroup textarea {
+  height: 110px;
+}
+
 .inputGroupGrid {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -418,8 +468,17 @@ button.secondary {
   text-align: center;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 50px;
   color: var(--grey);
+}
+
+.error-info .tag {
+  display: inline-block;
+  border: 1px solid var(--grey);
+  color: var(--grey);
+  padding: 2px 4px;
+  margin-bottom: 5px;
+  border-radius: 4px;
 }
 
 /* itemsPage */
@@ -436,6 +495,7 @@ button.secondary {
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
   width: 100%;
+  margin: 10px 0px;
 }
 
 .item {
@@ -501,13 +561,21 @@ button.secondary {
 }
 
 .itemPrice {
+  display: flex;
+  align-items: center;
   font-size: 1.1rem;
   font-weight: bold;
 }
 
 .itemPrice::before {
-  content: "\0024";
-  margin-right: 2px;
+  content: "台幣";
+  margin-right: 3px;
+  font-size: 0.8rem;
+  font-weight: normal;
+  background-color: var(--primary);
+  color: white;
+  padding: 1px 4px;
+  border-radius: 4px;
 }
 
 .itemStock {

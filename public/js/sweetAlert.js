@@ -88,7 +88,15 @@ const sweetAlert = {
       })
       resolve(result)
     })
-
+  },
+  image: (url, size) => {
+    Swal.fire({
+      showConfirmButton: false,
+      imageWidth: size || '400px',
+      imageHeight: size || '400px',
+      background: `#fff`,
+      imageUrl: url
+    })
   }
 }
 

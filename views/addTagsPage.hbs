@@ -11,15 +11,13 @@
   <div class="addTagsPage"> 
       <!--tags-->
     <label>標籤</label>
-    <div class="inputGroupGrid">
-      <div class="resetInputGroup">
-        <form class="" disabled="true">
+      <form class="resetInputGroup" disabled>
+        <div class="inputContainer">
            <input class="resetInput" id="tagInput" type="text" placeholder="新增標籤..." autocomplete="off">
           <button class="resetButton" type="reset">x</button>
-        </form>
-      </div>
-      <button id="addBtn" type="button">新增</button>
-    </div>
+        </div>
+        <button id="addBtn" type="button">新增</button>
+      </form>
      <div class="inputGroup">
       <div id="tagsContainer" class="tagsContainer">
       </div>
@@ -39,7 +37,7 @@
 
   <script type="module">
   import TagClass from '/js/TagClass.js'
-  import swal from '/js/sweetAlert.js'
+  import sweetAlert from '/js/sweetAlert.js'
 
   // tags
   const tagsContainer = document.querySelector('#tagsContainer')
@@ -62,7 +60,7 @@
   async function editTag(tagId, tagName){
     try{
       if(!tagId || !tagName) return
-      const result  = await swal.editTagInput('修改標籤', tagName, '要修改的名稱...')
+      const result  = await sweetAlert.editTagInput('修改標籤', tagName, '要修改的名稱...')
       const newName = result.value
        // --- 修改標籤
       if (result.isConfirmed || newName){
@@ -77,14 +75,14 @@
         const json = await response.json()
         if (!json.ok) throw new Error(json.err)
         // 修改成功
-        await swal.success('成功修改標題',newName)
+        await sweetAlert.success('成功修改標題',newName)
         window.location.reload()
       } 
 
       // ---- 刪除標籤
       if (result.isDenied){
         // 再次確認
-        const result = await swal.confirm('你確定要刪除嗎？', `${tagName}`)
+        const result = await sweetAlert.confirm('你確定要刪除嗎？', `${tagName}`)
         if (!result.value) {
           return
         }
@@ -96,13 +94,12 @@
         // 刪除成功
         const json = await response.json()
         if (!json.ok) throw new Error(json.err)
-        await swal.notice('刪除成功', 'success', `${tagName}`)
+        await sweetAlert.notice('刪除成功', 'success', `${tagName}`)
         window.location.reload()
         return
       }
     }catch(err){
-      await swal.error('失敗', err.message)
-       window.location.reload()
+      await sweetAlert.error('失敗', err.message)
     }
   }
 
@@ -111,11 +108,11 @@
     if (tagInput.value){
       const json = await tagClass.postTag(tagInput.value)
       if(!json.ok) throw new Error(json.err)
-      await swal.success('新增成功', tagInput.value)
+      await sweetAlert.success('新增成功', tagInput.value)
       window.location.reload()
     }
     }catch(err) {
-      await swal.error('新增失敗', err)
+      await sweetAlert.error('新增失敗', err)
     }
   }
 

@@ -97,10 +97,14 @@
 </label>
 </div>
 
-
 <script type="module">
   import TagClass from  '/js/TagClass.js'
   import sweetAlert from '/js/sweetAlert.js'
+  import HandleImage from '/js/handleImage.js'
+
+  // handle images
+  const handleImage = new HandleImage()
+  handleImage.handleAllPictureClick()
 
   // display
   const imageDisplay = document.body.querySelector('#imageDisplay');
@@ -134,20 +138,23 @@
   }
 
   async function handleDeletePicture(e) {
-    const imageId = e.target.parentElement.dataset.id;
+    try {
+     const imageId = e.target.parentElement.dataset.id;
     if (!imageId) return;
-    const isConfirmed = await sweetAlert.confirm(`Do you want to delete image ${imageId}`)
-    if (!isConfirmed) return;
 
-    fetch(`/images/${imageId}`, { method: 'DELETE' })
-      .then((response) => {
-        if (!response.ok) throw new Error('Fail to delete');
-        window.location.reload();
-      })
-      .catch((error) => {
-        alert('Error deleting items', error.message);
-        window.location.reload();
-      });
+    const result = await sweetAlert.confirm(`你要刪除照片嗎?`)
+    if (!result.isConfirmed) return;
+    
+    const response = await fetch(`/images/${imageId}`, { method: 'DELETE' })
+    if(!response.ok) throw new Error('Response Fail' + response.status )
+
+    const json = await response.json()
+    if (!json.ok) throw new Error(json.err)
+    await sweetAlert.success('照片刪除成功')
+    window.location.reload();
+    }catch(err){
+     await sweetAlert.error('刪除照片失敗', err)
+    }
   }
 
   // post picture
@@ -200,10 +207,7 @@
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}, Text: ${response.statusText}`);
       }
-
-      const json = await response.json();
-      console.log('json', json);
-
+      const json = await response.json()
       if (!json.ok) throw new Error(json.message);
 
       window.location.href = '/items';
@@ -224,18 +228,14 @@
   addPictureBtn.onclick = () => {
     pictureInput.click();
   };
-
   deletePictureInputBtns.forEach((b) => {
     b.onclick = handleDeletePictureInput;
   });
-
   deletePictureBtns.forEach((b) => {
     b.onclick = handleDeletePicture;
   });
-
   itemPutSubmit.onclick = (e) => {
     itemPutForm.submit();
   };
-
   deleteItemBtn.onclick = handleDeleteItem;
 </script>

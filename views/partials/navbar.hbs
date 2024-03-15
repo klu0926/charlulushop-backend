@@ -1,7 +1,7 @@
 <nav class="navbar">
-  <a href="/items/add" class='nav-link {{isCurrentPage page 'add'}}'><i class="fa-regular fa-square-plus"></i>新增</a>
-  <a href="/items" class='nav-link {{isCurrentPage page 'items'}}'><i class="fa-solid fa-list"></i>全部好貨</a>
-  <a href="/tags/add" class='nav-link {{isCurrentPage page 'tags'}}'><i class="fa-solid fa-tag fa-rotate-90"></i>標籤</a>
+  <a href="/items/add" class='nav-link {{isCurrentPage page 'add'}}'>新增</a>
+  <a href="/items" class='nav-link {{isCurrentPage page 'items'}}'>全部好貨</a>
+  <a href="/tags/add" class='nav-link {{isCurrentPage page 'tags'}}'>標籤</a>
   {{#if (isCurrentPage page 'edit')}}
     <a href="/items" class='nav-link {{isCurrentPage page 'edit'}}'><i class="fa-solid fa-pen-to-square"></i>修改</a>
   {{/if}}

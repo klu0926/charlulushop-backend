@@ -1,5 +1,6 @@
 const { Tag, Item_Tag } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
+const { deleteAllItemTagWithTag } = require('./itemTagApi').services
 
 async function findTag(tagId) {
   try {
@@ -27,9 +28,15 @@ async function findAllTags() {
       attributes: { exclude: ['createdAt', 'updatedAt'] },
       raw: true
     })
+
+    // find Item_Tag relate to it
     if (tags) {
       for (const tag of tags) {
-        const count = await Item_Tag.count({ where: { tagId: tag.id } })
+        const count = await Item_Tag.count(
+          {
+            where: { tagId: tag.id },
+          }
+        )
         tag.itemsCount = count
       }
     }
@@ -40,7 +47,7 @@ async function findAllTags() {
   }
 }
 
-async function countAllTags(){
+async function countAllTags() {
   try {
     const count = await Tag.count()
 
@@ -92,6 +99,9 @@ async function deleteTag(tagId) {
     const deletedCount = await Tag.destroy({ where: { id: tagId } })
 
     if (deletedCount === 0) throw new Error('刪除標籤失敗，標籤ID: ', tagId)
+
+    // delete Item_Tag
+    await deleteAllItemTagWithTag(tagId)
     return deletedCount
   } catch (err) {
     console.error(err)
@@ -126,11 +136,7 @@ const tagApi = {
   putTag: async (req, res, next) => {
     try {
       const { tagName } = req.body
-      console.log('body', req.body)
       const tagId = req.params.tagId
-
-      console.log('tagName', tagName)
-      console.log('tagId', tagId)
 
       await putTag(tagId, tagName)
       res.status(200).json(responseJSON(true, 'PUT', null, 'PUT tag completed'))
@@ -146,13 +152,18 @@ const tagApi = {
       const tag = await postTag(tagName, tagDescription)
       res.status(200).json(responseJSON(true, 'POST', tag, 'POST tag completed'))
     } catch (err) {
-      console.error('second erro', err)
+      console.error(err)
       res.status(500).json(responseJSON(false, 'POST', null, 'Fail to post Tag', err))
     }
   },
   deleteTag: async (req, res, next) => {
     try {
+      const tagId = req.params.tagId
       await deleteTag(req.params.tagId)
+
+      // delete ItemTag
+      await deleteAllItemTagWithTag(tagId)
+
       res.status(200).json(responseJSON(true, 'DELETE', null, 'DELETE tag completed'))
     } catch (err) {
       console.error(err)

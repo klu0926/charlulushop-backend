@@ -4,6 +4,7 @@ const { resize } = require('../helpers/sharp.js')
 // controller
 const itemController = require('../controller/modules/itemController.js')
 const imageController = require('../controller/modules/imageController')
+const userController = require('../controller/modules/userController.js')
 // api
 const itemTagApi = require('../controller/api/itemTagApi.js')
 const tagApi = require('../controller/api/tagApi.js')
@@ -30,6 +31,8 @@ router.get('/tags/add', (req, res) => {
   res.render('addTagsPage', { page: 'tags' })
 })
 
+// User
+router.get('/users/login', userController.login)
 
 // -------------------- API --------------------- //
 // Tags api

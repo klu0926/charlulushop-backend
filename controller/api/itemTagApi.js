@@ -18,6 +18,8 @@ async function findItemTag(itemTagId) {
   }
 }
 
+
+
 async function findAllItemTags() {
   try {
     const itemTags = await Item_Tag.findAll({
@@ -73,7 +75,7 @@ async function deleteItemTag(itemTagId) {
   }
 }
 
-async function deleteAllItemTag(itemId) {
+async function deleteAllItemTagWithItem(itemId) {
   try {
     if (itemId === undefined) throw new Error('Missing itemId')
     const deleteCount = await Item_Tag.destroy({ where: { itemId } })
@@ -84,7 +86,16 @@ async function deleteAllItemTag(itemId) {
   }
 }
 
-
+async function deleteAllItemTagWithTag(tagId) {
+  try {
+    if (tagId === undefined) throw new Error('Missing tagId')
+    const deleteCount = await Item_Tag.destroy({ where: { tagId } })
+    return true
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}
 
 
 // API
@@ -132,7 +143,7 @@ const itemTagApi = {
   deleteAllItemTag: async (req, res, next) => {
     try {
       const { itemId } = req.body
-      const deleteCount = await deleteAllItemTag(itemId)
+      const deleteCount = await deleteAllItemTagWithItem(itemId)
       res.status(200).json(responseJSON(true, 'DELETE', null, `DELETE item id:${itemId}'s all ${deleteCount} itemTags completed`));
     } catch (err) {
       console.error(err)
@@ -147,7 +158,8 @@ const services = {
   findAllItemTags,
   postItemTag,
   deleteItemTag,
-  deleteAllItemTag,
+  deleteAllItemTagWithItem,
+  deleteAllItemTagWithTag
 }
 
 

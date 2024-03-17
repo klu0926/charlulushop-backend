@@ -1,7 +1,7 @@
 const { Item, Image, Tag, Item_Tag } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
 const { findAllTags, countAllTags } = require('../api/tagApi').services
-const { postItemTag, deleteAllItemTag } = require('../api/itemTagApi').services
+const { postItemTag, deleteAllItemTagWithItem } = require('../api/itemTagApi').services
 const { Op } = require('sequelize')
 
 const itemController = {
@@ -52,7 +52,6 @@ const itemController = {
       })
       // get tags for the page
       const tagsData = await findAllTags()
-      console.log('get item:', itemData)
 
       // response
       res.render('itemPage', { item: itemData, tags: tagsData, page: 'edit' })
@@ -90,7 +89,8 @@ const itemController = {
             where: whereOptions.queryTag,
             through: {
               attributes: []
-            }
+            },
+            raw: true
           }
         ],
         order: [['id', 'DESC']],
@@ -106,6 +106,7 @@ const itemController = {
         })
         return data
       })
+
       // get tags
       const tagsData = await findAllTags()
 
@@ -152,7 +153,7 @@ const itemController = {
 
       // change tag (itemTag)
       // delete all old itemTags
-      await deleteAllItemTag(item.id)
+      await deleteAllItemTagWithItem(item.id)
 
       // create all new itemTags
       if (tags) {
@@ -241,6 +242,9 @@ const itemController = {
       const itemId = req.params.itemId
       if (!itemId) throw new Error('No id for item delete')
       await Item.destroy({ where: { id: itemId } })
+
+      // delete ItemTags
+      await deleteAllItemTagWithItem(itemId)
       res
         .status(200)
         .json(responseJSON(true, 'DELETE', null, 'Delete item completed'))

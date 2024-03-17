@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Item_Tag,
         foreignKey: 'itemId',
         as: 'tags',
+        onDelete: 'CASCADE',
       })
     }
   }

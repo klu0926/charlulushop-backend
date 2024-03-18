@@ -8,6 +8,13 @@ const tagApi = require('../controller/api/tagApi.js')
 
 
 // -------------------- API --------------------- //
+// items
+
+
+// order
+
+
+
 // Tags api
 router.get('/tags', tagApi.getTags)
 router.get('/tags/:tagId', tagApi.getTag)

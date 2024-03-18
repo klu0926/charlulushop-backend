@@ -18,8 +18,9 @@ module.exports = {
         type: Sequelize.STRING,
       },
       buyerIG: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
+        defaultValue: null
       },
       price: {
         allowNull: false,

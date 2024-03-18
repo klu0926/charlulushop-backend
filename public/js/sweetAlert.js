@@ -92,10 +92,11 @@ const sweetAlert = {
   image: (url, size) => {
     Swal.fire({
       showConfirmButton: false,
-      imageWidth: size || '400px',
-      imageHeight: size || '400px',
+      showCancelButton: true,
+      cancelButtonText: '關閉',
+      imageWidth: size || '320px',
       background: `#fff`,
-      imageUrl: url
+      imageUrl: url,
     })
   }
 }

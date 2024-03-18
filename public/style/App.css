@@ -10,7 +10,7 @@
   --dark: rgb(120, 120, 120);
   --shadow: rgba(0, 0, 0, 0.1);
 
-  --min-width: 400px;
+  --min-width: 320px;
   --mid-width: 750px;
   --max-width: 1100px;
 }
@@ -530,8 +530,7 @@ button.secondary {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  max-width: 200px;
-  min-height: 200px;
+  max-width: 180px;
   align-items: start;
   border-radius: 5px;
   margin: auto;
@@ -569,7 +568,7 @@ button.secondary {
   display: inline-block;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 155px;
+  flex: 1;
   white-space: nowrap;
   font-size: 0.9rem;
   color: black;
@@ -749,11 +748,7 @@ button.secondary {
 .loginForm {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  padding: 30px;
-  box-shadow: 1px 2px 4px var(--border);
+  padding: 10px;
 }
 
 .loginForm .resetInputGroup .inputContainer input {

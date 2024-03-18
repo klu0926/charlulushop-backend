@@ -1,12 +1,12 @@
 const sweetAlert = {
-  success: (title, text) => {
+  success: (title, text, timer) => {
     return new Promise((resolve, reject) => {
       Swal.fire({
         title: title || "成功",
         icon: "success",
         text: text || '',
         showConfirmButton: false,
-        timer: 1500,
+        timer: timer || 1500,
         customClass: {
           title: 'swal-title',
         }

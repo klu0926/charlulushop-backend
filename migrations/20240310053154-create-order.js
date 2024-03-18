@@ -21,9 +21,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      orderItemIds: {
+      price: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      itemsIds: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      status: {
         allowNull: false,
         type: Sequelize.STRING,
+        defaultValue: 'pending'
       },
       createdAt: {
         allowNull: false,

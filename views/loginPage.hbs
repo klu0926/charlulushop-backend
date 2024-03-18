@@ -1,0 +1,37 @@
+<div class="page">
+  <div class="loginPage">
+    <h1 style="text-align: center;">登入</h1>
+    <form id="loginForm" class="loginForm" action="/users/login" method="POST">
+    <!--名稱-->
+      <div class="inputGroup-row">
+      <label for="name"><i class="fa-solid fa-user"></i></label>
+      <input id="name" name="name" type="text" placeholder="名稱..." required />
+    </div>
+          <p id="name-error" class="form-error">需要填寫名稱</p>
+    <!--密碼-->
+    <div class="inputGroup-row">
+      <label for="password"><i class="fa-solid fa-lock"></i></label>
+      <input id="password" name="password" type="password" placeholder="密碼..." required />
+    </div>
+    <p id="password-error" class="form-error">需要填寫密碼</p>
+      <div style="display: flex; justify-content: center">
+      <button id="submit" class="w-80" type="submit">登入</button>
+      </div>
+    </form>
+  </div>
+<div>
+
+  <script type="module">
+      import sweetAlert from '/js/sweetAlert.js'
+      import login from '/js/login.js'
+
+      const submit = document.querySelector('#submit')
+      const form = document.querySelector('#loginForm')
+      const formErrors = document.querySelectorAll('.form-error')
+      const nameInput = document.querySelector('#name')
+      const passwordInput = document.querySelector('#password')
+      const inputError = document.querySelector('#name-error')
+      const passwordError = document.querySelector('#password-error')     
+
+
+  </script>

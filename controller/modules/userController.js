@@ -1,13 +1,52 @@
 
 const responseJSON = require('../../helpers/responseJSON')
+const bcrypt = require('bcrypt')
+const { User } = require('../../models')
 
 const userController = {
-  login: (req, res, next) => {
+  loginPage: (req, res, next) => {
     try {
-      res.send('login page')
+      res.render('loginPage', { page: 'login' })
     } catch (err) {
       console.error(err)
       res.status(500).json(responseJSON(false, 'GET', null, 'Fail to get login page', err))
+    }
+  },
+  postLogin: async (req, res, next) => {
+    try {
+      const { name, password } = req.body
+      if (!name || !password) throw new Error('Missing name or password')
+
+      // check user
+      const user = await User.findOne({
+        where: { name },
+        attributes: ['id', 'name', 'password'],
+        raw: true,
+      })
+      if (!user) throw new Error('使用者名稱不存在')
+
+      // check password
+      const isPassword = await bcrypt.compare(password, user.password)
+      if (!isPassword) throw new Error('使用者名稱或密碼錯誤')
+
+      // remove password
+      delete user.password
+
+      // set session
+      req.session.userId = user.id
+      res.redirect('/items')
+    } catch (err) {
+      console.error(err)
+      res.redirect('/users/login')
+    }
+  },
+  getLogout: async (req, res, next) => {
+    try {
+      await req.session.destroy()
+      res.redirect('/users/login')
+    } catch (err) {
+      console.error(err)
+      res.redirect('/users/login')
     }
   }
 }

@@ -3,6 +3,7 @@
   --primary-light: rgb(246, 139, 156);
   --primary-light2: rgb(252, 204, 212);
   --secondary: rgb(56, 148, 241);
+  --secondary-light: rgb(112, 183, 255);
   --light: rgb(240, 240, 240);
   --border: rgb(181, 181, 181);
   --grey: rgb(157, 157, 157);
@@ -25,6 +26,10 @@ a {
   text-decoration: none;
   color: var(--primary);
   padding: 2px;
+}
+
+i {
+  color: var(--primary);
 }
 
 .itemLink {
@@ -85,6 +90,18 @@ h4 {
   border-bottom: 3px solid var(--primary);
 }
 
+.nav-link.secondary {
+  color: var(--secondary);
+}
+
+.nav-link.secondary:hover {
+  color: var(--secondary-light);
+}
+
+.nav-link.secondary.current {
+  border-bottom: 3px solid var(--secondary);
+}
+
 .speech {
   display: flex;
   width: var(--min-width);
@@ -140,7 +157,6 @@ h4 {
 }
 
 /* */
-
 label {
   color: var(--primary);
   font-weight: bold;
@@ -396,6 +412,17 @@ textarea {
   gap: 5px;
   margin-top: 5px;
   margin-bottom: 15px;
+}
+
+.inputGroup-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+.inputGroup-row input {
+  flex: 1;
 }
 
 .inputGroup textarea {
@@ -711,6 +738,39 @@ button.secondary {
   gap: 5px;
   border-top: 3px solid var(--primary);
   padding-top: 15px;
+}
+
+/* loginPage */
+.loginPage {
+  max-width: var(--min-width);
+  margin-top: 20px;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 30px;
+  box-shadow: 1px 2px 4px var(--border);
+}
+
+.loginForm .resetInputGroup .inputContainer input {
+  height: 40px;
+  border: none;
+}
+
+.loginForm #submit {
+  margin-top: 20px;
+  height: 50px;
+}
+
+.form-error {
+  display: none;
+  color: var(--primary);
+  margin: 0;
+  margin-top: -10px;
 }
 
 /* sweet alert 2 */

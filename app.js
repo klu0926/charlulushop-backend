@@ -5,6 +5,8 @@ const routes = require('./routes')
 const methodOverride = require('method-override')
 const handlebarHelper = require('./helpers/handlebarHelper')
 const path = require('path')
+const session = require('express-session')
+const checkSessionAuth = require('./middleware/sessionAuth')
 
 if (process.env.ENV_ENV !== 'production') {
   require('dotenv').config()
@@ -17,9 +19,24 @@ app.engine(
     defaultLayout: 'main', extname: '.hbs', helpers: handlebarHelper,
   })
 )
-
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
+
+// session
+const MemoryStore = session.MemoryStore
+const memoryStore = new MemoryStore()
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: true,
+  store: memoryStore
+}))
+app.use(checkSessionAuth)
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  res.locals.isAuth = req.isAuthenticated
+  next()
+})
 
 // middleware
 app.use(express.static('public'))

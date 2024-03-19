@@ -6,16 +6,16 @@ const { resize } = require('../helpers/sharp.js')
 const itemApi = require('../controller/api/itemApi.js')
 const itemTagApi = require('../controller/api/itemTagApi.js')
 const tagApi = require('../controller/api/tagApi.js')
+const imageApi = require('../controller/api/imageApi.js')
 
 
 // -------------------- API --------------------- //
 // ITEMS
-// get all items
 router.get('/items/:itemId', itemApi.getItem)
 router.get('/items', itemApi.getItems)
 
-
-// get single item
+// IMAGES
+router.get('/images/:imageId', imageApi.getImage)
 
 // TAGS
 // get all tags
@@ -26,9 +26,6 @@ router.get('/items', itemApi.getItems)
 
 // admin edit order
 // admin delete order
-
-
-
 
 // Tags api
 router.get('/tags', tagApi.getTags)

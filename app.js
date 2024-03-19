@@ -7,10 +7,12 @@ const handlebarHelper = require('./helpers/handlebarHelper')
 const path = require('path')
 const session = require('express-session')
 const checkSessionAuth = require('./middleware/sessionAuth')
+const cors = require('cors')
 
 if (process.env.ENV_ENV !== 'production') {
   require('dotenv').config()
 }
+
 // view engine
 const { engine } = require('express-handlebars')
 app.engine(
@@ -21,6 +23,16 @@ app.engine(
 )
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
+
+// cors
+const corsOption = {
+  origin: [
+    'http://localhost:3001',
+  ],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}
+app.use(cors(corsOption))
 
 // session
 const MemoryStore = session.MemoryStore

@@ -3,15 +3,30 @@ const { upload } = require('../helpers/multer')
 const { resize } = require('../helpers/sharp.js')
 
 // api
+const itemApi = require('../controller/api/itemApi.js')
 const itemTagApi = require('../controller/api/itemTagApi.js')
 const tagApi = require('../controller/api/tagApi.js')
 
 
 // -------------------- API --------------------- //
-// items
+// ITEMS
+// get all items
+router.get('/items/:itemId', itemApi.getItem)
+router.get('/items', itemApi.getItems)
 
 
-// order
+// get single item
+
+// TAGS
+// get all tags
+
+// ORDER
+// buyer post order
+// buyer delete order
+
+// admin edit order
+// admin delete order
+
 
 
 

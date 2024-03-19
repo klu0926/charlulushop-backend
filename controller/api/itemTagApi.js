@@ -1,7 +1,7 @@
 const { Item_Tag, Item, Tag } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
 
-
+// Services
 async function findItemTag(itemTagId) {
   try {
     if (itemTagId === undefined) throw new Error('Missing itemId, tagId')
@@ -17,8 +17,6 @@ async function findItemTag(itemTagId) {
     throw err
   }
 }
-
-
 
 async function findAllItemTags() {
   try {

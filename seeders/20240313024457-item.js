@@ -5,7 +5,7 @@ const data = {
   description: '產品的介紹，希望大家可以多多買買，消費多多',
   price: 100,
 }
-const amount = 30
+const amount = 10
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

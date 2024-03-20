@@ -54,7 +54,9 @@ h4 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
+  margin: 5px 0px;
 }
 
 .color-primary {
@@ -68,16 +70,17 @@ h4 {
 /* navbar */
 .navbar {
   position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  min-height: 50px;
+  min-height: 42px;
   text-align: center;
-  gap: 30px;
   box-shadow: 0px 1px 6px 2px var(--shadow);
   background-color: white;
   z-index: 100;
+}
+
+.links {
+  display: flex;
+  gap: 20px;
 }
 
 .nav-link {
@@ -121,7 +124,7 @@ h4 {
   padding: 0px 10px;
   overflow: hidden;
   width: 100%;
-  max-width: 400px;
+  max-width: var(--max-content);
 }
 
 .speech .icon {
@@ -157,11 +160,9 @@ h4 {
 }
 /* search bar */
 .searchBar {
+  padding: 0px 6px;
   width: 100%;
   max-width: var(--max-content);
-  height: 30px;
-  border: 1px solid red;
-  margin: 4px 0px;
 }
 
 /* */
@@ -237,7 +238,7 @@ textarea {
   align-items: center;
   width: 100%;
   margin-top: 50px;
-  padding: 15px;
+  padding: 2px 5px;
 }
 
 /* All items page - tags */
@@ -531,18 +532,21 @@ button.secondary {
   width: 100%;
 }
 
-.itemsPageGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.itemsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
   gap: 5px;
   width: 100%;
   margin: 10px 0px;
 }
 
 .itemLink {
-  display: block;
+  display: inline-block;
   padding: 0;
-  width: 100%;
+  width: 46%;
+  margin-bottom: 6px;
 }
 
 .item {
@@ -550,7 +554,7 @@ button.secondary {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  width: var(--item);
+  width: 100%;
   align-items: start;
   border-radius: 5px;
   margin: auto;
@@ -762,7 +766,7 @@ button.secondary {
 
 /* loginPage */
 .loginPage {
-  width: 100%;
+  width: 350px;
   max-width: var(--max-content);
   margin-top: 20px;
 }
@@ -781,7 +785,8 @@ button.secondary {
 
 .loginForm #submit {
   margin-top: 20px;
-  height: 50px;
+  height: 40px;
+  width: 120px;
 }
 
 .form-error {
@@ -808,27 +813,23 @@ button.secondary {
   }
 }
 
-@media screen and (min-width: 400px) {
-  :root {
-    --item: 160px;
-  }
-  .itemsPageGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+@media screen and (min-width: 600px) {
+  .itemLink {
+    width: 30%;
   }
 }
 
 @media screen and (min-width: 800px) {
-  :root {
-    --item: 170px;
-  }
   #App {
     width: var(--mid-width);
   }
-  .itemsPageGrid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+  .itemsContainer {
+    gap: 15px;
   }
+  .itemLink {
+    width: 23%;
+  }
+
   .pictureGroup {
     position: relative;
     width: 160px;
@@ -843,18 +844,15 @@ button.secondary {
     margin: 5px auto;
     gap: 10px;
     padding: 0px 5px;
+    overflow: hidden;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  :root {
-    --item: 240px;
-  }
   #App {
     width: var(--max-width);
   }
-  .itemsPageGrid {
-    width: var(--max-width);
-    grid-template-columns: repeat(4, 1fr);
+  .itemLink {
+    width: 17%;
   }
 }

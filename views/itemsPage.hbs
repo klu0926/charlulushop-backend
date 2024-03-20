@@ -36,7 +36,10 @@
   </div>
  
   {{#if (checkLength items.length 0)}}
-  <div class="itemsPageGrid">
+
+  <!--RWD-->
+  <div class="RWD-container">
+  <div class="itemsContainer">
     {{#each items}}
     <a class="itemLink" href="/items/{{id}}">
       <div class="item flash {{#isSold amount}}sold{{/isSold}}">
@@ -54,6 +57,7 @@
       </div>
     </a>
     {{/each}}
+  </div>
   </div>
 </div>
 </div>

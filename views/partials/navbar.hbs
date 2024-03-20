@@ -1,5 +1,7 @@
 <nav class="navbar">
-  <a href="/items/add" class='nav-link {{isCurrentPage page 'add'}}'>新增</a>
+  <div class="RWD-container">
+  <div class="links">
+ <a href="/items/add" class='nav-link {{isCurrentPage page 'add'}}'>新增</a>
   <a href="/items" class='nav-link {{isCurrentPage page 'items'}}'>全部</a>
   <a href="/tags/add" class='nav-link {{isCurrentPage page 'tags'}}'>標籤</a>
 
@@ -8,6 +10,8 @@
   {{else}}
      <a href="/users/login" class='nav-link secondary {{isCurrentPage page 'login'}}'>登入</a>
   {{/if}}
+    </div>
+    </div>
 </nav>
 
 

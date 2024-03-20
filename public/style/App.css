@@ -238,7 +238,7 @@ textarea {
   align-items: center;
   width: 100%;
   margin-top: 50px;
-  padding: 2px 5px;
+  padding: 15px;
 }
 
 /* All items page - tags */
@@ -726,12 +726,12 @@ button.secondary {
 }
 .pictureGroup {
   position: relative;
-  width: 49%;
+  width: 48%;
   margin-bottom: 5px;
 }
 .pictureGroup img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1/1;
   background-size: cover;
   background-position: center;
 }

@@ -114,7 +114,6 @@ h4 {
 
 .speech {
   display: flex;
-  width: var(--min-width);
   justify-content: start;
   align-items: center;
   font-size: 0.8rem;
@@ -122,10 +121,11 @@ h4 {
   background-color: white;
   border: 1px solid var(--border);
   border-radius: 4px;
-  margin: 15px auto;
-  padding: 0px;
+  margin: 10px auto;
+  padding: 0px 10px;
   overflow: hidden;
-  max-width: var(--max-content);
+  width: 100%;
+  max-width: 400px;
 }
 
 .speech .icon {
@@ -240,7 +240,7 @@ textarea {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 70px;
+  margin-top: 50px;
   padding: 15px;
 }
 
@@ -621,6 +621,10 @@ button.secondary {
   border-radius: 4px;
 }
 
+.item.sold .itemPrice::before {
+  background-color: var(--dark);
+}
+
 .itemStock {
   font-size: 0.9rem;
 }
@@ -632,6 +636,10 @@ button.secondary {
 
 .item.sold .itemName {
   color: var(--dark);
+}
+
+.item.sold .itemImage {
+  filter: grayscale(70%);
 }
 
 /* edit item*/
@@ -842,7 +850,7 @@ button.secondary {
   }
   .itemsPageGrid {
     width: var(--max-width);
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 15px;
   }
 }

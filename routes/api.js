@@ -19,6 +19,7 @@ router.get('/images/:imageId', imageApi.getImage)
 
 // TAGS
 // get all tags
+router.get('/tags', tagApi.getTags)
 
 // ORDER
 // buyer post order

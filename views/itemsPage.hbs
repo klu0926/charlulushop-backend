@@ -45,7 +45,7 @@
         {{/isSold}}
         <img class="itemImage" src="/images/{{cover.id}}" alt="{{name}}" loading="lazy" />
         <div class="itemInfoDiv">
-          <span class="itemName"> {{name}} </span>
+          <p class="itemName"> {{name}} </p>
           <div class="item-price-stock">
             <span class="itemPrice">{{price}} </span>
             <span class="itemStock">{{#isSold amount}}售完{{else}}有貨{{/isSold}}</span>

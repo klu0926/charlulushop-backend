@@ -14,6 +14,7 @@
   --mid-width: 750px;
   --max-width: 1100px;
   --max-content: 500px;
+  --item: 170px;
 }
 
 * {
@@ -549,7 +550,7 @@ button.secondary {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  width: 100%;
+  width: var(--item);
   align-items: start;
   border-radius: 5px;
   margin: auto;
@@ -579,18 +580,12 @@ button.secondary {
 .itemInfoDiv {
   width: 100%;
   padding: 5px;
-  bottom: 0;
-  left: 0;
 }
 
 .itemName {
-  display: inline-block;
   text-overflow: ellipsis;
   overflow: hidden;
-  flex: 1;
   white-space: nowrap;
-  font-size: 0.9rem;
-  color: black;
 }
 
 .itemImage {
@@ -814,6 +809,9 @@ button.secondary {
 }
 
 @media screen and (min-width: 400px) {
+  :root {
+    --item: 160px;
+  }
   .itemsPageGrid {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
@@ -821,6 +819,9 @@ button.secondary {
 }
 
 @media screen and (min-width: 800px) {
+  :root {
+    --item: 170px;
+  }
   #App {
     width: var(--mid-width);
   }
@@ -846,12 +847,14 @@ button.secondary {
 }
 
 @media screen and (min-width: 1200px) {
+  :root {
+    --item: 240px;
+  }
   #App {
     width: var(--max-width);
   }
   .itemsPageGrid {
     width: var(--max-width);
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(4, 1fr);
   }
 }

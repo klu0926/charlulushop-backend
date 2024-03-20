@@ -10,9 +10,10 @@
   --dark: rgb(120, 120, 120);
   --shadow: rgba(0, 0, 0, 0.1);
 
-  --min-width: 320px;
+  --min-width: 100%;
   --mid-width: 750px;
   --max-width: 1100px;
+  --max-content: 500px;
 }
 
 * {
@@ -49,6 +50,15 @@ h4 {
   flex-direction: column;
   align-items: center;
   padding-bottom: 100px;
+  width: var(--min-width);
+  margin: 0 auto;
+}
+
+.RWD-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .color-primary {
@@ -115,6 +125,7 @@ h4 {
   margin: 15px auto;
   padding: 0px;
   overflow: hidden;
+  max-width: var(--max-content);
 }
 
 .speech .icon {
@@ -150,7 +161,8 @@ h4 {
 }
 /* search bar */
 .searchBar {
-  width: var(--min-width);
+  width: 100%;
+  max-width: var(--max-content);
   height: 30px;
   border: 1px solid red;
   margin: 4px 0px;
@@ -181,7 +193,7 @@ input:not([type="file"]):not([type="checkbox"]):not(.resetInput) {
   gap: 10px;
   margin: 10px 0px;
   width: 100%;
-  max-width: var(--min-width);
+  max-width: var(--max-content);
 }
 
 .resetInputGroup .inputContainer {
@@ -224,22 +236,26 @@ textarea {
 }
 
 .page {
-  min-width: var(--min-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   margin-top: 70px;
+  padding: 15px;
 }
 
 /* All items page - tags */
 .tagsSlider {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: start;
   align-items: center;
-  width: var(--min-width);
-  height: 40px;
+  width: 100%;
   margin: 5px auto;
   gap: 10px;
   padding: 0px 5px;
+  overflow-x: scroll;
   white-space: nowrap;
-  overflow-x: auto;
 }
 
 .tag-link {
@@ -368,12 +384,14 @@ textarea {
 
 /* itemPage */
 .itemPage {
-  max-width: var(--min-width);
+  width: 100%;
+  max-width: var(--max-content);
 }
 
 /* add item Page*/
 .addItemPage {
-  max-width: var(--min-width);
+  width: 100%;
+  max-width: var(--max-content);
 }
 
 .imageDisplay {
@@ -514,13 +532,13 @@ button.secondary {
   flex-direction: column;
   align-items: center;
   margin: 0px auto;
-  width: var(--min-width);
+  width: 100%;
 }
 
 .itemsPageGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  gap: 5px;
   width: 100%;
   margin: 10px 0px;
 }
@@ -530,7 +548,7 @@ button.secondary {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  min-width: 100px;
+  width: 100%;
   align-items: start;
   border-radius: 5px;
   margin: auto;
@@ -576,7 +594,6 @@ button.secondary {
 
 .itemImage {
   width: 100%;
-  height: 100%;
   background-size: cover;
   background-position: center;
 }
@@ -690,24 +707,23 @@ button.secondary {
 }
 
 .picturesDisplayGroup {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: wrap;
   margin-bottom: 10px;
   margin-top: 10px;
+  gap: 2%;
+  width: 100%;
 }
 .pictureGroup {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  width: 49%;
+  margin-bottom: 5px;
 }
 .pictureGroup img {
   width: 100%;
   height: 100%;
-  max-height: 200px;
   background-size: cover;
   background-position: center;
 }
@@ -726,7 +742,8 @@ button.secondary {
 
 /* add tags page */
 .addTagsPage {
-  max-width: var(--min-width);
+  width: 100%;
+  max-width: var(--max-content);
 }
 
 .tagsEditContainer {
@@ -741,11 +758,13 @@ button.secondary {
 
 /* loginPage */
 .loginPage {
-  max-width: var(--min-width);
+  width: 100%;
+  max-width: var(--max-content);
   margin-top: 20px;
 }
 
 .loginForm {
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -785,31 +804,45 @@ button.secondary {
   }
 }
 
-@media screen and (min-width: 800px) {
-  .tagsSlider {
-    width: var(--mid-width);
+@media screen and (min-width: 400px) {
+  .itemsPageGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
-  .itemsPage {
+}
+
+@media screen and (min-width: 800px) {
+  #App {
     width: var(--mid-width);
   }
   .itemsPageGrid {
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    gap: 10px;
+  }
+  .pictureGroup {
+    position: relative;
+    width: 160px;
+    height: 160px;
+  }
+  .tagsSlider {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    margin: 5px auto;
+    gap: 10px;
+    padding: 0px 5px;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  .tagsSlider {
-    width: var(--max-width);
-    height: auto;
-    flex-wrap: wrap;
-  }
-  .itemsPage {
+  #App {
     width: var(--max-width);
   }
   .itemsPageGrid {
     width: var(--max-width);
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
   }
 }

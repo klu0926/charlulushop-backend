@@ -33,11 +33,6 @@ i {
   color: var(--primary);
 }
 
-.itemLink {
-  display: block;
-  padding: 0;
-}
-
 h1,
 h2,
 h3,
@@ -541,6 +536,12 @@ button.secondary {
   gap: 5px;
   width: 100%;
   margin: 10px 0px;
+}
+
+.itemLink {
+  display: block;
+  padding: 0;
+  width: 100%;
 }
 
 .item {

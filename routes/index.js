@@ -5,6 +5,7 @@ const { resize } = require('../helpers/sharp.js')
 const itemController = require('../controller/modules/itemController.js')
 const imageController = require('../controller/modules/imageController')
 const userController = require('../controller/modules/userController.js')
+const orderController = require('../controller/modules/orderController.js')
 // api
 const apiRouter = require('./api.js')
 // isAuth
@@ -37,6 +38,9 @@ router.get('/tags/add', isAuth, (req, res) => {
 router.get('/users/login', userController.loginPage)
 router.get('/users/logout', userController.getLogout)
 router.post('/users/login', userController.postLogin)
+
+// Order
+router.get('/orders', isAuth, orderController.getOrders)
 
 // API
 router.use('/api', apiRouter)

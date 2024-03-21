@@ -1,0 +1,120 @@
+<div class="page">
+  <!--speech-->
+  <div class="speech">
+    <img class="icon" src="/images/idea.png" alt="icon" />
+    <div>
+      <p class="info">點選右邊的選項可以調整<span> 訂單狀態</span></p>
+      <p class="info"><span>取消交易後無法在復原</span>需要再次下單</p>
+    </div>
+  </div>
+      <div class="orderPage">
+        <div class="orderPage-head">
+          <span>訂單總數: {{orders.length}}</span>
+          <span>總金額: {{totalPrice}}</span>
+        </div>
+        <div class="ordersContainer">
+      {{#each orders}}
+      <div class="order">
+        <!--items-->
+        <div class="itemsRow">
+          {{#each items}}
+          <div class="orderItem">
+            <img class="orderItem-img" src='/api/images/{{cover.id}}' alt="cover">
+            <div class="orderItem-info">
+              <p>{{name}}</p>
+              <p>${{price}}</p>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+
+        <!--order info-->
+        <div class="infoRow">
+          <div class="infoLine">
+          <p><span class="orderId">orderId: {{id}}</span></p>
+           <p><span class="orderInfo">件數:</span> {{items.length}}</p>
+          <p><span class="orderPrice">總價: {{price}}</span></p>
+            </div>
+            <p><span class="orderInfo">買家:</span> {{buyerName}}</p>
+            <p><span class="orderInfo">信箱:</span> {{buyerEmail}}</p>
+            <p><span class="orderInfo">IG:</span> {{buyerIG}}</p>
+
+        {{#if (isSame status '取消訂單')}}
+          <p class="cancel-status">訂單已取消，需要手動加回物件</p>
+          <p class="cancel-status">不會影響訂單總數與總金額</p>
+        {{else}}
+           <select class="status-select" name="status"  data-orderid={{id}}>
+          <option value="等待聯繫" {{#if (isSame status '等待聯繫')}}selected{{/if}}>等待聯繫</option>
+          <option value="備貨" {{#if (isSame status '備貨')}}selected{{/if}}>備貨</option>
+          <option value="交易完成" {{#if (isSame status '交易完成')}}selected{{/if}}>交易完成</option>
+        </select>
+        <button class="cancel" type="button" data-orderid={{id}}>取消訂單</button>   
+        {{/if}}
+        </div>
+      </div>
+      {{/each}}
+      </div>
+    </div>
+</div>
+
+
+<script type="module">
+  import sweetAlert from '/js/sweetAlert.js'
+  const selectors = document.querySelectorAll('.status-select')
+  const cancels = document.querySelectorAll('.cancel')
+
+  async function fetchPostStatus(orderId, status){
+    try {
+    if (!status || orderId === undefined) throw new Error('Missing Status or orderId')
+    
+    // fetch POST
+    const url = '/api/orders/status'
+    const body = { 
+      orderId,
+       status,
+    }
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    if (!response.ok) throw new Error(response.statusText)
+    const json = await response.json()
+    if (!json.ok) throw new Error(json.err)
+    // completed
+    await sweetAlert.success('修改成功', `成功修改訂單狀態為 [${status}]`)
+    }catch(err){
+      console.error(err)
+      await sweetAlert.error('修改失敗', err.message)
+    }
+  }
+
+  function handleSelectorChange(e){
+    const status = e.target.value.trim()
+    const orderId = e.target.dataset.orderid
+    fetchPostStatus(orderId,status)
+  }
+
+  async function handleCancelClick(e){
+    const status = '取消訂單'
+    const orderId = e.target.dataset.orderid
+    const result = await sweetAlert.confirm('取消訂單!?', '取消訂單後無法恢復訂單 (資料會保留)')
+    if (result.isConfirmed){
+      await fetchPostStatus(orderId, status)
+      window.location.reload()
+    }
+  }
+
+  // Action
+  selectors.forEach(s => {
+  s.onchange = handleSelectorChange
+  })
+
+  cancels.forEach(c => {
+    c.onclick = handleCancelClick
+  })
+
+
+</script>

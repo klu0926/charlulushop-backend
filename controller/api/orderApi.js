@@ -91,8 +91,7 @@ const services = {
 
 
       // START TRANSACTIONS
-      const result = await sequelize.transaction(async (t) => {
-
+      await sequelize.transaction(async (t) => {
         const orderItems = await Item.findAll({
           where: {
             id: {
@@ -120,10 +119,28 @@ const services = {
           buyerName: buyerName,
           buyerEmail: buyerEmail,
           buyerIG: buyerIG,
-          price: price
+          price: price,
+          status: '等待聯繫'
         }, { transaction: t });
       });
       console.log('Transaction successful');
+      return true
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  },
+  changeOrderStatus: async (orderId, status) => {
+    try {
+      if (!orderId || !status) throw new Error('Missing orderId and status')
+      if (typeof status !== 'string') throw new Error('status needs to be typeof string')
+
+      const order = await Order.findOne({ where: { id: orderId } })
+
+      if (!order) throw new Error(`Can not find order with id ${orderId}`)
+
+      order.status = status
+      await order.save()
       return true
     } catch (err) {
       console.error(err)
@@ -150,9 +167,6 @@ const orderApi = {
     try {
       const { itemsIdsString, buyerName, buyerEmail, buyerIG, price } = req.body
 
-      console.log('post order body:', req.body)
-
-
       if (!itemsIdsString) throw new Error('req.body does not have itemsIdsString')
 
       const itemsIds = JSON.parse(itemsIdsString)
@@ -164,6 +178,26 @@ const orderApi = {
     } catch (err) {
       console.error(err)
       res.status(500).json(responseJSON(false, 'POST', null, 'Fail to post order', err))
+    }
+  },
+  // POST
+  // body: status
+  changeOrderStatus: async (req, res, next) => {
+    try {
+      const { orderId, status } = req.body
+
+
+      console.log('body', req.body)
+      console.log('orderId', orderId)
+      console.log('status', status)
+
+
+      await services.changeOrderStatus(orderId, status)
+      res.status(200).json(responseJSON(true, 'POST', null, 'Change order status completed'))
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'POST', null, 'Fail to change order status', err))
+
     }
   }
 }

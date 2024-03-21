@@ -796,6 +796,112 @@ button.secondary {
   margin-top: -10px;
 }
 
+/* order Page */
+.orderPage {
+  width: 100%;
+  max-width: 600px;
+}
+
+.orderPage-head {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px 0px;
+}
+
+.orderPage-head span {
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+.orderContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.order {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  margin-bottom: 25px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 2px 3px 5px var(--shadow);
+}
+
+.itemsRow {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  overflow: hidden;
+  gap: 10px;
+}
+
+.infoRow {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.infoLine {
+  display: flex;
+  justify-content: start;
+  gap: 15px;
+  border-bottom: 2.5px dashed var(--border);
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.orderId {
+  color: var(--secondary);
+}
+
+.orderItem {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  border: 1px solid var(--grey);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.orderItem-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.orderItem .orderItem-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+}
+
+.order .orderInfo {
+  color: var(--grey);
+}
+
+.order .orderPrice {
+  color: var(--primary);
+}
+
+.status-select {
+  height: 30px;
+  margin: 10px 0px;
+  width: 120px;
+}
+
+.order .cancel {
+  font-size: 0.9rem;
+  width: 120px;
+}
+
+.cancel-status {
+  font-size: 0.9rem;
+  color: red;
+}
+
 /* sweet alert 2 */
 .swal-title {
   font-size: 1.5rem;

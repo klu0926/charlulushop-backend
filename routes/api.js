@@ -25,7 +25,9 @@ router.get('/tags', tagApi.getTags)
 
 // ORDER
 router.get('/orders/buyer', orderApi.getOrdersForBuyer)
+router.post('/orders/status', orderApi.changeOrderStatus)
 router.post('/orders', orderApi.postOrder)
+
 
 // buyer post order
 // buyer delete order

@@ -7,10 +7,12 @@ const itemApi = require('../controller/api/itemApi.js')
 const itemTagApi = require('../controller/api/itemTagApi.js')
 const tagApi = require('../controller/api/tagApi.js')
 const imageApi = require('../controller/api/imageApi.js')
+const orderApi = require('../controller/api/orderApi.js')
 
 
 // -------------------- API --------------------- //
 // ITEMS
+router.get('/items/cart/:itemsIdString', itemApi.getCartItems)
 router.get('/items/:itemId', itemApi.getItem)
 router.get('/items', itemApi.getItems)
 
@@ -22,6 +24,9 @@ router.get('/images/:imageId', imageApi.getImage)
 router.get('/tags', tagApi.getTags)
 
 // ORDER
+router.get('/orders/buyer', orderApi.getOrdersForBuyer)
+router.post('/orders', orderApi.postOrder)
+
 // buyer post order
 // buyer delete order
 

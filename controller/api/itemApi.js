@@ -73,7 +73,6 @@ async function getItems(query) {
           model: Image,
           as: 'images',
           attributes: ['id', 'isCover'],
-
         },
         {
           model: Tag,
@@ -106,6 +105,60 @@ async function getItems(query) {
   }
 }
 
+async function getCartItems(itemIds) {
+  try {
+    if (itemIds === undefined) throw new Error('itemIds is undefined')
+    if (typeof itemIds !== 'object') throw new Error('itemIds is not an array')
+
+    const items = await Item.findAll({
+      where: {
+        id: {
+          [Op.in]: itemIds
+        }
+      },
+      attributes: {
+        exclude: ['createdAt', 'updatedAt'],
+      },
+      include: [
+        {
+          model: Image,
+          as: 'images',
+          attributes: ['id', 'isCover'],
+        },
+        {
+          model: Tag,
+          as: 'tags',
+          attributes: ['id', 'name'],
+          through: {
+            attributes: []
+          },
+          raw: true
+        }
+      ],
+      order: [['id', 'DESC']],
+      distinct: true,
+    })
+    if (!items) throw new Error('Can not find item table')
+
+    // create .cover for easy access
+    const itemsData = items.map(i => {
+      const data = i.toJSON()
+      data.images.forEach(image => {
+        if (image.isCover) data.cover = image
+      })
+      return data
+    })
+    // response
+    return itemsData
+  } catch (err) {
+    throw err
+  }
+}
+
+
+
+
+
 
 
 // API
@@ -130,12 +183,26 @@ const itemApi = {
       console.error(err)
       res.status(500).json(responseJSON(false, 'GET Items', null, 'Fail to get Items', err))
     }
+  },
+  getCartItems: async (req, res, next) => {
+    try {
+      const itemsIdString = req.params.itemsIdString
+      if (!itemsIdString) throw new Error('missing params itemsIdString')
+      const itemsData = await getCartItems(JSON.parse(itemsIdString))
+
+      res.status(200).json(responseJSON(true, 'GET Cart Items', itemsData, 'Get Cart Items completed', null))
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'GET Cart Items', null, 'Fail to get Cart Items', err))
+
+    }
   }
 }
 
 const services = {
   getItems,
-  getItem
+  getItem,
+  getCartItems
 }
 
 

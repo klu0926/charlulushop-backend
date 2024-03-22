@@ -28,7 +28,7 @@ app.set('views', path.join(__dirname, 'views'))
 const corsOption = {
   origin: [
     'http://localhost:3001',
-    'https://klu0926.github.io/'
+    'https://klu0926.github.io',
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   allowedHeaders: ['Content-Type', 'Authorization'],

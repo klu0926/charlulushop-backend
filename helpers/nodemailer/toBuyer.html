@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>訂單紀錄</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.4; /* Reduced line height */
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+        color: black;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 10px auto; /* Reduced margin */
+        padding: 15px; /* Reduced padding */
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        font-size: 22px; /* Reduced font size */
+        color: #000; /* Black text color */
+        margin-bottom: 15px; /* Increased margin */
+      }
+
+      p {
+        margin-bottom: 8px; /* Reduced margin */
+        color: #000; /* Black text color */
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+      }
+
+      ul li {
+        margin-bottom: 3px; /* Reduced margin */
+        list-style-position: inside;
+        color: #000; /* Black text color */
+      }
+
+      strong {
+        color: #000; /* Black text color */
+      }
+
+      a {
+        color: #007bff; /* Blue link color */
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .contact-info {
+        margin-top: 15px; /* Reduced margin */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>夏洛特的『斷。捨。離』感謝您的訂單！</h1>
+      <p>您的訂單編號為：<strong>{{orderId}}</strong></p>
+      <h3>您的訂單項目：</h3>
+      <p>
+        <strong>{{itemsCount}}</strong>件商品，總計<strong>{{price}} </strong>元
+      </p>
+      <ul>
+        {{itemsRecord}}
+      </ul>
+      <h3>買家資訊：</h3>
+      <p>姓名：{{buyerName}}</p>
+      <p>電子郵件：{{buyerEmail}}</p>
+      <p>Instagram：{{buyerIG}}</p>
+      <h3>下一步：</h3>
+      <p>請聯繫夏洛特以確認訂單，我們將立即處理您的訂單。</p>
+      <p>
+        您可以在以下連結檢視您的訂單狀態：<a
+          target="_blank"
+          href="https://klu0926.github.io/charlulushop-react/#/orders"
+          >查詢訂單</a
+        >
+      </p>
+      <p>感謝您的訂單！</p>
+      <br />
+      <h3 class="contact-info">賣家聯絡資訊：</h3>
+      <p>
+        夏洛特Instagram：<a
+          href="https://www.instagram.com/charlotte_journalday/"
+          target="_blank"
+          >charlotte_journalday</a
+        >
+      </p>
+      <p>
+        夏洛特Youtube：<a
+          href="https://www.youtube.com/@CharluluStory"
+          target="_blank"
+          >Charlulu Story</a
+        >
+      </p>
+    </div>
+  </body>
+</html>

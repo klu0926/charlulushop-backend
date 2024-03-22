@@ -2,6 +2,7 @@ const { Item_Tag, Item, Tag, Order, sequelize } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
 const { getCartItems } = require('./itemApi.js').services
 const { Op, where } = require('sequelize')
+const sendEmail = require('../../helpers/nodemailer/nodemailer.js')
 
 // Services
 const services = {
@@ -27,6 +28,25 @@ const services = {
         const itemsIds = JSON.parse(order.itemsIds)
         order.items = await getCartItems(itemsIds)
       }
+
+      return ordersData
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  },
+  getOrderWithId: async (id) => {
+    try {
+      const order = await Order.findOne({
+        where: { id },
+        order: [['id', 'DESC']],
+      })
+      if (!order) throw new Error('can not find order table')
+      const ordersData = order.toJSON()
+
+      // find items
+      const itemsIds = JSON.parse(ordersData.itemsIds)
+      ordersData.items = await getCartItems(itemsIds)
 
       return ordersData
     } catch (err) {
@@ -65,7 +85,6 @@ const services = {
       throw err
     }
   },
-
   postOrder: async (itemsIds, buyerName, buyerEmail, buyerIG, price) => {
     try {
       // check validate
@@ -91,6 +110,7 @@ const services = {
 
 
       // START TRANSACTIONS
+      let newOrder = null
       await sequelize.transaction(async (t) => {
         const orderItems = await Item.findAll({
           where: {
@@ -114,7 +134,7 @@ const services = {
         }
 
         // Create order record
-        await Order.create({
+        newOrder = await Order.create({
           itemsIds: JSON.stringify(itemsIds),
           buyerName: buyerName,
           buyerEmail: buyerEmail,
@@ -124,7 +144,11 @@ const services = {
         }, { transaction: t });
       });
       console.log('Transaction successful');
-      return true
+
+      // get order data
+      const orderData = await services.getOrderWithId(newOrder.id)
+
+      return orderData
     } catch (err) {
       console.error(err)
       throw err
@@ -172,7 +196,12 @@ const orderApi = {
       const itemsIds = JSON.parse(itemsIdsString)
       if (!Array.isArray(itemsIds)) throw new Error('itemsIdsString can not parse to array')
 
-      await services.postOrder(itemsIds, buyerName, buyerEmail, buyerIG, price)
+      const orderData = await services.postOrder(itemsIds, buyerName, buyerEmail, buyerIG, price)
+
+      // send email
+      console.log('sending email')
+      sendEmail(orderData)
+
       res.status(200).json(responseJSON(true, 'POST', null, 'Post order completed'))
 
     } catch (err) {
@@ -185,12 +214,6 @@ const orderApi = {
   changeOrderStatus: async (req, res, next) => {
     try {
       const { orderId, status } = req.body
-
-
-      console.log('body', req.body)
-      console.log('orderId', orderId)
-      console.log('status', status)
-
 
       await services.changeOrderStatus(orderId, status)
       res.status(200).json(responseJSON(true, 'POST', null, 'Change order status completed'))

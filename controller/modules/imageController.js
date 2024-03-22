@@ -15,7 +15,7 @@ const imageController = {
       res.send(image.imageData)
     } catch (err) {
       console.error(err)
-      res.status(500).json(responseJSON(false, 'GET', null, err))
+      res.status(500).json(responseJSON(false, 'GET', null, 'Fail to get image', err))
     }
   },
   // params: imageId

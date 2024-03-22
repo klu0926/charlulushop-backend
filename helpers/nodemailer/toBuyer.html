@@ -13,6 +13,13 @@
         background-color: #f8f8f8;
         color: black;
       }
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: black;
+        margin: 10px 0px;
+      }
 
       .container {
         max-width: 600px;
@@ -66,12 +73,12 @@
   </head>
   <body>
     <div class="container">
-      <h1>夏洛特的『斷。捨。離』感謝您的訂單！</h1>
-      <p>您的訂單編號為：<strong>{{orderId}}</strong></p>
-      <h3>您的訂單項目：</h3>
+      <h1>夏洛特的『斷。捨。離』成功下單！</h1>
+      <p>訂單編號為：<strong>{{orderId}}</strong></p>
+      <h3>訂單項目：</h3>
       <p>
         <strong>{{itemsCount}}</strong>件商品，總計<strong>{{price}} </strong>元
-      </p>
+      ，運費未計</p>
       <ul>
         {{itemsRecord}}
       </ul>
@@ -88,8 +95,6 @@
           >查詢訂單</a
         >
       </p>
-      <p>感謝您的訂單！</p>
-      <br />
       <h3 class="contact-info">賣家聯絡資訊：</h3>
       <p>
         夏洛特Instagram：<a

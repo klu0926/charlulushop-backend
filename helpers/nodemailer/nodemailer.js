@@ -6,8 +6,6 @@ const path = require('path')
 // order: (same as order record)
 
 async function sendEmail(order) {
-
-  console.log('order-----', order)
   try {
     if (!order) throw new Error('sendEmail missing order record')
 
@@ -24,15 +22,11 @@ async function sendEmail(order) {
     // email content
     const toBuyerSubject = '夏洛特的「斷。捨。離」感謝您的訂單！'
     const toSellerSubject = `${order.buyerName} 在「斷。捨。離」下單了，總共${order.price}元～！`
-    const toDeveloperSubject = toSellerSubject
-
+    const toDeveloperSubject = `${order.buyerName} 在「斷。捨。離」下單了，總共${order.price}元～！`
 
     // HTML template
     const htmlFilePath = path.join(__dirname, 'toBuyer.html')
     let toBuyerHtmlString = await fs.readFile(htmlFilePath, 'utf8')
-    let toSellerHtmlString = null
-    let toDeveloperHtmlString = null
-
 
     // Buyer HTML content edit
     if (!toBuyerHtmlString) throw new Error('Buyer html fail to read file')
@@ -46,6 +40,10 @@ async function sendEmail(order) {
     toBuyerHtmlString = toBuyerHtmlString.replace('{{buyerName}}', order.buyerName)
     toBuyerHtmlString = toBuyerHtmlString.replace('{{buyerEmail}}', order.buyerEmail)
     toBuyerHtmlString = toBuyerHtmlString.replace('{{buyerIG}}', order.buyerIG)
+
+    // developer and seller 
+    let toSellerHtmlString = toBuyerHtmlString
+    let toDeveloperHtmlString = toBuyerHtmlString
 
     // transporter
     const transporter = nodemailer.createTransport({
@@ -79,11 +77,19 @@ async function sendEmail(order) {
     }
 
     // send mail
-    const info = await transporter.sendMail(toBuyer);
-    //const developerInfo = await transporter.sendMail(toDeveloper);
-    // const sellerInfo = await transporter.sendMail(toSeller);
-    console.log('Email response:', info.response)
-    console.log('Email info:', info.response)
+    const buyerInfo = await transporter.sendMail(toBuyer);
+    const developerInfo = await transporter.sendMail(toDeveloper);
+    const sellerInfo = await transporter.sendMail(toSeller);
+
+    console.log('Buyer Email response:', buyerInfo.response)
+    console.log('Buyer Email envelope:', buyerInfo.envelope)
+    console.log('--------')
+    console.log('Developer Email response:', developerInfo.response)
+    console.log('Developer Email envelope:', developerInfo.envelope)
+    console.log('--------')
+    console.log('sellerInfo Email response:', sellerInfo.response)
+    console.log('sellerInfo Email envelope:', sellerInfo.envelope)
+    console.log('--------')
     console.log('Email done!')
   } catch (err) {
     console.error('Error sending email:', err);

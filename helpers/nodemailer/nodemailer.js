@@ -34,9 +34,14 @@ async function sendEmail(order) {
     toBuyerHtmlString = toBuyerHtmlString.replace('{{itemsCount}}', order.items.length)
     toBuyerHtmlString = toBuyerHtmlString.replace('{{price}}', order.price)
     records = order.items.map(item => {
-      return `<li><strong>${item.name}</string> <span>${item.price}</span></li>`
+      return `
+      <tr>
+      <td>${item.name}</td>
+      <td>${item.price}</td>
+      </tr>
+      `
     })
-    toBuyerHtmlString = toBuyerHtmlString.replace('{{itemsRecord}}', records)
+    toBuyerHtmlString = toBuyerHtmlString.replace('{{itemsRecord}}',records.join(''))
     toBuyerHtmlString = toBuyerHtmlString.replace('{{buyerName}}', order.buyerName)
     toBuyerHtmlString = toBuyerHtmlString.replace('{{buyerEmail}}', order.buyerEmail)
     toBuyerHtmlString = toBuyerHtmlString.replace('{{buyerIG}}', order.buyerIG)
@@ -81,14 +86,17 @@ async function sendEmail(order) {
     const developerInfo = await transporter.sendMail(toDeveloper);
     const sellerInfo = await transporter.sendMail(toSeller);
 
-    console.log('Buyer Email response:', buyerInfo.response)
-    console.log('Buyer Email envelope:', buyerInfo.envelope)
+    console.log('Buyer')
+    console.log('response:', buyerInfo.response)
+    console.log('envelope:', buyerInfo.envelope)
     console.log('--------')
-    console.log('Developer Email response:', developerInfo.response)
-    console.log('Developer Email envelope:', developerInfo.envelope)
+    console.log('Developer')
+    console.log('response:', developerInfo.response)
+    console.log('envelope:', developerInfo.envelope)
     console.log('--------')
-    console.log('sellerInfo Email response:', sellerInfo.response)
-    console.log('sellerInfo Email envelope:', sellerInfo.envelope)
+    console.log('Seller')
+    console.log('response:', sellerInfo.response)
+    console.log('envelope:', sellerInfo.envelope)
     console.log('--------')
     console.log('Email done!')
   } catch (err) {

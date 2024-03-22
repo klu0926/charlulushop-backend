@@ -7,7 +7,7 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        line-height: 1.4; /* Reduced line height */
+        line-height: 1.4;
         margin: 0;
         padding: 0;
         background-color: #f8f8f8;
@@ -17,48 +17,48 @@
       h2,
       h3,
       h4 {
-        color: black;
+        color: black !important;
         margin: 10px 0px;
       }
 
       .container {
         max-width: 600px;
-        margin: 10px auto; /* Reduced margin */
-        padding: 15px; /* Reduced padding */
+        margin: 10px auto;
+        padding: 15px;
         background-color: #fff;
         border-radius: 5px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       }
 
       h1 {
-        font-size: 22px; /* Reduced font size */
-        color: #000; /* Black text color */
-        margin-bottom: 15px; /* Increased margin */
+        font-size: 22px;
+        color: #000;
+        margin-bottom: 7px;
       }
 
       p {
-        margin-bottom: 8px; /* Reduced margin */
-        color: #000; /* Black text color */
+        margin-bottom: 2px;
+        color: #000;
       }
 
-      ul {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
+      table {
+        width: 50%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        border: 2px solid #dddddd;
       }
-
-      ul li {
-        margin-bottom: 3px; /* Reduced margin */
-        list-style-position: inside;
-        color: #000; /* Black text color */
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 10px;
       }
-
-      strong {
-        color: #000; /* Black text color */
+      th {
+        background-color: #f2f2f2;
       }
 
       a {
-        color: #007bff; /* Blue link color */
+        color: #ff2f78;
         text-decoration: none;
       }
 
@@ -67,7 +67,7 @@
       }
 
       .contact-info {
-        margin-top: 15px; /* Reduced margin */
+        margin-top: 10px;
       }
     </style>
   </head>
@@ -77,11 +77,17 @@
       <p>訂單編號為：<strong>{{orderId}}</strong></p>
       <h3>訂單項目：</h3>
       <p>
-        <strong>{{itemsCount}}</strong>件商品，總計<strong>{{price}} </strong>元
-      ，運費未計</p>
-      <ul>
+        <strong>{{itemsCount}}</strong>件商品，總計<strong>{{price}} </strong
+        >元，運費未計
+      </p>
+      <table>
+        <tr>
+          <th>商品</th>
+          <th>價錢</th>
+        </tr>
         {{itemsRecord}}
-      </ul>
+      </table>
+
       <h3>買家資訊：</h3>
       <p>姓名：{{buyerName}}</p>
       <p>電子郵件：{{buyerEmail}}</p>

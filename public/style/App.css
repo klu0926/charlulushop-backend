@@ -23,6 +23,10 @@
   box-sizing: border-box;
 }
 
+p {
+  font-size: 1rem;
+}
+
 a {
   display: inline-block;
   text-decoration: none;
@@ -846,7 +850,7 @@ button.secondary {
 
 .infoLine {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   gap: 15px;
   border-bottom: 2.5px dashed var(--border);
   margin-bottom: 10px;
@@ -869,7 +873,6 @@ button.secondary {
 .orderItem-info {
   display: flex;
   flex-direction: column;
-  gap: 5px;
 }
 
 .orderItem .orderItem-img {
@@ -888,11 +891,21 @@ button.secondary {
 
 .status-select {
   height: 30px;
-  margin: 10px 0px;
+  margin: 5px 0px 5px 0px;
   width: 120px;
 }
 
 .order .cancel {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  width: 120px;
+  background-color: white;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.order .delete {
+  margin: 5px 0;
   font-size: 0.9rem;
   width: 120px;
 }

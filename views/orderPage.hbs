@@ -9,7 +9,7 @@
   </div>
       <div class="orderPage">
         <div class="orderPage-head">
-          <span>訂單總數: {{orders.length}}</span>
+          <span>訂單 &#40;完成/全部&#41; : {{completedOrders}} / {{activeOrders}}</span>
           <span>總金額: {{totalPrice}}</span>
         </div>
         <div class="ordersContainer">
@@ -21,6 +21,7 @@
           <div class="orderItem">
             <img class="orderItem-img" src='/api/images/{{cover.id}}' alt="cover">
             <div class="orderItem-info">
+              <p class="info"><span>Id: {{id}}</span></p>
               <p>{{name}}</p>
               <p>${{price}}</p>
             </div>
@@ -40,15 +41,22 @@
             <p><span class="orderInfo">IG:</span> {{buyerIG}}</p>
 
         {{#if (isSame status '取消訂單')}}
-          <p class="cancel-status">訂單已取消，需要手動加回物件</p>
-          <p class="cancel-status">不會影響訂單總數與總金額</p>
+           <p><span class="orderInfo">訂單裝態:</span></p>
+           <select class="status-select" name="status"  disabled>
+          <option value="取消訂單" selected>取消訂單</option>
+          </select>
+
+          <p class="info"><span>訂單已取消，物品已經回歸</span></p>
+          <p class="info"><span> ↓ [刪除訂單] 會把訂單資料整筆刪除</span></p>
+          <button class="delete" type="button" data-orderid={{id}}>刪除訂單</button>
         {{else}}
+          <p><span class="orderInfo">訂單裝態:</span></p>
            <select class="status-select" name="status"  data-orderid={{id}}>
           <option value="等待聯繫" {{#if (isSame status '等待聯繫')}}selected{{/if}}>等待聯繫</option>
           <option value="備貨" {{#if (isSame status '備貨')}}selected{{/if}}>備貨</option>
           <option value="交易完成" {{#if (isSame status '交易完成')}}selected{{/if}}>交易完成</option>
         </select>
-        <button class="cancel" type="button" data-orderid={{id}}>取消訂單</button>   
+        <button class="cancel" type="button" data-orderid={{id}}>取消訂單</button> 
         {{/if}}
         </div>
       </div>
@@ -62,11 +70,31 @@
   import sweetAlert from '/js/sweetAlert.js'
   const selectors = document.querySelectorAll('.status-select')
   const cancels = document.querySelectorAll('.cancel')
+  const deletes = document.querySelectorAll('.delete')
+
+
+  async function deleteOrder(orderId){
+    try{
+      if (orderId === undefined) throw new Error('沒有orderId')
+      // fetch DELETE
+      const url = `/api/orders/${orderId}`
+      const response = await fetch(url, {
+        method: 'DELETE'
+      })
+      if(!response.ok) throw new Error('刪除失敗：'+ response.statusText)
+      const json = await response.json()
+      if (!json.ok) throw new Error(json.err)
+      // completed
+      await sweetAlert.success('刪除成功', '成功把訂單資料刪除')
+    } catch(err){
+      console.error(err)
+      await sweetAlert.error('刪除失敗', err.message)
+    }
+  }
 
   async function fetchPostStatus(orderId, status){
     try {
     if (!status || orderId === undefined) throw new Error('Missing Status or orderId')
-    
     // fetch POST
     const url = '/api/orders/status'
     const body = { 
@@ -100,9 +128,18 @@
   async function handleCancelClick(e){
     const status = '取消訂單'
     const orderId = e.target.dataset.orderid
-    const result = await sweetAlert.confirm('取消訂單!?', '取消訂單後無法恢復訂單 (資料會保留)')
+    const result = await sweetAlert.confirm('取消訂單?', '取消訂單會把貨物回歸，無法復原！')
     if (result.isConfirmed){
       await fetchPostStatus(orderId, status)
+      window.location.reload()
+    }
+  }
+
+  async function handleDeleteClick(e){
+    const orderId = e.target.dataset.orderid
+    const result = await sweetAlert.confirm('刪除訂單?', '把訂單資料整筆刪除！')
+    if (result.isConfirmed){
+      await deleteOrder(orderId)
       window.location.reload()
     }
   }
@@ -116,5 +153,7 @@
     c.onclick = handleCancelClick
   })
 
-
+  deletes.forEach(d => {
+    d.onclick = handleDeleteClick
+  })
 </script>

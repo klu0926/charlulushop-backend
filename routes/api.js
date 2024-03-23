@@ -1,7 +1,4 @@
 const router = require('express').Router()
-const { upload } = require('../helpers/multer')
-const { resize } = require('../helpers/sharp.js')
-
 // api
 const itemApi = require('../controller/api/itemApi.js')
 const itemTagApi = require('../controller/api/itemTagApi.js')
@@ -27,7 +24,7 @@ router.get('/tags', tagApi.getTags)
 router.get('/orders/buyer', orderApi.getOrdersForBuyer)
 router.post('/orders/status', orderApi.changeOrderStatus)
 router.post('/orders', orderApi.postOrder)
-
+router.delete('/orders/:orderId', orderApi.deleteOrder)
 
 // buyer post order
 // buyer delete order

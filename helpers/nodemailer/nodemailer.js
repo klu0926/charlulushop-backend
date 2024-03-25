@@ -86,18 +86,6 @@ async function sendEmail(order) {
     const developerInfo = await transporter.sendMail(toDeveloper);
     const sellerInfo = await transporter.sendMail(toSeller);
 
-    console.log('Buyer')
-    console.log('response:', buyerInfo.response)
-    console.log('envelope:', buyerInfo.envelope)
-    console.log('--------')
-    console.log('Developer')
-    console.log('response:', developerInfo.response)
-    console.log('envelope:', developerInfo.envelope)
-    console.log('--------')
-    console.log('Seller')
-    console.log('response:', sellerInfo.response)
-    console.log('envelope:', sellerInfo.envelope)
-    console.log('--------')
     console.log('Email done!')
   } catch (err) {
     console.error('Error sending email:', err);

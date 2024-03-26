@@ -265,7 +265,6 @@ const orderApi = {
       const orderData = await services.postOrder(itemsIds, buyerName, buyerEmail, buyerIG, price)
 
       // send email
-      console.log('sending email')
       sendEmail(orderData)
 
       res.status(200).json(responseJSON(true, 'POST', null, 'Post order completed'))

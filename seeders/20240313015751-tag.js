@@ -1,21 +1,15 @@
 'use strict'
 
 const tagSeed = [
-  { name: '夏露露' },
-  { name: '美好Station' },
-  { name: '每日文藝' },
-  { name: '熊熊上文具' },
-  { name: 'Prettier Art' },
-  { name: '無日隨記' },
-  { name: 'Mara in mars' },
-  { name: '最貴的男人' },
-  { name: '台灣價值Win' },
-  { name: '愛手藝' },
+  { name: '全新' },
+  { name: '二手' },
   { name: '紙膠帶' },
-  { name: '明信片' },
+  { name: '手帳本' },
   { name: '印章' },
-  { name: '海報' },
-  { name: '本本' },
+  { name: '貼紙' },
+  { name: '雜貨' },
+  { name: '筆類' },
+  { name: '書籍' },
 ]
 
 /** @type {import('sequelize-cli').Migration} */

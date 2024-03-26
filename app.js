@@ -9,7 +9,7 @@ const session = require('express-session')
 const checkSessionAuth = require('./middleware/sessionAuth')
 const cors = require('cors')
 
-if (process.env.ENV_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
@@ -59,5 +59,8 @@ app.use(methodOverride('_method'))
 app.use(routes)
 
 app.listen(port, () => {
+  console.log('-----------------------------')
   console.log(`Sever running on port ${port}`)
+  console.log('current NODE_ENV : ' + process.env.NODE_ENV)
+  console.log('-----------------------------')
 })

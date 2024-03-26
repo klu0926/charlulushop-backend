@@ -7,6 +7,7 @@ const path = require('path')
 
 async function sendEmail(order) {
   try {
+    console.log('sending email...')
     if (!order) throw new Error('sendEmail missing order record')
 
     const serverMail = process.env.SERVER_GMAIL
@@ -41,7 +42,7 @@ async function sendEmail(order) {
       </tr>
       `
     })
-    toBuyerHtmlString = toBuyerHtmlString.replace('{{itemsRecord}}',records.join(''))
+    toBuyerHtmlString = toBuyerHtmlString.replace('{{itemsRecord}}', records.join(''))
     toBuyerHtmlString = toBuyerHtmlString.replace('{{buyerName}}', order.buyerName)
     toBuyerHtmlString = toBuyerHtmlString.replace('{{buyerEmail}}', order.buyerEmail)
     toBuyerHtmlString = toBuyerHtmlString.replace('{{buyerIG}}', order.buyerIG)
@@ -82,16 +83,17 @@ async function sendEmail(order) {
     }
 
     // send mail
-    const buyerInfo = await transporter.sendMail(toBuyer);
-    const developerInfo = await transporter.sendMail(toDeveloper);
-    const sellerInfo = await transporter.sendMail(toSeller);
-
+    if (process.env.NODE_ENV === 'development') {
+      const buyerInfo = await transporter.sendMail(toBuyer);
+    } else {
+      const buyerInfo = await transporter.sendMail(toBuyer);
+      const developerInfo = await transporter.sendMail(toDeveloper);
+      const sellerInfo = await transporter.sendMail(toSeller);
+    }
     console.log('Email done!')
   } catch (err) {
     console.error('Error sending email:', err);
   }
 }
-
-
 module.exports = sendEmail
 

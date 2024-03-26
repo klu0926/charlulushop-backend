@@ -6,7 +6,7 @@ const youtubeApi = {
     try {
       const videos = await getYoutubeVideo()
 
-      res.status(200).json(responseJSON(true, 'GET Video', videos, 'Get video completed', sassNull))
+      res.status(200).json(responseJSON(true, 'GET Video', videos, 'Get video completed', null))
     } catch (err) {
       console.error(err)
       res.status(500).json(responseJSON(false, 'GET Video', null, 'Get video Fail', err.message))

@@ -28,7 +28,7 @@ router.post('/orders', orderApi.postOrder)
 router.delete('/orders/:orderId', orderApi.deleteOrder)
 
 // youtube
-router.get('/youtubes', youtubeApi.getVideo)
+router.get('/youtubes/newest', youtubeApi.getNewestVideo)
 
 // buyer post order
 // buyer delete order

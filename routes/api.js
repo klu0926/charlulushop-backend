@@ -5,6 +5,7 @@ const itemTagApi = require('../controller/api/itemTagApi.js')
 const tagApi = require('../controller/api/tagApi.js')
 const imageApi = require('../controller/api/imageApi.js')
 const orderApi = require('../controller/api/orderApi.js')
+const youtubeApi = require('../controller/api/youtubeApi.js')
 
 
 // -------------------- API --------------------- //
@@ -25,6 +26,9 @@ router.get('/orders/buyer', orderApi.getOrdersForBuyer)
 router.post('/orders/status', orderApi.changeOrderStatus)
 router.post('/orders', orderApi.postOrder)
 router.delete('/orders/:orderId', orderApi.deleteOrder)
+
+// youtube
+router.get('/youtubes', youtubeApi.getVideo)
 
 // buyer post order
 // buyer delete order

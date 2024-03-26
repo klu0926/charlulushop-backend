@@ -1,4 +1,3 @@
-const { sassNull } = require('sass')
 const getYoutubeVideo = require('../../helpers/googleApi/getNewestVideo')
 const responseJSON = require('../../helpers/responseJSON')
 

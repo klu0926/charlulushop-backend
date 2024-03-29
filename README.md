@@ -7,10 +7,10 @@ Charlulu Shop Backend is the backend service for the Charlulu Shop React site. I
 
 ## Table of Contents
 
-1. [Features](#authentication)
-2. [Technologies](#backend-framework)
-3. [Getting Started](#🚀-getting-started)
-4. [Contact Me](#👋-contact-Me)
+1. [Features](#-features)
+2. [Technologies](#-technologies)
+3. [Getting Started](#-getting-started)
+4. [Contact Me](#-contact-me)
 
 
 ## ⭐️ Features

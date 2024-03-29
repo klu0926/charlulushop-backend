@@ -3,7 +3,9 @@
 Charlulu Shop Backend is the backend service for the Charlulu Shop React site. It provides the necessary functionality and endpoints to support the e-commerce features of the Charlulu Shop website.
 
 
-![Home Page](https://charlulu-shop-546c2a4689b9.herokuapp.com/readme/readme-items.png)
+![items Page](https://charlulu-shop-546c2a4689b9.herokuapp.com/readme/readme-items.png)
+
+![orders Page](https://charlulu-shop-546c2a4689b9.herokuapp.com/readme/readme-orders.png)
 
 ## Table of Contents
 

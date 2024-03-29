@@ -7,15 +7,19 @@ Charlulu Shop Backend is the backend service for the Charlulu Shop React site. I
 ![orders Page](https://charlulu-shop-546c2a4689b9.herokuapp.com/readme/readme-orders.png)
 
 
-## Table of Contents
+## Table of Contents 📖
 
-1. [Features](#-features)
-2. [Technologies](#-technologies)
-3. [Getting Started](#-getting-started)
-4. [Contact Me](#-contact-me)
+1. [Features](#1-features-%EF%B8%8F)
+2. [Technologies](#2-technologies-)
+3. [Getting Started](#3-getting-started-)
+4. [Contact Me](#4-contact-me-)
 
 
-## ⭐️ Features
+<div style="display: flex; align-items:center; gap: 2%" >
+
+<div style="width: 65%">
+
+## 1. Features ⭐️
 
 - **Authentication:** Secure login/logout.
 - **Authorization:** Access control for endpoints.
@@ -27,9 +31,16 @@ Charlulu Shop Backend is the backend service for the Charlulu Shop React site. I
 - **YouTube Integration:** Display the newest YouTube video from the seller's channel. Provides hourly updates and sends video data to the React site.
 - **Email Notifications:** Nodemailer for order alerts.
 - **Responsive Web Design (RWD):** Optimized for mobile and desktop viewing.
+</div>
+
+<div style="width: 30%; float:right ">
+    <img src="https://charlulu-shop-546c2a4689b9.herokuapp.com/readme/readme-email.png" alt="email" width="100%" />
+</div>
+</div>
 
 
-## 🤓 Technologies
+
+## 2. Technologies 🤓
 
 - **Backend Framework:** Express.js
 - **Frontend:** HTML, CSS, JavaScript, Handlebars.js for template
@@ -41,7 +52,7 @@ Charlulu Shop Backend is the backend service for the Charlulu Shop React site. I
 - **Cross-Origin Resource Sharing (CORS):** Core for frontend-backend integration.
 
 
-## 🚀 Getting Started
+## 3. Getting Started 🚀
 
 ### Prerequisites
 
@@ -93,7 +104,7 @@ npx sequelize db:seed:all
 npm run dev
 ```
 
-## 👋 Contact Me
+## 4. Contact Me 👋
 If you have any questions, feedback, or suggestions, feel free to reach out:
 
 - **Email:** [lukuoyu@gmail.com](mailto:your.email@example.com)

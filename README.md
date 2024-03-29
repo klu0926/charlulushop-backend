@@ -15,10 +15,6 @@ Charlulu Shop Backend is the backend service for the Charlulu Shop React site. I
 4. [Contact Me](#4-contact-me-)
 
 
-<div style="display: flex; align-items:center; gap: 2%" >
-
-<div style="width: 65%">
-
 ## 1. Features ⭐️
 
 - **Authentication:** Secure login/logout.
@@ -29,15 +25,7 @@ Charlulu Shop Backend is the backend service for the Charlulu Shop React site. I
 - **CRUD Tags:** Associate tags with each item.
 - **CRUD Orders:** Manage buyer orders, including creation, viewing, updating, and deletion.
 - **YouTube Integration:** Display the newest YouTube video from the seller's channel. Provides hourly updates and sends video data to the React site.
-- **Email Notifications:** Nodemailer for order alerts.
-- **Responsive Web Design (RWD):** Optimized for mobile and desktop viewing.
-</div>
-
-<div style="width: 30%; float:right ">
-    <img src="https://charlulu-shop-546c2a4689b9.herokuapp.com/readme/readme-email.png" alt="email" width="100%" />
-</div>
-</div>
-
+- **Email Notifications:** Nodemailer for order alerts, see [example](https://charlulu-shop-546c2a4689b9.herokuapp.com/readme/readme-email.png) <-
 
 
 ## 2. Technologies 🤓

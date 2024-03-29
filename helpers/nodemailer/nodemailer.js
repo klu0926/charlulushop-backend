@@ -2,9 +2,6 @@ var nodemailer = require('nodemailer');
 const fs = require('fs').promises
 const path = require('path')
 
-// buyer: name, email, ig
-// order: (same as order record)
-
 async function sendEmail(order) {
   try {
     console.log('sending email...')

@@ -537,10 +537,8 @@ button.secondary {
 }
 
 .itemsContainer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 5px;
   width: 100%;
   margin: 10px 0px;
@@ -548,9 +546,7 @@ button.secondary {
 
 .itemLink {
   display: inline-block;
-  padding: 0;
-  width: 46%;
-  margin-bottom: 6px;
+  width: 100%;
 }
 
 .item {
@@ -566,6 +562,7 @@ button.secondary {
   transition: all 0.2s ease-in-out;
   box-shadow: 1px 1px 5px 0px var(--shadow);
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .item:not(.flash):hover {
@@ -933,8 +930,8 @@ button.secondary {
 }
 
 @media screen and (min-width: 600px) {
-  .itemLink {
-    width: 30%;
+  .itemsContainer {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -942,13 +939,6 @@ button.secondary {
   #App {
     width: var(--mid-width);
   }
-  .itemsContainer {
-    gap: 15px;
-  }
-  .itemLink {
-    width: 23%;
-  }
-
   .pictureGroup {
     position: relative;
     width: 160px;
@@ -967,11 +957,17 @@ button.secondary {
   }
 }
 
+@media screen and (min-width: 1000px) {
+  .itemsContainer {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
 @media screen and (min-width: 1200px) {
   #App {
     width: var(--max-width);
   }
-  .itemLink {
-    width: 17%;
+  .itemsContainer {
+    grid-template-columns: repeat(6, 1fr);
   }
 }

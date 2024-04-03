@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon app.js"
+    "dev": "NODE_ENV=development nodemon app.js",
+    "ui": "browser-sync start --config 'bs-config.js' --proxy localhost:3000 --port 4000 --files=**/*  --ignore=node_modules --no-inject-changes",
+    "watch": "concurrently --kill-others \"npm run dev\" \"npm run ui\" "
   },
   "keywords": [],
   "author": "",
@@ -29,6 +31,7 @@
     "sharp": "^0.32.6"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "prettier": "^2.0.0"
   }
 }

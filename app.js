@@ -9,6 +9,7 @@ const session = require('express-session')
 const checkSessionAuth = require('./middleware/sessionAuth')
 const cors = require('cors')
 
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }

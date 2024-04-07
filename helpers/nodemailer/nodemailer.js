@@ -81,7 +81,7 @@ async function sendEmail(order) {
 
     // send mail
     if (process.env.NODE_ENV === 'development') {
-      const buyerInfo = await transporter.sendMail(toBuyer);
+      const buyerInfo = await transporter.sendMail(toDeveloper);
     } else {
       const buyerInfo = await transporter.sendMail(toBuyer);
       const developerInfo = await transporter.sendMail(toDeveloper);

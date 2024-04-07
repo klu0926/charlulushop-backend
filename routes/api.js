@@ -6,6 +6,8 @@ const tagApi = require('../controller/api/tagApi.js')
 const imageApi = require('../controller/api/imageApi.js')
 const orderApi = require('../controller/api/orderApi.js')
 const youtubeApi = require('../controller/api/youtubeApi.js')
+const shopStatusApi = require('../controller/api/shopStatusApi.js')
+const authenticationApi = require('../controller/api/authenticationApi.js')
 
 
 // -------------------- API --------------------- //
@@ -30,11 +32,12 @@ router.delete('/orders/:orderId', orderApi.deleteOrder)
 // youtube
 router.get('/youtubes/newest', youtubeApi.getNewestVideo)
 
-// buyer post order
-// buyer delete order
+// shop status api
+router.get('/shop-status', shopStatusApi.getLock)
 
-// admin edit order
-// admin delete order
+// Authentication
+router.post('/auth', authenticationApi.postLogin)
+router.post('/auth/jwt', authenticationApi.postValidateJWT)
 
 // Tags api
 router.get('/tags', tagApi.getTags)

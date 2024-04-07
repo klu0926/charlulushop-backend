@@ -17,6 +17,12 @@
       <div class="order">
         <!--items-->
         <div class="itemsRow">
+          <!--info line-->
+          <div class="infoLine">
+            <p><span class="orderId">orderId: {{id}}</span></p>
+            <p><span class="orderCount">件數:</span> {{items.length}}</p>
+            <p><span class="orderPrice">總價: {{price}}</span></p>
+          </div>
           {{#each items}}
           <div class="orderItem">
             <img class="orderItem-img" src='/api/images/{{cover.id}}' alt="cover">
@@ -31,11 +37,7 @@
 
         <!--order info-->
         <div class="infoRow">
-          <div class="infoLine">
-          <p><span class="orderId">orderId: {{id}}</span></p>
-           <p><span class="orderInfo">件數:</span> {{items.length}}</p>
-          <p><span class="orderPrice">總價: {{price}}</span></p>
-            </div>
+          
             <p><span class="orderInfo">買家:</span> {{buyerName}}</p>
             <p><span class="orderInfo">信箱:</span> {{buyerEmail}}</p>
             <p><span class="orderInfo">IG:</span> {{buyerIG}}</p>

@@ -21,7 +21,6 @@ const shopStatusApi = {
       console.error(err)
       res.status(500).json(responseJSON(false, 'GET shop status', null, 'Fail to get shop status', err.message))
     }
-
   },
   // body: JWT, isLock (boolean), reason, message
   postLock: async (req, res, next) => {
@@ -29,8 +28,6 @@ const shopStatusApi = {
       const { JWT, isLock, reason, message } = req.body
       if (!JWT) throw new Error('沒有傳入JWT')
 
-      console.log(isLock, reason, message)
-      console.log(typeof isLock, typeof reason, typeof message)
       if (typeof isLock !== 'boolean') throw new Error('沒有設定 isLock boolean')
       if (!reason.trim() || !message.trim()) throw new Error('沒有設定 reason 跟 message')
 

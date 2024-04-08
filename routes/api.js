@@ -33,8 +33,8 @@ router.delete('/orders/:orderId', orderApi.deleteOrder)
 router.get('/youtubes/newest', youtubeApi.getNewestVideo)
 
 // shop status api
-router.get('/shop-status', shopStatusApi.getLock)
-router.post('/shop-status', shopStatusApi.postLock)
+router.get('/shop-status', shopStatusApi.getShopStatus)
+router.post('/shop-status', shopStatusApi.postShopStatus)
 
 // Authentication
 router.post('/auth', authenticationApi.postLogin)

@@ -11,8 +11,9 @@ const shopStatusApi = {
   // "isLock": true,
   // "reason": "貨品理貨中",
   // "message": "請等待夏洛特通知開店時間"
-  getLock: async (req, res, next) => {
+  getShopStatus: async (req, res, next) => {
     try {
+      console.log('GET shopStatus...')
       const shopStatusObject = shopStatus
       if (!shopStatusObject) throw new Error('找不到 shop status')
 
@@ -23,7 +24,7 @@ const shopStatusApi = {
     }
   },
   // body: JWT, isLock (boolean), reason, message
-  postLock: async (req, res, next) => {
+  postShopStatus: async (req, res, next) => {
     try {
       const { JWT, isLock, reason, message } = req.body
       if (!JWT) throw new Error('沒有傳入JWT')

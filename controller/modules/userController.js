@@ -2,6 +2,7 @@
 const responseJSON = require('../../helpers/responseJSON')
 const bcrypt = require('bcrypt')
 const { User } = require('../../models')
+const { signJWT } = require('../../controller/api/authenticationApi').services
 
 const userController = {
   loginPage: (req, res, next) => {
@@ -32,8 +33,10 @@ const userController = {
       // remove password
       delete user.password
 
-      // set session
+      // set session (user id, jwt)
       req.session.userId = user.id
+      req.session.jwt = signJWT({ name: user.name })
+
       res.redirect('/items')
     } catch (err) {
       console.error(err)

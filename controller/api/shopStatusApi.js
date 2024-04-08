@@ -1,9 +1,16 @@
 const shopStatus = require('../../shopStatus')
 const responseJSON = require('../../helpers/responseJSON')
+const { validateJWT } = require('../../controller/api/authenticationApi').services
+const fs = require('fs')
+const path = require('path')
+const shopStatusPath = path.resolve(__dirname, '../../shopStatus.json')
 
 const shopStatusApi = {
   // return {object} shop status
-  // 
+  // body : JWT : jwt string
+  // "isLock": true,
+  // "reason": "貨品理貨中",
+  // "message": "請等待夏洛特通知開店時間"
   getLock: async (req, res, next) => {
     try {
       const shopStatusObject = shopStatus
@@ -12,12 +19,34 @@ const shopStatusApi = {
       res.status(200).json(responseJSON(true, 'Get Lock status', shopStatusObject, 'Get lock status', null))
     } catch (err) {
       console.error(err)
-      res.status(500).json(responseJSON(false, 'get lock status', null, 'Fail to get lock status', err.message))
+      res.status(500).json(responseJSON(false, 'GET shop status', null, 'Fail to get shop status', err.message))
     }
 
   },
+  // body: JWT, isLock (boolean), reason, message
   postLock: async (req, res, next) => {
+    try {
+      const { JWT, isLock, reason, message } = req.body
+      if (!JWT) throw new Error('沒有傳入JWT')
 
+      console.log(isLock, reason, message)
+      console.log(typeof isLock, typeof reason, typeof message)
+      if (typeof isLock !== 'boolean') throw new Error('沒有設定 isLock boolean')
+      if (!reason.trim() || !message.trim()) throw new Error('沒有設定 reason 跟 message')
+
+      // check JWT
+      validateJWT(JWT)
+
+      // post shop status
+      const shopStatus = { isLock, reason, message }
+      fs.writeFileSync(shopStatusPath, JSON.stringify(shopStatus))
+
+      res.status(200).json(responseJSON(true, 'POST shop status', shopStatus, 'POST shop status completed', null))
+
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'POST shop status', null, 'Fail to post shop status', err.message))
+    }
   }
 }
 

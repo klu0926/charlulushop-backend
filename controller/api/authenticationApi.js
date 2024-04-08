@@ -1,7 +1,7 @@
 const { User } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonWebToken')
+const jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET
 
 const services = {

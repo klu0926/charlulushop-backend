@@ -45,6 +45,15 @@ h4 {
   color: var(--primary);
 }
 
+.header {
+  text-align: center;
+}
+.flex-center{
+ display: flex;
+ justify-content: center;
+ align-items: center; 
+}
+
 #App {
   display: flex;
   flex-direction: column;
@@ -440,8 +449,35 @@ textarea {
   margin-top: 5px;
   margin-bottom: 15px;
 }
-.inputGroup-row input {
+
+.inputGroup-input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  width: 100%;
+  padding: 0px 6px;
+}
+
+.inputGroup-input-container:focus-within {
+  border: 1px solid var(--primary);
+}
+
+.inputGroup-input-container:focus-within .inputGroup-label {
+  color: red;
+}
+
+.inputGroup-label {
+  margin: auto;
+}
+
+.inputGroup-input {
   flex: 1;
+  outline: none;
+  border: none !important;
+}
+.inputGroup-input:disabled {
+  color: var(--grey);
 }
 
 .inputGroup textarea {
@@ -894,6 +930,7 @@ button.secondary {
   height: 30px;
   margin: 5px 0px 5px 0px;
   width: 120px;
+  color: var(--secondary) !important;
 }
 
 .order .cancel {
@@ -916,11 +953,88 @@ button.secondary {
   color: red;
 }
 
+/* status Page */
+.statusPage {
+  width: 100%;
+  max-width: 400px;
+}
+
+.statusPage-infograph {
+  width: 300px;
+  overflow: hidden;
+  margin: auto;
+}
+.statusPage-infograph img {
+  width: 100%;
+}
+
+.statusPage-select {
+  width: 100%;
+  padding: 6px 4px;
+  height: 44px;
+  border-radius: 10px;
+  color: var(--secondary);
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.statusPage-button{
+  width: 150px;
+}
+
+/* error message */
+.error-message {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  left: 0;
+  right: 0;
+  width: 95%;
+  margin: 0px auto;
+  z-index: 1000;
+}
+
+.error-message-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--primary);
+  border-radius: 5px;
+  padding: 10px 10px;
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--primary);
+  color: white;
+  animation: shake 0.4s ease-in-out;
+}
+
+.error-message-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.error-message .close-button {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  background-color: var(--primary);
+  color: white;
+}
+.error-message .close-button:hover {
+  background-color: var(--primary);
+  filter: none;
+  color: var(--primary-light2);
+}
+
 /* sweet alert 2 */
 .swal-title {
   font-size: 1.5rem;
 }
 
+/* animation */
 @keyframes flash {
   0% {
     filter: brightness(1);
@@ -933,6 +1047,25 @@ button.secondary {
   }
 }
 
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* media */
 @media screen and (min-width: 600px) {
   .itemsContainer {
     grid-template-columns: repeat(4, 1fr);

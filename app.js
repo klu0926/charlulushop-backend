@@ -14,6 +14,8 @@ try {
   const session = require('express-session')
   const checkSessionAuth = require('./middleware/sessionAuth')
   const cors = require('cors')
+  const flash = require('./helpers/flash')
+
 
 
   // view engine
@@ -51,6 +53,7 @@ try {
   app.use((req, res, next) => {
     res.locals.user = req.user
     res.locals.isAuth = req.isAuthenticated
+    res.locals.error = flash.getFlash(req, 'error')
     next()
   })
 
@@ -70,7 +73,7 @@ try {
 
 
 } catch (err) {
-  console.error('An error occurred during startup: ', err)
+  // console.error('An error occurred during startup: ', err)
 }
 
 

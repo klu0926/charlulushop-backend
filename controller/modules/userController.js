@@ -3,6 +3,7 @@ const responseJSON = require('../../helpers/responseJSON')
 const bcrypt = require('bcrypt')
 const { User } = require('../../models')
 const { signJWT } = require('../../controller/api/authenticationApi').services
+const flash = require('../../helpers/flash')
 
 const userController = {
   loginPage: (req, res, next) => {
@@ -39,6 +40,7 @@ const userController = {
 
       res.redirect('/items')
     } catch (err) {
+      flash.setFlash(req, 'error', err.message)
       console.error(err)
       res.redirect('/users/login')
     }

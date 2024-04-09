@@ -6,6 +6,8 @@ const itemController = require('../controller/modules/itemController.js')
 const imageController = require('../controller/modules/imageController')
 const userController = require('../controller/modules/userController.js')
 const orderController = require('../controller/modules/orderController.js')
+const shopStatusController = require('../controller/modules/shopStatusController.js')
+
 // api
 const apiRouter = require('./api.js')
 // isAuth
@@ -41,6 +43,9 @@ router.post('/users/login', userController.postLogin)
 
 // Order
 router.get('/orders', isAuth, orderController.getOrders)
+
+// Status
+router.get('/status', isAuth, shopStatusController.getStatusPage)
 
 // API
 router.use('/api', apiRouter)

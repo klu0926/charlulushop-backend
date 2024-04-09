@@ -56,7 +56,7 @@ const authenticationApi = {
 
     } catch (err) {
       console.error(err)
-      res.status(500).json(responseJSON(false, 'POST front jwt', null, 'Fail to post frontend jwt', err.message))
+      res.status(401).json(responseJSON(false, 'POST front jwt', null, 'Fail to post frontend jwt', err.message))
     }
   },
   // body : JWT

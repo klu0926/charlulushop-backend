@@ -1,0 +1,22 @@
+{{#if error}}
+    <div id="error-message" class="error-message" >
+      <div class="error-message-container">
+        <button type="button" id="error-message-close" class="close-button" onclick="handleClose()">
+        x
+      </button>
+      {{#if title}}
+      <p class="error-message-title">{{title}}</p>
+      {{/if}}
+      <p>{{error}}</p> 
+      </div>
+      </div>
+   <script>
+    const errorMessage = document.querySelector('#error-message')
+    function handleClose(){
+      errorMessage.remove()
+    }
+  
+  </script>
+{{/if}}
+
+

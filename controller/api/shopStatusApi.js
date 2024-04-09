@@ -1,9 +1,23 @@
-const shopStatus = require('../../shopStatus')
 const responseJSON = require('../../helpers/responseJSON')
 const { validateJWT } = require('../../controller/api/authenticationApi').services
 const fs = require('fs')
 const path = require('path')
 const shopStatusPath = path.resolve(__dirname, '../../shopStatus.json')
+
+
+const services = {
+  getShopStatus: () => {
+    try {
+      const data = fs.readFileSync(shopStatusPath, 'utf8')
+      shopStatusObject = JSON.parse(data)
+      if (!shopStatusObject) throw new Error('找不到 shop status')
+      return shopStatusObject
+    } catch (err) {
+      throw err
+    }
+  }
+
+}
 
 const shopStatusApi = {
   // return {object} shop status
@@ -13,27 +27,33 @@ const shopStatusApi = {
   // "message": "請等待夏洛特通知開店時間"
   getShopStatus: async (req, res, next) => {
     try {
-      console.log('GET shopStatus...')
-      const shopStatusObject = shopStatus
-      if (!shopStatusObject) throw new Error('找不到 shop status')
-
+      const shopStatusObject = services.getShopStatus()
       res.status(200).json(responseJSON(true, 'Get Lock status', shopStatusObject, 'Get lock status', null))
     } catch (err) {
       console.error(err)
       res.status(500).json(responseJSON(false, 'GET shop status', null, 'Fail to get shop status', err.message))
     }
   },
-  // body: JWT, isLock (boolean), reason, message
+  // body: JWT(optional), isLock (boolean), reason, message
   postShopStatus: async (req, res, next) => {
     try {
       const { JWT, isLock, reason, message } = req.body
-      if (!JWT) throw new Error('沒有傳入JWT')
 
       if (typeof isLock !== 'boolean') throw new Error('沒有設定 isLock boolean')
       if (!reason.trim() || !message.trim()) throw new Error('沒有設定 reason 跟 message')
 
-      // check JWT
-      validateJWT(JWT)
+      // check for authenticated
+      // on server site use req.isAuthenticated
+      // on postman (api) use JWT
+
+      // user cross origin
+      if (req.isAuthenticated === undefined) {
+        if (!JWT) throw new Error('需要使用ＪＷＴ認證')
+        validateJWT(JWT)
+      } else {
+        // user on server site
+        if (!req.isAuthenticated()) throw new Error('Authenticated失敗，請嘗試重新登入')
+      }
 
       // post shop status
       const shopStatus = { isLock, reason, message }
@@ -49,3 +69,4 @@ const shopStatusApi = {
 }
 
 module.exports = shopStatusApi
+module.exports.services = services

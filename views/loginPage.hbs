@@ -4,34 +4,24 @@
     <form id="loginForm" class="loginForm" action="/users/login" method="POST">
     <!--名稱-->
       <div class="inputGroup-row">
-      <label for="name">名稱</label>
-      <input id="name" name="name" type="text" placeholder="名稱..." required autocomplete="username"/>
+     <div class="inputGroup-input-container">
+      <label class="inputGroup-label" for="name">名稱：</label>
+      <input class="inputGroup-input" id="name" name="name" type="text" placeholder="..." required autocomplete="username"/>
+      </div>
     </div>
           <p id="name-error" class="form-error">需要填寫名稱</p>
     <!--密碼-->
     <div class="inputGroup-row">
-      <label for="password">密碼</label>
-      <input id="password" name="password" type="password" placeholder="密碼..." required autocomplete="current-password" />
+      <div class="inputGroup-input-container">
+      <label class="inputGroup-label" for="password">密碼：</label>
+      <input class="inputGroup-input" id="password" name="password" type="password" placeholder="..." required autocomplete="current-password" />
+      </div>
     </div>
     <p id="password-error" class="form-error">需要填寫密碼</p>
       <div style="display: flex; justify-content: center">
       <button id="submit" class="w-80" type="submit">登入</button>
       </div>
     </form>
+    {{> errorMessage title='登入失敗'}}
   </div>
 <div>
-
-  <script type="module">
-      import sweetAlert from '/js/sweetAlert.js'
-      import login from '/js/login.js'
-
-      const submit = document.querySelector('#submit')
-      const form = document.querySelector('#loginForm')
-      const formErrors = document.querySelectorAll('.form-error')
-      const nameInput = document.querySelector('#name')
-      const passwordInput = document.querySelector('#password')
-      const inputError = document.querySelector('#name-error')
-      const passwordError = document.querySelector('#password-error')     
-
-
-  </script>

@@ -1,0 +1,102 @@
+<div class="page">
+  <div class="statusPage">
+      <h2 class="header">商店狀態</h2>
+        <!--speech-->
+  <div class="speech">
+    <img class="icon" src="/images/idea.png" alt="icon" />
+    <div>
+      <p class="info"><span>關閉</span>的商店需要給予<span>狀況</span>與<span>訊息</span></span></p>
+      <p class="info"><span>開啟</span>的商店不需要理會狀況與訊息</p>
+    </div>
+  </div>
+  <!--image-->
+  <div class="statusPage-infograph">
+          <img src="/images/shop-status-500.png" alt="shop-status">
+  </div>
+      <select id="select" class="statusPage-select" name="lock" >
+        {{#if (isSame isLock true)}}
+        <option value="false" >商店開啟</option>
+        <option value="true" selected>商店關閉</option>
+        {{else}}
+        <option value="false" selected>商店開啟</option>
+        <option value="true" >商店關閉</option>
+        {{/if}}
+
+      </select>
+        <!--reason-->
+      <div class="inputGroup-row">
+     <div class="inputGroup-input-container">
+      <label class="inputGroup-label" for="reason">狀況 :</label>
+      <input class="inputGroup-input" id="reason" name="reason" type="text" placeholder="..." value="{{reason}}" required {{#if isLock}}{{else}}disabled{{/if}} />
+      </div>
+    </div>
+    <!--message-->
+    <div class="inputGroup-row">
+      <div class="inputGroup-input-container">
+      <label class="inputGroup-label" for="message">訊息 :</label>
+      <input class="inputGroup-input" id="message" name="message" type="text" placeholder="..." value="{{message}}" required {{#if isLock}}{{else}}disabled{{/if}} />
+      </div>
+    </div>
+  <div>
+    <div class="flex-center">
+    <button id="status-page-button" class="statusPage-button" type="button">設定</button>
+    </div>
+<div>
+
+  <script type="module">
+    import sweetAlert from '/js/sweetAlert.js'
+    const button = document.querySelector('#status-page-button')
+    const select = document.querySelector('#select')
+    const reasonInput = document.querySelector('#reason')
+    const messageInput = document.querySelector('#message')
+
+
+    function handleSelect(){
+      if (select.value === 'true'){
+         reasonInput.disabled = false
+        messageInput.disabled = false
+        
+      } else {
+        reasonInput.disabled = true
+        messageInput.disabled = true
+      }
+    }
+
+    async function handleSettingShopStatus(){
+      try {
+        const isLock = select.value
+        const reason = reasonInput.value
+        const message = messageInput.value
+
+        // 關店需要原因 
+        if (isLock && (!reason.trim() || !message.trim()) ){
+          throw new Error('請填寫全部項目')
+        }
+        const shopStatusUrl = '/api/shop-status'
+        const response = await fetch(shopStatusUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json'
+          },
+          body: JSON.stringify({
+            isLock: isLock === 'true' ? true: false,
+            reason,
+            message
+          })
+        })
+        if (!response.ok) throw new Error(response.statusText)
+        const json = await response.json()
+        if (!json.ok) throw new Error(json.err)
+
+        const shopStatus = isLock === 'true' ? '關閉' : '開啟'
+        await sweetAlert.success('修改成功',`商店狀況： ${shopStatus}`)
+        location.reload()
+      }catch(err){
+        sweetAlert.error('修改失敗', err.message || err)
+      }
+    }
+    
+    button.onclick = handleSettingShopStatus
+    select.onchange = handleSelect
+
+  </script>

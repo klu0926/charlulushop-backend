@@ -9,7 +9,10 @@
   </head>
   <body>
     <div id="App">
-          {{>navbar}} {{{body}}}
+        {{#if isAuth}}
+          {{>navbar}}
+        {{/if}}  
+           {{{body}}}
       </div>
   </body>
 </html>

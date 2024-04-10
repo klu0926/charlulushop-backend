@@ -1,0 +1,155 @@
+/* order Page */
+.orderPage {
+  width: 100%;
+  max-width: 500px;
+}
+
+.orderPage-head {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0px;
+  background-color: var(--primary);
+  padding: 4px 10px;
+  border-radius: 5px;
+}
+
+.orderPage-head span {
+  color: white;
+}
+
+.orderContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.order {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  margin-bottom: 25px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 2px 3px 5px var(--shadow);
+}
+
+.itemsRow {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  overflow: hidden;
+  gap: 10px;
+}
+
+.infoRow {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.infoLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: var(--light);
+}
+
+.infoLine p span {
+  line-height: 20px;
+}
+
+.orderItem {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  border: 1px solid var(--grey);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.orderItem-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.orderItem .orderItem-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+}
+
+.order .orderInfo {
+  color: var(--grey);
+}
+
+.order .orderPrice {
+  color: var(--primary);
+}
+
+.status-select {
+  height: 30px;
+  margin: 5px 0px 5px 0px;
+  width: 120px;
+  color: var(--secondary) !important;
+}
+
+.order .cancel {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  width: 120px;
+  background-color: white;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.order .delete {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  width: 120px;
+}
+
+.cancel-status {
+  font-size: 0.9rem;
+  color: red;
+}
+
+.order-page-filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* filter */
+.order-filters-container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  margin: 10px 0px;
+}
+
+.order-filters-select {
+  width: auto;
+}
+.order-filters-select option {
+  font-size: 0.9rem;
+}
+
+#order-search-input{
+  width: 50px;
+}
+
+#order-search-button {
+  background-color: white;
+  padding: 7px;
+  border-radius: 50%;
+  margin: 0;
+}
+
+#order-search-button:hover {
+  background-color: var(--hover-grey);
+}

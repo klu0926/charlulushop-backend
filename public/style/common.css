@@ -1,0 +1,35 @@
+/* margin */
+.my-1 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+/* color */
+.c-primary {
+  color: var(--primary);
+}
+
+.c-dark {
+  color: var(--dark);
+}
+
+.c-grey {
+  color: var(--grey);
+}
+
+/* font size */
+.fs-small{
+  font-size: 0.9rem;
+}
+
+/* text*/
+.t-center {
+  text-align: center;
+}
+
+/* display*/
+.d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

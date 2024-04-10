@@ -8,10 +8,33 @@
   </div>
       <div class="orderPage">
         <div class="orderPage-head">
-          <span>訂單 &#40;完成/全部&#41; : {{completedOrders}} / {{activeOrders}}</span>
+          <span>全部訂單: {{activeOrders}} </span>
+           <span>完成: {{completedOrders}} </span>
           <span>總金額: {{totalPrice}}</span>
         </div>
+      
+      <div class="order-filters-container">
+        <!--filter selector-->
+      <select id="order-filters-select" class="order-filters-select" name="filter" id="filters-select">
+        <option value="全部" {{#if (isSame filter '全部' )}}selected {{/if}}>全部 </option>
+        <option value="未完成" {{#if (isSame filter '未完成' )}}selected {{/if}}>未完成  </option>
+        <option value="完成" {{#if (isSame filter '完成' )}}selected {{/if}}>完成 </option>
+      </select>
+      <!--search -->
+      <div id="inputGroup-input-container" class="inputGroup-input-container">
+      <input id="order-search-input" class="inputGroup-input" name="search" type="text" placeholder="名稱、信箱"  value="{{search}}" autofocus />
+       <button id='order-search-button' class="auto">
+        <i class="fa-solid fa-magnifying-glass"></i>
+       </button>
+      </div>
+      <!--search button -->
+      <button id='order-reset-button' class="auto secondary">全部</button>
+      </div>
+
+      <p class="c-dark my-1 t-center fs-small">目前顯示 {{orders.length}} 件訂單</p>
+
         <div class="ordersContainer">
+      {{#if orders}}
       {{#each orders}}
       <div class="order">
         <!--items-->
@@ -36,13 +59,11 @@
 
         <!--order info-->
         <div class="infoRow">
-          
             <p><span class="orderInfo">買家:</span> {{buyerName}}</p>
             <p><span class="orderInfo">信箱:</span> {{buyerEmail}}</p>
             <p><span class="orderInfo">IG:</span> {{buyerIG}}</p>
-
         {{#if (isSame status '取消訂單')}}
-           <p><span class="orderInfo">訂單裝態:</span></p>
+           <p><span class="orderInfo">訂單狀態:</span></p>
            <select class="status-select" name="status"  disabled>
           <option value="取消訂單" selected>取消訂單</option>
           </select>
@@ -62,6 +83,12 @@
         </div>
       </div>
       {{/each}}
+      {{else}}
+      <!-- 找不到東西 -->
+      <div style="d-flex">
+         <p class="t-center c-dark">在<span class="c-primary"> {{filter}} </span>的訂單中搜尋不到<span class="c-primary">{{#if search}} {{search}} </span>的訂單{{else}}訂單{{/if}}</p>
+      </div>
+      {{/if}}
       </div>
     </div>
 </div>
@@ -72,6 +99,10 @@
   const selectors = document.querySelectorAll('.status-select')
   const cancels = document.querySelectorAll('.cancel')
   const deletes = document.querySelectorAll('.delete')
+  const filterSelect = document.querySelector('#order-filters-select')
+  const filterSearchInput = document.querySelector('#order-search-input')
+  const filterSearchButton = document.querySelector('#order-search-button')
+  const filterResetButton = document.querySelector('#order-reset-button')
 
 
   async function deleteOrder(orderId){
@@ -145,6 +176,16 @@
     }
   }
 
+  function handleFilterSearch(){
+    const filter = filterSelect.value
+    const search = filterSearchInput.value
+    window.location.href = `/orders?filter=${filter}&search=${search}`
+  }
+
+  function handleFilterReset(){
+    window.location.href = `/orders`
+  }
+
   // Action
   selectors.forEach(s => {
   s.onchange = handleSelectorChange
@@ -157,4 +198,11 @@
   deletes.forEach(d => {
     d.onclick = handleDeleteClick
   })
+
+  filterSelect.onchange = handleFilterSearch
+  filterSearchButton.onclick = handleFilterSearch
+  filterResetButton.onclick = handleFilterReset
+  filterSearchInput.onkeydown = (e) => {
+    if(e.key === 'Enter') filterSearchButton.click()
+  }
 </script>

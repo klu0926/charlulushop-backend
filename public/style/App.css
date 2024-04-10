@@ -1,5 +1,7 @@
 @import url("burgerMenu.css");
 @import url("navbar.css");
+@import url("orderPage.css");
+@import url("common.css");
 
 :root {
   --primary: rgb(247, 100, 125);
@@ -12,6 +14,7 @@
   --grey: rgb(157, 157, 157);
   --dark: rgb(120, 120, 120);
   --shadow: rgba(0, 0, 0, 0.1);
+  --hover-grey: rgb(210, 210, 210);
 
   --min-width: 100%;
   --mid-width: 750px;
@@ -156,12 +159,16 @@ label {
   margin-top: 5px;
 }
 
+input::placeholder {
+  color: rgb(170, 170, 170);
+}
+
 input:not([type="file"]):not([type="checkbox"]):not(.resetInput) {
-  height: 40px;
+  height: 35px;
   border-radius: 5px;
   appearance: none;
   border: 1px solid var(--border);
-  padding: 5px;
+  padding: 0px 5px;
   font-size: 0.9rem;
 }
 
@@ -424,9 +431,9 @@ textarea {
   display: flex;
   align-items: center;
   border: 1px solid var(--border);
-  border-radius: 9px;
+  border-radius: 5px;
   width: 100%;
-  padding: 0px 6px;
+  padding: 0px 4px;
 }
 
 .inputGroup-input-container:focus-within {
@@ -483,7 +490,7 @@ button {
   color: white;
   border: none;
   padding: 5px 10px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border-radius: 5px;
   width: 100%;
   max-width: 200px;
@@ -808,123 +815,6 @@ button.secondary {
   color: var(--primary);
   margin: 0;
   margin-top: -10px;
-}
-
-/* order Page */
-.orderPage {
-  width: 100%;
-  max-width: 600px;
-}
-
-.orderPage-head {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 10px 0px;
-}
-
-.orderPage-head span {
-  font-size: 1.1rem;
-  color: var(--primary);
-}
-
-.orderContainer {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.order {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border);
-  margin-bottom: 25px;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 2px 3px 5px var(--shadow);
-}
-
-.itemsRow {
-  display: flex;
-  flex-direction: column;
-  padding: 5px;
-  overflow: hidden;
-  gap: 10px;
-}
-
-.infoRow {
-  display: flex;
-  flex-direction: column;
-  padding: 5px;
-  overflow: hidden;
-}
-
-.infoLine {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color: var(--light);
-}
-
-.infoLine p span {
-  line-height: 20px;
-}
-
-.orderItem {
-  display: flex;
-  width: 100%;
-  gap: 10px;
-  border: 1px solid var(--grey);
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.orderItem-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.orderItem .orderItem-img {
-  width: 60px;
-  height: 60px;
-  border-radius: 5px;
-}
-
-.order .orderInfo {
-  color: var(--grey);
-}
-
-.order .orderPrice {
-  color: var(--primary);
-}
-
-.status-select {
-  height: 30px;
-  margin: 5px 0px 5px 0px;
-  width: 120px;
-  color: var(--secondary) !important;
-}
-
-.order .cancel {
-  margin: 5px 0;
-  font-size: 0.9rem;
-  width: 120px;
-  background-color: white;
-  color: var(--primary);
-  border: 1px solid var(--primary);
-}
-
-.order .delete {
-  margin: 5px 0;
-  font-size: 0.9rem;
-  width: 120px;
-}
-
-.cancel-status {
-  font-size: 0.9rem;
-  color: red;
 }
 
 /* status Page */

@@ -1,0 +1,91 @@
+/* burger menu */
+.burger-menu-background {
+  position: fixed;
+  display: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  opacity: 0;
+  z-index: 2000;
+  transition: opacity var(--menu-close-time);
+}
+
+.burger-menu-background.open {
+  opacity: 0.5;
+}
+
+.burger-menu-panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 220px;
+  padding: 15px 20px;
+  background-color: var(--primary);
+  color: white;
+  z-index: 2001;
+  transform: translateX(-100%);
+  transition: transform var(--menu-close-time) ease-in-out;
+}
+
+.burger-menu-panel.open {
+  transform: translateX(0%);
+}
+
+.burger-menu-panel .menu-title {
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+}
+
+.menu-line {
+  height: 1px;
+  width: 100%;
+  background-color: white;
+  margin: 10px 0px;
+}
+
+.menu-links {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.menu-link {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  width: 100%;
+}
+
+.menu-link i {
+  color: white;
+}
+
+.menu-link:hover {
+  color: white !important;
+  background-color: var(--primary-light);
+}
+
+.menu-link:not(.current):hover {
+  color: var(--primary-light);
+}
+
+.menu-link.current {
+  background-color: var(--primary-light);
+}
+
+.menu-link.current:hover {
+  color: white;
+}
+
+@keyframes panel-active {
+  from {
+  }
+}

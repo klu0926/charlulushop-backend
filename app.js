@@ -1,4 +1,3 @@
-try {
   if (process.env.NODE_ENV !== 'production') {
     console.log('use dotenv')
     require('dotenv').config()
@@ -70,10 +69,5 @@ try {
     console.log('current NODE_ENV : ' + process.env.NODE_ENV)
     console.log('-----------------------------')
   })
-
-
-} catch (err) {
-  // console.error('An error occurred during startup: ', err)
-}
 
 

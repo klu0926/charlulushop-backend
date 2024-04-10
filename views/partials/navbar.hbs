@@ -1,35 +1,93 @@
 <nav class="navbar">
-  <div class="RWD-container">
+  <div class="navbar-container">
+    <!-- burger -->
+  <div id='burger' class="burger-container">
+    <div class="burger-icon">
+      <div class="burger-icon-line"></div>
+      <div class="burger-icon-line"></div>
+      <div class="burger-icon-line"></div>
+    </div>
+  </div>
+  <!-- page title (small screen) -->
+  <div class="navbar-current-page">
+    {{#if (isSame page 'add')}}
+    <i class="fa-solid fa-square-plus"></i>
+    新增{{/if}}
+    {{#if (isSame page 'items')}}
+    <i class="fa-solid fa-table-cells-large"></i>
+    全部{{/if}}
+    {{#if (isSame page 'tags')}}
+    <i class="fa-solid fa-tag"></i>
+    標籤{{/if}}
+    {{#if (isSame page 'orders')}}
+    <i class="fa-solid fa-cart-shopping"></i>
+    訂單{{/if}}
+    {{#if (isSame page 'status')}}
+    <i class="fa-solid fa-store"></i>
+    商店{{/if}}
+  </div>
+  <!-- title -->
+  <div class="navbar-title">
+    管理站
+  </div>
+  <!-- links -->
   <div class="links">
-  <a href="/items/add" class='nav-link {{isCurrentPage page 'add'}}'>新增</a>
-  <a href="/items" class='nav-link {{isCurrentPage page 'items'}}'>全部</a>
-  <a href="/tags/add" class='nav-link {{isCurrentPage page 'tags'}}'>標籤</a>
-  <a href="/orders" class='nav-link {{isCurrentPage page 'orders'}}'>訂單</a>
-  <a href="/status" class='nav-link {{isCurrentPage page 'status'}}'>管理</a>
-
+  <a href="/items/add" class='nav-link {{isCurrentPage page 'add'}}'>
+<i class="fa-solid fa-square-plus"></i>
+  新增</a>
+  <a href="/items" class='nav-link {{isCurrentPage page 'items'}}'>
+<i class="fa-solid fa-table-cells-large"></i>
+  全部</a>
+  <a href="/tags/add" class='nav-link {{isCurrentPage page 'tags'}}'>
+  <i class="fa-solid fa-tag"></i>
+  標籤</a>
+  <a href="/orders" class='nav-link {{isCurrentPage page 'orders'}}'>
+  <i class="fa-solid fa-cart-shopping"></i>
+  訂單</a>
+  <a href="/status" class='nav-link {{isCurrentPage page 'status'}}'>
+  <i class="fa-solid fa-store"></i>
+  商店</a>
+      </div>
   {{#if isAuth}}
-  <a id='logout' class="nav-link secondary" href="/users/logout">登出</a>
+  <a id='logout' class="logout-link nav-link secondary" href="/users/logout">登出</a>
   {{else}}
      <a href="/users/login" class='nav-link secondary {{isCurrentPage page 'login'}}'>登入</a>
   {{/if}}
-    </div>
-    </div>
+  </div>
+  
 </nav>
 
 <script type="module">
   import sweetAlert from '/js/sweetAlert.js'
-
   const logout = document.querySelector('#logout')
+  const burger = document.querySelector('#burger')
 
   async function handleLogout(e){
    e.preventDefault()
    const result = await sweetAlert.confirm('登出', '你確定要登出嗎？')
-   console.log(result)
    if (result && result.isConfirmed){
     window.location.href =  logout.href
    } 
   }
+
+  function handleBurgerClick(){
+     const menuBackground = document.querySelector('#burger-menu-background')
+    const menuPenal = document.querySelector('#burger-menu-panel')  
+  if (!menuBackground || !menuPenal){
+    console.log('can not find menu background and panel')
+    return
+  }
+    menuBackground.style.display = 'block'
+    menuBackground.classList.add('open')
+    menuPenal.classList.add('open')
+    document.body.style.overflow ='hidden'
+  }
+
+  if (burger){
+  burger.onclick = handleBurgerClick
+  }
   if (logout){
   logout.onclick = handleLogout
   }
+
 </script>

@@ -64,11 +64,11 @@
       </div>
       <!--buttons-->
       <div class="buttonContainer">
-        <button class="w-80" id="itemSubmit" type="button">Save</button>
-        <button class="secondary w-80" id="reset" type="reset">Reset</button>
+        <button class="w-80" id="itemSubmit" type="button">儲存</button>
+        <button class="secondary w-80" id="reset" type="reset">清空</button>
         <p class="info">如是已經<span>售完</span>的物件<span>請勿刪除</span>會影響訂單</p>
         <button class="secondary w-80" id="delete" type="button" data-name="{{item.name}}" data-id="{{item.id}}">
-          Delete
+          刪除商品
         </button>
       </div>
     </form>
@@ -196,9 +196,9 @@
   }
 
   async function handleDeleteItem(e) {
-    const isConfirm = await sweetAlert.confirm(`你要刪除掉物件:『${e.target.dataset.name}』?`);
     const itemId = e.target.dataset.id;
-    if (!isConfirm || !itemId) return;
+    const result = await sweetAlert.confirm(`你要刪除掉物件:『${e.target.dataset.name}』?`);
+    if (!result.isConfirmed || !itemId) return;
 
     try {
       const url = `/items/${itemId}`;
@@ -210,10 +210,10 @@
       const json = await response.json()
       if (!json.ok) throw new Error(json.message);
 
+      await sweetAlert.success('刪除成功', '將會跳轉回商品頁面', 2000);
       window.location.href = '/items';
     } catch (err) {
-      alert(err);
-      window.location.reload();
+      await sweetAlert.error('刪除失敗', err.message || err);
     }
   }
 

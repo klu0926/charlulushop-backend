@@ -7,7 +7,7 @@ const statusController = {
     const reason = shopStatusObject.reason
     const message = shopStatusObject.message
 
-    res.render('statusPage', { isLock, reason, message })
+    res.render('statusPage', { isLock, reason, message, page: 'status' })
   }
 }
 module.exports = statusController

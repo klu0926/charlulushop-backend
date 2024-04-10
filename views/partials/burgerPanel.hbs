@@ -1,0 +1,48 @@
+{{#if isAuth}}
+<div id="burger-menu-background" class="burger-menu-background">
+</div>
+
+<div id="burger-menu-panel" class="burger-menu-panel">
+  <p class="menu-title">Charlulu's 管理站</p>
+  <div class="menu-links">
+  <a href="/items/add" class='menu-link {{isCurrentPage page 'add'}}'>
+  <i class="fa-solid fa-square-plus"></i>
+  新增</a>
+  <a href="/items" class='menu-link {{isCurrentPage page 'items'}}'>
+  <i class="fa-solid fa-table-cells-large"></i>
+  全部</a>
+  <a href="/tags/add" class='menu-link {{isCurrentPage page 'tags'}}'>
+  <i class="fa-solid fa-tag"></i>
+  標籤</a>
+  <a href="/orders" class='menu-link {{isCurrentPage page 'orders'}}'>
+  <i class="fa-solid fa-cart-shopping"></i>
+  訂單</a>
+  <a href="/status" class='menu-link {{isCurrentPage page 'status'}}'>
+  <i class="fa-solid fa-store"></i>
+  商店</a>
+  </div>
+  <div class="menu-line"></div>
+  <a class="menu-link" href="/users/logout">
+  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+  登出</a>
+</div>
+
+<script>
+  const menuBackground = document.querySelector('#burger-menu-background')
+  const menuPenal = document.querySelector('#burger-menu-panel')
+
+  function handleBackgroundClick(){
+    menuPenal.classList.remove('open')
+    menuBackground.classList.remove('open')
+    document.body.style.overflowY ='scroll'
+
+    setTimeout(() => {
+      menuBackground.style.display = 'none'
+    }, 300)
+  }
+
+  menuBackground.onclick = handleBackgroundClick
+
+
+</script>
+  {{/if}}

@@ -1,3 +1,6 @@
+@import url("burgerMenu.css");
+@import url("navbar.css");
+
 :root {
   --primary: rgb(247, 100, 125);
   --primary-light: rgb(246, 139, 156);
@@ -15,6 +18,8 @@
   --max-width: 1100px;
   --max-content: 400px;
   --item: 170px;
+
+  --menu-close-time: 0.25s;
 }
 
 * {
@@ -48,17 +53,24 @@ h4 {
 .header {
   text-align: center;
 }
-.flex-center{
- display: flex;
- justify-content: center;
- align-items: center; 
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  height: 100vh;
+}
+
+.footer {
+  height: 100px;
 }
 
 #App {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 100px;
   width: var(--min-width);
   margin: 0 auto;
 }
@@ -80,50 +92,7 @@ h4 {
   font-weight: bold;
 }
 
-/* navbar */
-.navbar {
-  position: fixed;
-  width: 100%;
-  min-height: 42px;
-  text-align: center;
-  box-shadow: 0px 1px 6px 2px var(--shadow);
-  background-color: white;
-  z-index: 100;
-}
-
-.links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  color: var(--primary);
-}
-
-.nav-link:not(.current):hover {
-  color: var(--primary-light);
-}
-
-.nav-link.current {
-  border-bottom: 3px solid var(--primary);
-}
-
-.nav-link.secondary {
-  color: var(--secondary);
-}
-
-.nav-link.secondary:hover {
-  color: var(--secondary-light);
-}
-
-.nav-link.secondary.current {
-  border-bottom: 3px solid var(--secondary);
-}
-
+/* speech */
 .speech {
   display: flex;
   justify-content: start;
@@ -515,20 +484,26 @@ button {
   padding: 5px 10px;
   font-size: 1.1rem;
   border-radius: 5px;
+  width: 100%;
+  max-width: 200px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
 button.w-100 {
-  width: 100%;
+  max-width: 100%;
 }
 
 button.w-80 {
-  width: 80%;
+  max-width: 80%;
 }
 
 button.w-50 {
-  width: 50%;
+  max-width: 50%;
+}
+
+button.auto {
+  width: auto;
 }
 
 button:hover {
@@ -976,9 +951,6 @@ button.secondary {
   color: var(--secondary);
   margin-bottom: 10px;
   font-weight: bold;
-}
-.statusPage-button{
-  width: 150px;
 }
 
 /* error message */

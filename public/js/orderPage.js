@@ -153,4 +153,5 @@ import sweetAlert from '/js/sweetAlert.js'
   filterSearchInput.onkeydown = (e) => {
     if (e.key === 'Enter') filterSearchButton.click()
   }
+  filterSearchInput.oninput = handleFilterSearch
 })()

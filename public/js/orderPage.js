@@ -92,7 +92,7 @@ import sweetAlert from '/js/sweetAlert.js'
     // show some
     let filteredOrders = []
     function isSimilar(searchTerm, string) {
-      const regex = new RegExp(`^${searchTerm.trim() || ''}.*`);
+      const regex = new RegExp(`.*${searchTerm.trim() || ''}.*`);
       return regex.test(string)
     }
     orders.forEach(order => {
@@ -113,13 +113,9 @@ import sweetAlert from '/js/sweetAlert.js'
         filteredOrders.push(order)
       }
       // search (name, email)
-      if (search && search.includes('@')) {
+      if (search) {
         filteredOrders = filteredOrders.filter(order => {
-          return isSimilar(search, order.dataset.email)
-        })
-      } else if (search) {
-        filteredOrders = filteredOrders.filter(order => {
-          return isSimilar(search, order.dataset.name)
+          return isSimilar(search, order.dataset.email) || isSimilar(search, order.dataset.name)
         })
       }
       filteredOrders.forEach(order => order.style.display = 'flex')

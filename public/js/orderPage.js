@@ -1,14 +1,15 @@
 import sweetAlert from '/js/sweetAlert.js'
 
 (() => {
-  const selectors = document.querySelectorAll('.status-select')
+  const statusSelectors = document.querySelectorAll('.status-select')
   const cancels = document.querySelectorAll('.cancel')
   const deletes = document.querySelectorAll('.delete')
   const filterSelect = document.querySelector('#order-filters-select')
   const filterSearchInput = document.querySelector('#order-search-input')
   const filterSearchButton = document.querySelector('#order-search-button')
   const filterResetButton = document.querySelector('#order-reset-button')
-
+  const orders = document.querySelectorAll('.order')
+  const currentCount = document.querySelector('#current-orders-count')
 
   async function deleteOrder(orderId) {
     try {
@@ -56,7 +57,7 @@ import sweetAlert from '/js/sweetAlert.js'
     }
   }
 
-  function handleSelectorChange(e) {
+  function handleOrderStatusChange(e) {
     const status = e.target.value.trim()
     const orderId = e.target.dataset.orderid
     fetchPostStatus(orderId, status)
@@ -81,19 +82,62 @@ import sweetAlert from '/js/sweetAlert.js'
     }
   }
 
+  // filters
   function handleFilterSearch() {
     const filter = filterSelect.value
     const search = filterSearchInput.value
-    window.location.href = `/orders?filter=${filter}&search=${search}`
+    // hide all
+    orders.forEach(order => order.style.display = 'none')
+
+    // show some
+    let filteredOrders = []
+    let count = 0
+    function isSimilar(searchTerm, string) {
+      const regex = new RegExp(`^${searchTerm || ''}.*`);
+      return regex.test(string)
+    }
+    orders.forEach(order => {
+      const status = order.dataset.status
+
+      // filter
+      if (filter === '未完成') {
+        if (status !== '交易完成') {
+          filteredOrders.push(order)
+        }
+      }
+      if (filter === '完成') {
+        if (status === '交易完成') {
+          filteredOrders.push(order)
+        }
+      }
+      if (filter === '全部') {
+        filteredOrders.push(order)
+      }
+      // search (name, email)
+      if (search && search.includes('@')) {
+        filteredOrders = filteredOrders.filter(order => {
+          return isSimilar(search, order.dataset.email)
+        })
+      } else if (search) {
+        filteredOrders = filteredOrders.filter(order => {
+          return isSimilar(search, order.dataset.name)
+        })
+      }
+      filteredOrders.forEach(order => order.style.display = 'flex')
+    })
+    // set count
+    currentCount.innerText = filteredOrders.length
   }
 
   function handleFilterReset() {
-    window.location.href = `/orders`
+    filterSearchInput.value = ''
+    filterSelect.value = '全部'
+    handleFilterSearch()
   }
 
   // Action
-  selectors.forEach(s => {
-    s.onchange = handleSelectorChange
+  statusSelectors.forEach(s => {
+    s.onchange = handleOrderStatusChange
   })
 
   cancels.forEach(c => {

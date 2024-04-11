@@ -16,13 +16,13 @@
       <div class="order-filters-container">
         <!--filter selector-->
       <select id="order-filters-select" class="order-filters-select" name="filter" id="filters-select">
-        <option value="全部" {{#if (isSame filter '全部' )}}selected {{/if}}>全部 </option>
-        <option value="未完成" {{#if (isSame filter '未完成' )}}selected {{/if}}>未完成  </option>
-        <option value="完成" {{#if (isSame filter '完成' )}}selected {{/if}}>完成 </option>
+        <option value="全部">全部 </option>
+        <option value="未完成">未完成  </option>
+        <option value="完成">完成 </option>
       </select>
       <!--search -->
       <div id="inputGroup-input-container" class="inputGroup-input-container">
-      <input id="order-search-input" class="inputGroup-input" name="search" type="text" placeholder="名稱、信箱"  value="{{search}}" autofocus />
+      <input id="order-search-input" class="inputGroup-input" name="search" type="text" placeholder="名稱、信箱"  autofocus />
        <button id='order-search-button' class="auto">
         <i class="fa-solid fa-magnifying-glass"></i>
        </button>
@@ -31,12 +31,12 @@
       <button id='order-reset-button' class="auto secondary">全部</button>
       </div>
 
-      <p class="c-dark my-1 t-center fs-small">目前顯示 {{orders.length}} 件訂單</p>
+      <p class="c-dark my-1 t-center fs-small">目前顯示 <span id="current-orders-count">{{orders.length}}</span> 件訂單</p>
 
         <div class="ordersContainer">
       {{#if orders}}
       {{#each orders}}
-      <div class="order">
+      <div class="order" data-status="{{status}}" data-name='{{buyerName}}' data-email="{{buyerEmail}}">
         <!--items-->
         <div class="itemsRow">
           <!--info line-->
@@ -86,7 +86,7 @@
       {{else}}
       <!-- 找不到東西 -->
       <div style="d-flex">
-         <p class="t-center c-dark">在<span class="c-primary"> {{filter}} </span>的訂單中搜尋不到<span class="c-primary">{{#if search}} {{search}} </span>的訂單{{else}}訂單{{/if}}</p>
+         <p class="t-center c-dark">找不到東西</p>
       </div>
       {{/if}}
       </div>

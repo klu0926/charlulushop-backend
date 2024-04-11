@@ -91,9 +91,8 @@ import sweetAlert from '/js/sweetAlert.js'
 
     // show some
     let filteredOrders = []
-    let count = 0
     function isSimilar(searchTerm, string) {
-      const regex = new RegExp(`^${searchTerm || ''}.*`);
+      const regex = new RegExp(`^${searchTerm.trim() || ''}.*`);
       return regex.test(string)
     }
     orders.forEach(order => {

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { upload } = require('../helpers/multer')
+const { upload, pictureUpload } = require('../helpers/multer')
 const { resize } = require('../helpers/sharp.js')
 // controller
 const itemController = require('../controller/modules/itemController.js')
@@ -7,11 +7,13 @@ const imageController = require('../controller/modules/imageController')
 const userController = require('../controller/modules/userController.js')
 const orderController = require('../controller/modules/orderController.js')
 const shopStatusController = require('../controller/modules/shopStatusController.js')
+const postController = require('../controller/modules/postController.js')
 
 // api
 const apiRouter = require('./api.js')
 // isAuth
 const isAuth = require('../middleware/isAuth.js')
+const imgurHandler = require('../helpers/imgur.js')
 
 // ---------------- CONTROLLER ----------------- //
 // root
@@ -46,6 +48,10 @@ router.get('/orders', isAuth, orderController.getOrders)
 
 // Status
 router.get('/status', isAuth, shopStatusController.getStatusPage)
+
+// post
+router.get('/posts/add', isAuth, postController.getAddPostPage)
+router.post('/posts', isAuth, pictureUpload, imgurHandler.postImage, postController.postPost)
 
 // API
 router.use('/api', apiRouter)

@@ -2,6 +2,7 @@
 @import url("navbar.css");
 @import url("orderPage.css");
 @import url("common.css");
+@import url("addPostPage.css");
 
 :root {
   --primary: rgb(247, 100, 125);

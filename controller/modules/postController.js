@@ -1,8 +1,10 @@
 const { Post, Block } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
-const { block } = require('sharp')
 
 const postController = {
+  getAddPostPage: (req, res) => {
+    res.render('addPostPage')
+  },
   getPosts: async (req, res, next) => {
     try {
       const posts = await Post.findAll({
@@ -32,18 +34,15 @@ const postController = {
     try {
       // body
       const { title, description } = req.body
-      if (!title || !description) throw new Error('缺少 title 或是 description')
-
       // file
-      const coverImage = req.files.cover?.[0]
-
-      // upload to imgur
+      const file = req.files[0]
+      if (!title || !description) throw new Error('缺少 title 或是 description')
 
       const post = await Post.create({
         title,
         description,
         status: '創作中',
-        // cover
+        cover: file.link,
         block_order: JSON.stringify([])
       })
 
@@ -55,6 +54,5 @@ const postController = {
   }
 
 }
-
 
 module.exports = postController

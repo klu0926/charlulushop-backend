@@ -1,0 +1,32 @@
+.addPostPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.addPostPage-cover-display {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: var(--border);
+  border: 1px solid var(--border);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.addPostPage form {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.addPostPage form input,
+.addPostPage form textarea {
+  width: 100%;
+}

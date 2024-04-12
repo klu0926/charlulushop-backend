@@ -13,6 +13,4 @@ const upload = multer({ storage }).fields([
     maxCount: 5,
   },
 ])
-upload.fileFilter = 
-
 module.exports = { coverUpload, pictureUpload, upload }

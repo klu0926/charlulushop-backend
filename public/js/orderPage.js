@@ -57,10 +57,16 @@ import sweetAlert from '/js/sweetAlert.js'
     }
   }
 
-  function handleOrderStatusChange(e) {
+  async function handleOrderStatusChange(e) {
     const status = e.target.value.trim()
     const orderId = e.target.dataset.orderid
-    fetchPostStatus(orderId, status)
+    await fetchPostStatus(orderId, status)
+    // change order element's dateset-status
+    const parentOrder = e.target.closest('.order')
+    // change order status
+    parentOrder.dataset.status = status
+    // filter again
+    handleFilterSearch()
   }
 
   async function handleCancelClick(e) {
@@ -115,7 +121,7 @@ import sweetAlert from '/js/sweetAlert.js'
       // search (name, email)
       if (search) {
         filteredOrders = filteredOrders.filter(order => {
-          return isSimilar(search, order.dataset.email) || isSimilar(search, order.dataset.name)
+          return isSimilar(search, order.dataset.email) || isSimilar(search, order.dataset.name) || isSimilar(search, order.dataset.ig)
         })
       }
       filteredOrders.forEach(order => order.style.display = 'flex')

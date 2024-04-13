@@ -36,13 +36,13 @@ const userController = {
 
       // set session (user id, jwt)
       req.session.userId = user.id
-      req.session.jwt = signJWT({ name: user.name })
+      const jwt = signJWT({ userId: user.id })
 
-      res.redirect('/items')
+      // don't redirect, send back JWT
+      res.status(200).json(responseJSON(true, 'POST', { userId: user.id, jwt }, 'Successfully got JWT', null))
     } catch (err) {
-      flash.setFlash(req, 'error', err.message)
       console.error(err)
-      res.redirect('/users/login')
+      res.status(400).json(responseJSON(false, 'POST', null, 'Login Fail', err))
     }
   },
   getLogout: async (req, res, next) => {

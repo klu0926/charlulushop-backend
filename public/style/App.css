@@ -891,6 +891,24 @@ button.secondary {
   color: var(--primary-light2);
 }
 
+/* loading cover */
+.loading-cover {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.841);
+}
+.loading-cover::after {
+  content: "載入中...";
+  color: var(--primary);
+  animation: flash 1s infinite, shake 1s infinite;
+  font-size: 1.2rem;
+}
+
 /* sweet alert 2 */
 .swal-title {
   font-size: 1.5rem;
@@ -902,7 +920,7 @@ button.secondary {
     filter: brightness(1);
   }
   50% {
-    filter: brightness(1.1);
+    filter: brightness(1.2);
   }
   100% {
     filter: brightness(1);

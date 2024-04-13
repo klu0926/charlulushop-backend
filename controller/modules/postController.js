@@ -3,7 +3,7 @@ const responseJSON = require('../../helpers/responseJSON')
 
 const postController = {
   getAddPostPage: (req, res) => {
-    res.render('addPostPage')
+    res.render('addPostPage', { page: 'post-add' })
   },
   getPosts: async (req, res, next) => {
     try {

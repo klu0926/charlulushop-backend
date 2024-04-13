@@ -39,6 +39,7 @@ router.post('/shop-status', shopStatusApi.postShopStatus)
 // Authentication
 router.post('/auth', authenticationApi.postLogin)
 router.post('/auth/jwt', authenticationApi.postValidateJWT)
+router.post('/auth/jwtServerLogin', authenticationApi.serverLoginWithJWT)
 
 // Tags api
 router.get('/tags', tagApi.getTags)

@@ -36,8 +36,6 @@ const orderController = {
         }
       })
 
-
-
       res.render('orderPage', { page: 'orders', orders, totalPrice, completedOrders, activeOrders, inCompletedOrder, })
     } catch (err) {
       console.error(err)

@@ -1,6 +1,6 @@
 import sweetAlert from '/js/sweetAlert.js'
 
-(()=>{
+(() => {
   const logout = document.querySelector('#logout')
   const burger = document.querySelector('#burger')
 
@@ -8,6 +8,9 @@ import sweetAlert from '/js/sweetAlert.js'
     e.preventDefault()
     const result = await sweetAlert.confirm('登出', '你確定要登出嗎？')
     if (result && result.isConfirmed) {
+      // clear local storage
+      localStorage.removeItem('charlulu-jwt')
+      // use logout a element's herf
       window.location.href = logout.href
     }
   }

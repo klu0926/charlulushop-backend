@@ -48,7 +48,7 @@ const authenticationApi = {
       if (!isPassword) throw new Error('使用者名稱或信箱錯誤')
 
       // return JWT
-      const jwtString = services.signJWT({ name: name })
+      const jwtString = services.signJWT({ userId: user.id })
 
       if (!jwtString) throw new Error('生產JWT失敗')
 
@@ -71,6 +71,25 @@ const authenticationApi = {
     } catch (err) {
       console.error(err)
       res.status(500).json(responseJSON(false, 'POST validate JWT', null, 'Fail to validate JWT', err.message))
+    }
+  },
+  serverLoginWithJWT: (req, res, next) => {
+    try {
+      const { JWT } = req.body
+      if (!JWT) throw new Error('沒有傳入JWT')
+
+      // check JWT
+      const decoded = services.validateJWT(JWT)
+      const userId = decoded.userId
+
+      if (userId === 'undefined') throw new Error('JWT內沒有使用者Id')
+
+      // Set session
+      req.session.userId = userId
+      res.status(200).json(responseJSON(true, 'POST', null, 'Successfully login with JWT', null))
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'POST', null, 'Fail to login with JWT', err.message))
     }
   }
 }

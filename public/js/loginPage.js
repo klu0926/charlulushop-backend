@@ -34,7 +34,8 @@ import sweetAlert from "/js/sweetAlert.js"
       // redirect
       window.location.href = '/items'
     } catch (err) {
-      console.log('error', err)
+      // 清除錯誤的jwt
+      localStorage.removeItem('charlulu-jwt')
       await sweetAlert.error('登入失敗', err)
       isLogin = false
     }

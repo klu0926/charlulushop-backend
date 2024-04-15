@@ -4,7 +4,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     try {
-      return queryInterface.bulkInsert('statuses', [{
+      return queryInterface.bulkInsert('Statuses', [{
         isLock: true,
       }])
     } catch (err) {
@@ -14,7 +14,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('statuses')
+    return queryInterface.bulkDelete('Statuses')
 
   }
 };

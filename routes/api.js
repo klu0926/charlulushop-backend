@@ -34,7 +34,7 @@ router.get('/youtubes/newest', youtubeApi.getNewestVideo)
 
 // shop status api
 router.get('/shop-status', shopStatusApi.getShopStatus)
-router.post('/shop-status', shopStatusApi.postShopStatus)
+router.post('/shop-status', shopStatusApi.putShopStatus)
 
 // Authentication
 router.post('/auth', authenticationApi.postLogin)

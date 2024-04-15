@@ -3,15 +3,31 @@ const { validateJWT } = require('../../controller/api/authenticationApi').servic
 const fs = require('fs')
 const path = require('path')
 const shopStatusPath = path.resolve(__dirname, '../../shopStatus.json')
+const { Status } = require('../../models')
 
 
 const services = {
-  getShopStatus: () => {
+  getShopStatus: async () => {
     try {
-      const data = fs.readFileSync(shopStatusPath, 'utf8')
-      shopStatusObject = JSON.parse(data)
-      if (!shopStatusObject) throw new Error('找不到 shop status')
-      return shopStatusObject
+      const status = await Status.findOne({ where: { id: 1 }, raw: true })
+      if (!status) throw new Error('找不到 shop status')
+
+      return status
+    } catch (err) {
+      throw err
+    }
+  },
+  putShopStatus: async (isLock, reason, message) => {
+    try {
+      const status = await Status.findOne({ where: { id: 1 } })
+      if (!status) throw new Error('找不到 shop status')
+      status.isLock = isLock
+      status.reason = reason
+      status.message = message
+
+      await status.save()
+      const statusObject = status.toJSON()
+      return statusObject
     } catch (err) {
       throw err
     }
@@ -27,7 +43,8 @@ const shopStatusApi = {
   // "message": "請等待夏洛特通知開店時間"
   getShopStatus: async (req, res, next) => {
     try {
-      const shopStatusObject = services.getShopStatus()
+      const shopStatusObject = await services.getShopStatus()
+
       res.status(200).json(responseJSON(true, 'Get Lock status', shopStatusObject, 'Get lock status', null))
     } catch (err) {
       console.error(err)
@@ -35,7 +52,7 @@ const shopStatusApi = {
     }
   },
   // body: JWT(optional), isLock (boolean), reason, message
-  postShopStatus: async (req, res, next) => {
+  putShopStatus: async (req, res, next) => {
     try {
       const { JWT, isLock, reason, message } = req.body
 
@@ -52,13 +69,11 @@ const shopStatusApi = {
         validateJWT(JWT)
       } else {
         // user on server site
-        if (!req.isAuthenticated()) throw new Error('Authenticated失敗，請嘗試重新登入')
+        if (!req.isAuthenticated) throw new Error('Authenticated失敗，請嘗試重新登入')
       }
 
       // post shop status
-      const shopStatus = { isLock, reason, message }
-      fs.writeFileSync(shopStatusPath, JSON.stringify(shopStatus))
-
+      const shopStatus = await services.putShopStatus(isLock, reason, message)
       res.status(200).json(responseJSON(true, 'POST shop status', shopStatus, 'POST shop status completed', null))
 
     } catch (err) {

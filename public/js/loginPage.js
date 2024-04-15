@@ -9,9 +9,9 @@ import sweetAlert from "/js/sweetAlert.js"
   function showLoadingCover() {
     const loadingCover = document.createElement('div')
     loadingCover.classList.add('loading-cover')
+    loadingCover.id = 'loading-cover'
     document.body.appendChild(loadingCover)
   }
-
 
   async function jwtServerLogin(jwt) {
     try {
@@ -37,7 +37,7 @@ import sweetAlert from "/js/sweetAlert.js"
       // 清除錯誤的jwt
       localStorage.removeItem('charlulu-jwt')
       await sweetAlert.error('登入失敗', err)
-      isLogin = false
+      window.location.reload()
     }
   }
 

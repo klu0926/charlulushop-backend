@@ -1,5 +1,7 @@
 <div class="page">
   <div class="statusPage">
+    <p>isLock : {{isLock}}</p>
+
         <!--speech-->
   <div class="speech">
     <img class="icon" src="/images/idea.png" alt="icon" />
@@ -13,12 +15,12 @@
           <img src="/images/shop-status-500.png" alt="shop-status">
   </div>
       <select id="select" class="statusPage-select" name="lock" >
-        {{#if (isSame isLock true)}}
+        {{#if isLock}}
         <option value="false" >商店開啟</option>
         <option value="true" selected>商店關閉</option>
         {{else}}
-        <option value="false" selected>商店開啟</option>
-        <option value="true" >商店關閉</option>
+        <option value="false" selected >商店開啟</option>
+        <option value="true"  >商店關閉</option>
         {{/if}}
 
       </select>
@@ -26,14 +28,14 @@
       <div class="inputGroup-row">
      <div class="inputGroup-input-container">
       <label class="inputGroup-label" for="reason">狀況 :</label>
-      <input class="inputGroup-input" id="reason" name="reason" type="text" placeholder="..." value="{{reason}}" required {{#if isLock}}{{else}}disabled{{/if}} />
+      <input class="inputGroup-input" id="reason" name="reason" type="text" placeholder="..." value="{{reason}}" required  {{#if isLock }}{{else}}disabled{{/if}} />
       </div>
     </div>
     <!--message-->
     <div class="inputGroup-row">
       <div class="inputGroup-input-container">
       <label class="inputGroup-label" for="message">訊息 :</label>
-      <input class="inputGroup-input" id="message" name="message" type="text" placeholder="..." value="{{message}}" required {{#if isLock}}{{else}}disabled{{/if}} />
+      <input class="inputGroup-input" id="message" name="message" type="text" placeholder="..." value="{{message}}" required  {{#if isLock}}{{else}}disabled{{/if}} />
       </div>
     </div>
   <div>

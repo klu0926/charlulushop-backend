@@ -1,0 +1,28 @@
+<div class="page">
+<div class="editPostPage w-100">
+  <button class="back" onclick="window.history.go(-1); return false">back</button>
+
+<div class="post-section">
+  <div class="post-cover-container">
+    <img src="{{post.cover}}" alt="post cover">
+  </div>
+</div>
+
+<div class="post-section">
+ <p class="c-primary">標題</p>
+  <div id="post-title" class="post-block title-block" contenteditable="true">{{post.title}}</div>
+</div>
+ <div class="post-section">
+  <p class="c-primary">介紹</p>
+  <div id="post-description" class="post-block des-block" contenteditable="true">{{post.description}}</div>
+</div>
+ <div class="post-section">
+  <p class="c-primary">內文</p>
+  <div id="post-content" class="post-block content-block" contenteditable="true">
+    {{#if post.content}}{{post.content}}{{else}}目前沒有內文{{/if}}
+  </div>
+</div>
+</div>
+</div>
+
+<script type="module" src=""></script>

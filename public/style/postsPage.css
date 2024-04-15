@@ -1,0 +1,35 @@
+.postsPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+.posts-table {
+  width: 100%;
+}
+
+.td-id,
+.td-status {
+  text-align: center;
+}
+
+.table-cell {
+  flex-grow: 1;
+  min-width: 0;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.table-cell.td-id {
+  width: 25px;
+}
+
+.table-cell.td-status {
+  width: 60px;
+}
+
+.post-link:hover {
+  text-decoration: underline;
+}

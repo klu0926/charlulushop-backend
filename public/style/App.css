@@ -3,6 +3,8 @@
 @import url("orderPage.css");
 @import url("common.css");
 @import url("addPostPage.css");
+@import url("postsPage.css");
+@import url("editPostPage.css");
 
 :root {
   --primary: rgb(247, 100, 125);
@@ -30,6 +32,23 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+table,
+th,
+td {
+  border-collapse: collapse;
+}
+
+td {
+  padding: 20px 10px;
+  border-bottom: 1px solid var(--light);
+}
+
+th {
+  font-weight: normal;
+  color: var(--dark);
+  border-bottom: 1px solid var(--dark);
 }
 
 p {
@@ -496,7 +515,7 @@ button {
   width: 100%;
   max-width: 200px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 button.w-100 {
@@ -522,6 +541,22 @@ button:hover {
 
 button.secondary {
   background-color: var(--border);
+}
+
+button.back {
+  width: auto;
+  background-color: white;
+  border: 1px solid var(--border);
+  color: var(--border);
+  padding: 2px 4px;
+  border-radius: 2;
+  margin: 4px 0px;
+}
+
+button.back:hover {
+  color: white;
+  border: 1px solid var(--dark);
+  background-color: var(--dark);
 }
 
 .d-none {

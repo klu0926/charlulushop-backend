@@ -1,9 +1,19 @@
 const { Post, Block } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
+const { getPosts, getPost } = require('../api/postApi').services
 
 const postController = {
+  getPostsPage: async (req, res) => {
+
+    const posts = await getPosts()
+    res.render('postsPage', { page: 'post', posts })
+  },
+  getPostPage: async (req, res) => {
+    const post = await getPost(req.params.id)
+    res.render('editPostPage', { page: 'post', post })
+  },
   getAddPostPage: (req, res) => {
-    res.render('addPostPage', { page: 'post-add' })
+    res.render('addPostPage', { page: 'post' })
   },
   getPosts: async (req, res, next) => {
     try {
@@ -46,7 +56,7 @@ const postController = {
         block_order: JSON.stringify([])
       })
 
-      res.status(200).json(responseJSON(true, 'POST', post, '建立 Posts 成功', null))
+      res.redirect('/posts/')
     } catch (err) {
       console.error(err)
       res.status(500).json(responseJSON(true, 'POST', null, '建立 Posts 失敗', err.message))

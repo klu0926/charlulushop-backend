@@ -1,0 +1,47 @@
+.editPostPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  width: 100%;
+  max-width: 600px;
+}
+
+.post-cover-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--light);
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.post-cover-container img {
+  
+}
+
+.post-section {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* post-block */
+.post-block {
+  width: 100%;
+  padding: 5px 0px;
+  min-height: 2rem;
+}
+.post-block:focus {
+}
+
+/* each block */
+.title-block {
+  font-size: 1.4rem;
+}
+
+.des-block {
+}
+
+.content-block {
+}

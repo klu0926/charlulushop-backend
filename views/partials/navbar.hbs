@@ -25,7 +25,7 @@
     {{#if (isSame page 'status')}}
     <i class="fa-solid fa-store"></i>
     商店{{/if}}
-    {{#if (isSame page 'post-add')}}
+    {{#if (isSame page 'post')}}
   <i class="fa-solid fa-pencil"></i>
     貼文{{/if}}
   </div>
@@ -50,6 +50,20 @@
   <a href="/status" class='nav-link {{isCurrentPage page 'status'}}'>
   <i class="fa-solid fa-store"></i>
   商店</a>
+  <!--links : post-->
+    <span id="post-links" class='post-links nav-link {{isCurrentPage page 'post'}}'>貼文
+      <i class="post-links-i up fas fa-chevron-up"></i>
+      <i class="post-links-i down fas fa-chevron-down"></i>
+
+  <div class="post-links-container">
+      <a class="nav-link" href="/posts/add">
+        <i class="fa-solid fa-pencil"></i>
+  新增</a>
+      <a class="nav-link" href="/posts/">
+<i class="fa-solid fa-bars-staggered"></i>全部</a>
+  </div>
+
+  </span>
       </div>
   {{#if isAuth}}
   <a id='logout' class="logout-link nav-link secondary" href="/users/logout">登出</a>

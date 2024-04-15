@@ -4,17 +4,37 @@
   justify-content: start;
   align-items: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
+}
+.addPostPage label {
+  margin-right: auto;
 }
 
 .addPostPage-cover-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  aspect-ratio: 1/1;
-  background-color: var(--border);
-  border: 1px solid var(--border);
+  aspect-ratio: 2/1;
+  background-color: var(--light);
+  border-radius: 5px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.addPostPage-cover-display-title {
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.869);
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 4px 10px;
+  color: var(--primary);
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+.addPostPage-cover-display-title:hover {
+  transform: scale(1.1);
 }
 
 .addPostPage form {
@@ -30,3 +50,5 @@
 .addPostPage form textarea {
   width: 100%;
 }
+
+

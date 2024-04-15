@@ -1,0 +1,30 @@
+<div class="page">
+<div class="postsPage">
+  <table class="posts-table">
+    <thead>
+      <tr class="table-row">
+      <th>ID</th>
+      <th>標題</th>
+      <th>狀態</th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--post array-->
+      {{#each posts}}
+      <tr class="table-row">
+        <td class="table-cell td-id">{{id}}</td>
+        <td class="table-cell td-des"><a class="post-link" href="/posts/{{id}}">{{title}}</a></td>
+        <td class="table-cell td-status">{{status}}</td>
+        <td>
+          <div>
+            <button>X</button>
+          </div>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<script type="module" src=""></script>

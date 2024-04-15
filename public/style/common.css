@@ -18,7 +18,7 @@
 }
 
 /* font size */
-.fs-small{
+.fs-small {
   font-size: 0.9rem;
 }
 
@@ -26,10 +26,25 @@
 .t-center {
   text-align: center;
 }
+.t-left {
+  text-align: left;
+}
+
+
+/* width */
+.w-100{
+  width: 100%;
+}
 
 /* display*/
 .d-flex {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.d-flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: start;
 }

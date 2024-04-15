@@ -3,6 +3,22 @@ import sweetAlert from '/js/sweetAlert.js'
 (() => {
   const logout = document.querySelector('#logout')
   const burger = document.querySelector('#burger')
+  const postLinks = document.querySelector('#post-links')
+
+  function handlePostLinksToggle() {
+    if (postLinks.classList.contains('active')) {
+      handlePostLinksOff()
+    } else {
+      handlePostLinksOn()
+    }
+  }
+
+  function handlePostLinksOn() {
+    postLinks.classList.add('active')
+  }
+  function handlePostLinksOff() {
+    postLinks.classList.remove('active')
+  }
 
   async function handleLogout(e) {
     e.preventDefault()
@@ -19,7 +35,6 @@ import sweetAlert from '/js/sweetAlert.js'
     const menuBackground = document.querySelector('#burger-menu-background')
     const menuPenal = document.querySelector('#burger-menu-panel')
     if (!menuBackground || !menuPenal) {
-      console.log('can not find menu background and panel')
       return
     }
     menuBackground.style.display = 'block'
@@ -33,5 +48,14 @@ import sweetAlert from '/js/sweetAlert.js'
   }
   if (logout) {
     logout.onclick = handleLogout
+  }
+  if (postLinks) {
+    postLinks.onclick = handlePostLinksToggle
+    document.body.addEventListener('click', (e) => {
+      if (e.target !== postLinks && !e.target.classList.contains('post-links-i')) {
+        console.log('body click')
+        handlePostLinksOff()
+      }
+    })
   }
 })()

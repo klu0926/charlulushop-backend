@@ -1,7 +1,10 @@
 <div class="page">
 <div class="addPostPage">
     <label for="imageInput">貼文封面</label>
-    <div id="image-display" class="addPostPage-cover-display">cover display</div>
+    <!--image display-->
+    <div id="image-display" class="addPostPage-cover-display">
+      <div class="addPostPage-cover-display-title">上傳封面</div>
+    </div>
 
     <form action="/posts" method="post" enctype="multipart/form-data">
     <input id="imageInput" class="d-none" type="file" name="picture" required />
@@ -9,7 +12,7 @@
     <label for="postTitle">標題</label>
     <input id="postTitle" name="title" type="text" required>
 
-    <label for="postDescription">小介紹</label>
+    <label for="postDescription">介紹</label>
     <textarea id="postDescription" name="description" cols="30" rows="10" required></textarea>
 
     <button type="submit">創建貼文</button>

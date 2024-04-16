@@ -28,7 +28,66 @@ const services = {
     } catch (err) {
       throw err
     }
-  }
+  },
+  postPost: async (title, description, coverUrl) => {
+    try {
+      // check missing
+      // check if missing anything
+      if (!title) throw new Error('Missing title')
+      if (!description) throw new Error('Missing title')
+      if (!coverUrl) throw new Error('Missing image url')
+
+      const post = await Post.create({
+        title,
+        description,
+        cover: coverUrl,
+      })
+      return post.toJSON()
+    } catch (err) {
+      throw err
+    }
+  },
+  putPost: async (id, title, description, status, coverUrl, order) => {
+    try {
+      // check missing
+      // check if missing anything
+      if (id === undefined) throw new Error('Missing post id')
+      if (!title) throw new Error('Missing title')
+      if (!description) throw new Error('Missing title')
+      if (!status) throw new Error('Missing status')
+
+      // update post
+      const post = await Post.findOne({ where: { id } })
+
+      if (!post) throw new Error(`Can not find post with id ${id}`)
+
+      if (title) post.title = title
+      if (description) post.description = description
+      if (status) post.status = status
+      if (coverUrl) post.cover = coverUrl
+      await post.save()
+
+      // update block
+      
+
+      return post.toJSON()
+    } catch (err) {
+      throw err
+    }
+  },
+  deletePost: async (id) => {
+    try {
+      if (id === undefined) throw new Error('No post id')
+      const post = await Post.findOne({
+        where: { id }
+      })
+      if (!post) throw new Error(`找不到貼文 id:${id}`)
+      await Post.destroy({ where: { id } })
+      return true
+    } catch (err) {
+      throw err
+    }
+  },
 }
 
 

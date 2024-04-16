@@ -19,17 +19,49 @@
   flex-grow: 1;
   min-width: 0;
   overflow: hidden;
-  padding: 2px;
+  padding: 10px 2px;
 }
 
 .table-cell.td-id {
-  width: 25px;
+  width: 40px;
+  border-right: 1px solid var(--light);
+}
+
+.table-cell.td-des{
+  padding: 4px 6px;
 }
 
 .table-cell.td-status {
-  width: 60px;
+  width: 80px;
+  font-size: 0.9rem;
+  border-left: 1px solid var(--light);
+}
+
+.table-cell.td-action {
+  width: 30px;
+}
+.table-cell.td-action button {
+  font-size: 0.8rem;
+  padding: 5px;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border: 1px solid var(--primary);
+  background-color: white;
+  color: var(--primary);
+}
+.table-cell.td-action button:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+
+.post-link{
+  width: 100%;
+  padding: 3px 6px;
 }
 
 .post-link:hover {
-  text-decoration: underline;
+  border-radius: 5px;
+  background-color: var(--light);
 }

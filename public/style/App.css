@@ -5,6 +5,7 @@
 @import url("addPostPage.css");
 @import url("postsPage.css");
 @import url("editPostPage.css");
+@import url("swal.css");
 
 :root {
   --primary: rgb(247, 100, 125);
@@ -546,17 +547,23 @@ button.secondary {
 button.back {
   width: auto;
   background-color: white;
-  border: 1px solid var(--border);
+  border: 1px solid var(--primary);
   color: var(--border);
-  padding: 2px 4px;
+  padding: 2px 6px;
   border-radius: 2;
-  margin: 4px 0px;
+  margin: 10px 0px;
+  transition: none;
 }
 
 button.back:hover {
   color: white;
-  border: 1px solid var(--dark);
-  background-color: var(--dark);
+  border: 1px solid var(--primary);
+  background-color: var(--primary);
+}
+
+button.back:hover i {
+  color: white;
+  transition: none;
 }
 
 .d-none {
@@ -944,18 +951,13 @@ button.back:hover {
   font-size: 1.2rem;
 }
 
-/* sweet alert 2 */
-.swal-title {
-  font-size: 1.5rem;
-}
-
 /* animation */
 @keyframes flash {
   0% {
     filter: brightness(1);
   }
   50% {
-    filter: brightness(1.2);
+    filter: brightness(1.5);
   }
   100% {
     filter: brightness(1);

@@ -53,7 +53,6 @@ import sweetAlert from '/js/sweetAlert.js'
     postLinks.onclick = handlePostLinksToggle
     document.body.addEventListener('click', (e) => {
       if (e.target !== postLinks && !e.target.classList.contains('post-links-i')) {
-        console.log('body click')
         handlePostLinksOff()
       }
     })

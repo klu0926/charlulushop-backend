@@ -98,6 +98,31 @@ const sweetAlert = {
       background: `#fff`,
       imageUrl: url,
     })
+  },
+  loading: () => {
+    return new Promise((resolve, reject) => {
+      Swal.fire({
+        title: "努力中...",
+        html: `<div class='swal-loading-bar'></div>`,
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        customClass: {
+          title: 'swal-loading-title',
+          popup: 'swal-loading-popup',
+          text: 'swal-loading-text'
+        }
+      }).then(result => {
+        return resolve(result)
+      })
+    })
+  },
+  close: (timer = 0) => {
+    setTimeout(() => {
+      const alert = document.querySelector('.swal2-container')
+      if (alert) {
+        sweetAlert.close()
+      }
+    }, timer)
   }
 }
 

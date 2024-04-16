@@ -1,6 +1,6 @@
 const { Post, Block } = require('../../models')
 const responseJSON = require('../../helpers/responseJSON')
-const { getPosts, getPost } = require('../api/postApi').services
+const { getPosts, getPost, postPost, deletePost } = require('../api/postApi').services
 
 const postController = {
   getPostsPage: async (req, res) => {
@@ -15,51 +15,34 @@ const postController = {
   getAddPostPage: (req, res) => {
     res.render('addPostPage', { page: 'post' })
   },
-  getPosts: async (req, res, next) => {
-    try {
-      const posts = await Post.findAll({
-        attributes: {
-          exclude: ['createAt', 'updateAt']
-        },
-        include: [
-          {
-            model: Block,
-            as: 'blocks',
-            exclude: ['createAt', 'updateAt']
-          }
-        ],
-        order: [['id', 'DESC']],
-        distinct: true,
-        raw: true
-      })
-
-      if (!posts) throw new Error('Can not find any post')
-      res.status(200).json(responseJSON(true, 'GET', posts, '成功取得全部 Posts', null))
-    } catch (err) {
-      console.error(err)
-      res.status(500).json(responseJSON(true, 'GET', null, '取得 Posts 失敗', err.message))
-    }
-  },
   postPost: async (req, res, next) => {
     try {
       // body
-      const { title, description } = req.body
+      const { title, description, order } = req.body
       // file
       const file = req.files[0]
-      if (!title || !description) throw new Error('缺少 title 或是 description')
+      if (!file?.link) throw new Error('封面照上傳Imgur失敗')
+      if (!title.trim() || !description.trim()) throw new Error('請確定標題、介紹都有填寫')
 
-      const post = await Post.create({
-        title,
-        description,
-        status: '創作中',
-        cover: file.link,
-        block_order: JSON.stringify([])
-      })
+      const post = await postPost(title, description, file.link)
+      if (!post) throw new Error('建立 Post 失敗')
 
-      res.redirect('/posts/')
+      res.status(200).json(responseJSON(true, 'POST', post, '建立 Post 成功', null))
     } catch (err) {
       console.error(err)
-      res.status(500).json(responseJSON(true, 'POST', null, '建立 Posts 失敗', err.message))
+      res.status(500).json(responseJSON(false, 'POST', null, '建立 Posts 失敗', err.message))
+    }
+  },
+  deletePost: async (req, res, next) => {
+    try {
+
+      const id = req.params.id
+      if (id === undefined || id === '') throw new Error('Missing post id')
+      await deletePost(id)
+      res.status(200).json(responseJSON(true, 'DELETE', null, '刪除 Post 成功', null))
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'POST', null, '建立 Posts 失敗', err.message))
     }
   }
 

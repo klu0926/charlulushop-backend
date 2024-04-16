@@ -150,7 +150,7 @@
   display: none;
   bottom: -80px;
   left: 0;
-  width: 130px;
+  min-width: 100px;
   padding: 10px;
   background-color: white;
   border: none;

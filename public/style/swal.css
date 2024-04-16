@@ -1,0 +1,64 @@
+/* sweet alert 2 */
+.swal-title {
+  font-size: 1.5rem;
+}
+.swal-loading-popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  cursor: progress;
+}
+.swal-loading-title {
+  font-size: 1.2rem;
+  animation: flash 1s infinite linear, shake 0.5s infinite linear;
+  user-select: none;
+}
+
+.swal-loading-bar {
+  width: 100%;
+  height: 20px;
+  background-color: var(--primary);
+  transform-origin: center left;
+  animation: loadingBar 3s infinite linear;
+}
+
+/* animation */
+@keyframes loadingBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes flash {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.5);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

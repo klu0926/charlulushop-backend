@@ -7,7 +7,7 @@ tinyfy.key = process.env.TINYFY_API_KEY;
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 const imgurHandler = {
-  postImage: (width = 500, height = 500) => {
+  postImage: (width = 500, height = 400) => {
     return async (req, res, next) => {
       try {
         // get file 
@@ -36,10 +36,12 @@ const imgurHandler = {
         })
         if (!response.ok) throw new Error(response.statusText)
         const responseData = await response.json();
+
+        // add the imgur image url back to file's property
         file.link = responseData.data.link
         next()
       } catch (err) {
-        throw err
+        res.status(500).json(responseJSON(false, 'POST', null, '沒有上傳照片', err.message))
       }
     }
 

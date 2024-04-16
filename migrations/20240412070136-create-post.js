@@ -28,8 +28,9 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: '/images/writing-placeholder.png'
       },
-      block_order: {
-        type: Sequelize.STRING
+      content: {
+        allowNull: true,
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,

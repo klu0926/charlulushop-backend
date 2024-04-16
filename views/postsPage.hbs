@@ -1,5 +1,6 @@
 <div class="page">
 <div class="postsPage">
+  {{#if posts}}
   <table class="posts-table">
     <thead>
       <tr class="table-row">
@@ -16,15 +17,16 @@
         <td class="table-cell td-id">{{id}}</td>
         <td class="table-cell td-des"><a class="post-link" href="/posts/{{id}}">{{title}}</a></td>
         <td class="table-cell td-status">{{status}}</td>
-        <td>
-          <div>
-            <button>X</button>
-          </div>
+        <td class="table-cell td-action">  
+            <button class="post-delete auto" data-id="{{id}}">X</button>
         </td>
       </tr>
       {{/each}}
     </tbody>
   </table>
+   {{else}}
+  {{> note text='目前沒有任何貼文'}}
+  {{/if}}
 </div>
 
-<script type="module" src=""></script>
+<script type="module" src="/js/postsPage.js"></script>

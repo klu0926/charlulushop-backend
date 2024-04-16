@@ -53,7 +53,8 @@ router.get('/status', isAuth, shopStatusController.getStatusPage)
 router.get('/posts/add', isAuth, postController.getAddPostPage)
 router.get('/posts/:id', isAuth, postController.getPostPage)
 router.get('/posts/', isAuth, postController.getPostsPage)
-router.post('/posts', isAuth, pictureUpload, imgurHandler.postImage(600, 300), postController.postPost)
+router.post('/posts', isAuth, pictureUpload, imgurHandler.postImage(), postController.postPost)
+router.delete('/posts/:id', isAuth, postController.deletePost)
 
 // API
 router.use('/api', apiRouter)

@@ -8,6 +8,7 @@ const userController = require('../controller/modules/userController.js')
 const orderController = require('../controller/modules/orderController.js')
 const shopStatusController = require('../controller/modules/shopStatusController.js')
 const postController = require('../controller/modules/postController.js')
+const uploadController = require('../controller/modules/uploadController.js')
 
 // api
 const apiRouter = require('./api.js')
@@ -57,6 +58,9 @@ router.get('/posts/', isAuth, postController.getPostsPage)
 router.put('/posts/:id', isAuth, pictureUpload, imgurHandler.postCoverImage(), postController.putPost)
 router.post('/posts', isAuth, pictureUpload, imgurHandler.postCoverImage(), postController.postPost)
 router.delete('/posts/:id', isAuth, postController.deletePost)
+
+// upload
+router.post('/upload', isAuth, pictureUpload, imgurHandler.postCoverImage(), uploadController.uploadImgur)
 
 // API
 router.use('/api', apiRouter)

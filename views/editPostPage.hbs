@@ -7,16 +7,8 @@
   </div>
   </div>
 
-<!---->
-<div class="editPostPage-top-container">
 
-    <!--title-->
-  <div class="post-section title-section">
-   <p class="title">標題</p>
-    <div id="post-title" class="post-block title-block" contenteditable="true">{{post.title}}</div>
-  </div>
-
-  <!--display-->
+ <!--display-->
   <div class="post-section">
    <p class="title">貼文封面</p>
   <div id="cover-display" class="post-cover-display" style="background-image: url({{post.cover}});">
@@ -25,13 +17,12 @@
   </div>
   </div>
 
-  <!--desc-->
-  <div class="post-section">
-  <p class="title">介紹</p>
-  <div id="post-description" class="post-block des-block" contenteditable="true">{{post.description}}</div>
+    <!--title-->
+  <div class="post-section title-section">
+   <p class="title">標題</p>
+    <div id="post-title" class="post-block title-block" contenteditable="true">{{post.title}}</div>
   </div>
 
-</div>
   <!--main content-->
  <div class="post-section">
   <p class="title">內文</p>
@@ -43,7 +34,8 @@
     <option value="創作中"{{#if (isSame post.status '創作中')}}selected{{/if}}>狀態：創作中</option>
     <option value="公開"{{#if (isSame post.status '公開')}}selected{{/if}}>狀態：公開</option>
   </select>
-  <button id="save" type="button" data-id="{{post.id}}">儲存</button>
+  <button id="save" class="" type="button" data-id="{{post.id}}">儲存</button>
+  <button id="save-view" class="btn-secondary" type="button" data-id="{{post.id}}">儲存 \ 檢視</button>
 </div>
 </div>
 </div>

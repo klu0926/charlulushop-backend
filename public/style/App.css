@@ -524,6 +524,10 @@ button.w-50 {
   max-width: 50%;
 }
 
+button.w-30 {
+  max-width: 30%;
+}
+
 button.auto {
   width: auto;
 }
@@ -533,8 +537,12 @@ button:hover {
   transform: scale(1.02);
 }
 
-button.secondary {
+button.btn-border {
   background-color: var(--border);
+}
+
+button.btn-secondary {
+  background-color: var(--secondary);
 }
 
 button.back {

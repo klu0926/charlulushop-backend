@@ -13,11 +13,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      description: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        defaultValue: '這是我的新貼文，歡迎大家來閱讀～',
-      },
       status: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -31,6 +26,10 @@ module.exports = {
       content: {
         allowNull: true,
         type: Sequelize.TEXT,
+      },
+      userId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

@@ -29,17 +29,15 @@ const services = {
       throw err
     }
   },
-  postPost: async (title, description, coverUrl) => {
+  postPost: async (title, coverUrl) => {
     try {
       // check missing
       // check if missing anything
       if (!title) throw new Error('Missing title')
-      if (!description) throw new Error('Missing title')
       if (!coverUrl) throw new Error('Missing image url')
 
       const post = await Post.create({
         title,
-        description,
         cover: coverUrl,
       })
       return post.toJSON()
@@ -47,13 +45,12 @@ const services = {
       throw err
     }
   },
-  putPost: async (id, title, description, content, status, coverUrl) => {
+  putPost: async (id, title, content, status, coverUrl) => {
     try {
       // check missing
       // check if missing anything
       if (id === undefined) throw new Error('Missing post id')
       if (!title) throw new Error('Missing title')
-      if (!description) throw new Error('Missing title')
       if (!status) throw new Error('Missing status')
 
       // update post
@@ -62,7 +59,6 @@ const services = {
       if (!post) throw new Error(`Can not find post with id ${id}`)
 
       if (title) post.title = title
-      if (description) post.description = description
       if (status) post.status = status
       if (content) post.content = content
       if (coverUrl) post.cover = coverUrl

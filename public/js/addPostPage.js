@@ -25,10 +25,8 @@ import coverChange from '/js/helpers/coverChange.js'
         throw new Error('請上傳封面照')
       }
       if (
-        !formData.get('title')?.trim() ||
-        !formData.get('description')?.trim()
-      ) {
-        throw new Error('請確定標題、介紹都有填寫')
+        !formData.get('title')?.trim()) {
+        throw new Error('請填寫標題')
       }
       // start fetching
       sweetAlert.loading()

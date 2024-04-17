@@ -20,13 +20,13 @@ const postController = {
   postPost: async (req, res, next) => {
     try {
       // body
-      const { title, description } = req.body
+      const { title } = req.body
       // file
       const file = req.files[0]
       if (!file?.link) throw new Error('封面照上傳Imgur失敗')
-      if (!title.trim() || !description.trim()) throw new Error('請確定標題、介紹都有填寫')
+      if (!title.trim()) throw new Error('沒有標題')
 
-      const post = await postPost(title, description, file.link)
+      const post = await postPost(title, file.link)
       if (!post) throw new Error('建立 Post 失敗')
 
       res.status(200).json(responseJSON(true, 'POST', post, '建立 Post 成功', null))
@@ -37,23 +37,20 @@ const postController = {
   },
   putPost: async (req, res, next) => {
     try {
-      console.log('put post...')
       // id
       const id = req.params.id
       if (id === undefined) throw new Error('Missing post id')
 
       // body
-      const { title, description, content, status } = req.body
+      const { title, content, status } = req.body
       // file
       const file = req.files?.[0] || null
 
-      console.log('body:', req.body)
-
       // validate data
-      if (!title?.trim() || !description?.trim()) throw new Error('請確定標題、介紹都有填寫')
+      if (!title?.trim() ) throw new Error('沒有標題')
       // 有照片，可是沒有 imgur 的 link 代表 imgur middleware 錯誤
       if (file && !file.link) throw new Error('有檔案可是無法生成imgur link')
-      const post = await putPost(id, title, description, content, status, file?.link || null)
+      const post = await putPost(id, title, content, status, file?.link || null)
       if (!post) throw new Error('建立 Post 失敗')
 
       res.status(200).json(responseJSON(true, 'PUT', post, '更新 Post 成功', null))

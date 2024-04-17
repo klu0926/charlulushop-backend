@@ -3,25 +3,25 @@
   <div class="speech">
     <img class="icon" src="/images/idea.png" alt="icon" />
     <div>
-      <p class="info">封面照長寬比為<span>5:4</span>，會被縮小成<span>500x400</span></p>
-      <p class="info">大於此大小會被自動縮小</p>
+      <p class="info">封面照長寬比為<span> 1:1</span></p>
+      <p class="info">大於此會被縮小成<span> 500x500</span></p>
     </div>
   </div>
 <div class="addPostPage">
+    <form id="post-form" action="/posts" method="post" enctype="multipart/form-data">
+
+    <!--封面-->
     <label for="imageInput">貼文封面</label>
-    <!--image display-->
     <div id="image-display" class="addPostPage-cover-display">
       <div class="addPostPage-cover-display-title">上傳封面</div>
+      <input id="imageInput" class="d-none" type="file" name="picture" required />
     </div>
 
-    <form id="post-form" action="/posts" method="post" enctype="multipart/form-data">
-    <input id="imageInput" class="d-none" type="file" name="picture" required />
-  
+    <!--標題-->
     <label for="postTitle">標題</label>
     <input id="postTitle" name="title" type="text" required>
 
-    <label for="postDescription">介紹</label>
-    <textarea id="postDescription" name="description" cols="30" rows="10" required></textarea>
+
     <button id="post-submit" type="button">創建貼文</button>
   </form>
 </div>

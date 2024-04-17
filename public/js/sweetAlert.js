@@ -99,10 +99,10 @@ const sweetAlert = {
       imageUrl: url,
     })
   },
-  loading: () => {
+  loading: (loadTitle) => {
     return new Promise((resolve, reject) => {
       Swal.fire({
-        title: "努力中...",
+        title: loadTitle || "努力中...",
         html: `<div class='swal-loading-bar'></div>`,
         showConfirmButton: false,
         allowOutsideClick: false,

@@ -6,7 +6,7 @@ tinyfy.key = process.env.TINYFY_API_KEY;
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 const imgurHandler = {
-  postCoverImage: (width = 700, height = 394) => {
+  postCoverImage: (width = 500, height = 500) => {
     return async (req, res, next) => {
       try {
         console.log('using imgur...')

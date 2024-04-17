@@ -10,21 +10,21 @@ const TOOLBAR_OPTIONS = [
 
 const quillHelper = {
   // container is the css id
-  init: (containerId) => {
+  init: (containerId, isReadOnly = false,) => {
     const quill = new Quill(containerId, {
+      readOnly: isReadOnly,
       theme: 'snow',
       placeholder: '輸入內容...',
-      modules: { toolbar: TOOLBAR_OPTIONS }
-    })
-
-    // text-change
-    quill.on('text-change', (delta, oldDelta, source) => {
-      if (source === 'user') {
+      modules: {
+        toolbar: isReadOnly ? null : TOOLBAR_OPTIONS
       }
     })
 
-
-
+    // text-change
+    // quill.on('text-change', (delta, oldDelta, source) => {
+    //   if (source === 'user') {
+    //   }
+    // })
 
     return quill
   }

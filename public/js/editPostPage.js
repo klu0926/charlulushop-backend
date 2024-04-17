@@ -11,12 +11,11 @@ import quillHelper from '/js/helpers/quillHelper.js'
   const status = document.body.querySelector('#status-select')
   const save = document.body.querySelector('#save')
   const addLink = document.body.querySelector('#add-link')
+  const id = document.body.querySelector('#main').dataset.id
 
   // get post's content html
   async function fetchPostContent(quill) {
     try {
-      console.log('fetch content')
-      const id = save.dataset.id
       if (id === undefined) throw new Error('無法取得堆文ID')
       const url = `/api/posts/${id}`
 
@@ -26,8 +25,6 @@ import quillHelper from '/js/helpers/quillHelper.js'
       const json = await response.json()
       if (!json.ok) throw new Error(json.err)
 
-      console.log('json:', json)
-      console.log('response:', response)
       //render quill with content
       if (json.data?.content || json.data?.content !== '') {
         quill.setContents(JSON.parse(json.data.content))
@@ -51,7 +48,6 @@ import quillHelper from '/js/helpers/quillHelper.js'
   async function handleSave(e, quill) {
     try {
       if (!quill) throw new Error('Quill取得失敗')
-      const id = e.target.dataset.id;
       if (id === undefined) throw new Error('沒有推文id');
 
       // gather data

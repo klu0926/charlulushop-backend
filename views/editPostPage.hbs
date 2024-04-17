@@ -1,6 +1,11 @@
 <div class="page">
-<div class="editPostPage w-100">
-  {{> backButton}}
+<div id="main" class="editPostPage w-100" data-id="{{post.id}}">
+  <div class="editPostPage-top-buttons">
+  {{> backButton link='/posts' text='全部貼文'}}
+  <div class="editPostPage-top-buttons-views">
+    <button class="auto" ><a style="display: flex; align-items:center; gap: 5px" href="/posts/view/{{post.id}}">檢視<i class="fa-regular fa-eye"></i></a></button>
+  </div>
+  </div>
 
 <!---->
 <div class="editPostPage-top-container">

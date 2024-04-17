@@ -67,13 +67,6 @@ i {
   color: var(--primary);
 }
 
-h1,
-h2,
-h3,
-h4 {
-  color: var(--primary);
-}
-
 .header {
   text-align: center;
 }
@@ -545,13 +538,18 @@ button.secondary {
 }
 
 button.back {
-  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  min-width: 40px;
+  padding: 2px 6px;
+  margin: 10px 0px;
+  color: var(--primary);
   background-color: white;
   border: 1px solid var(--primary);
-  color: var(--border);
-  padding: 2px 6px;
   border-radius: 2;
-  margin: 10px 0px;
   transition: none;
 }
 

@@ -3,13 +3,16 @@ const { getPosts, getPost, postPost, putPost, deletePost } = require('../api/pos
 
 const postController = {
   getPostsPage: async (req, res) => {
-
     const posts = await getPosts()
     res.render('postsPage', { page: 'post', posts })
   },
   getPostPage: async (req, res) => {
     const post = await getPost(req.params.id)
     res.render('editPostPage', { page: 'post', post })
+  },
+  getViewPostPage: async (req, res) => {
+    const post = await getPost(req.params.id)
+    res.render('viewPostPage', { page: 'post', post })
   },
   getAddPostPage: (req, res) => {
     res.render('addPostPage', { page: 'post' })

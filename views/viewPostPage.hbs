@@ -1,0 +1,23 @@
+<div class="page">
+<div id="main" class="editPostPage view w-100" data-id="{{post.id}}">
+  <div class="editPostPage-top-buttons">
+  {{> backButton link='/posts' text='全部貼文'}}
+   <div class="editPostPage-top-buttons-views">
+    <button class="auto" ><a style="display: flex; align-items:center; gap: 5px" href="/posts/{{post.id}}">編輯<i class="fa-solid fa-pen-to-square"></i></a></button>
+  </div>
+  </div>
+
+  <div class="viewPage-container">
+  <!--title-->
+  <h1>{{post.title}}</h1>
+  <!--display-->
+  <div id="cover-display" class="post-cover-display view" style="background-image: url({{post.cover}});"></div>
+  <!--main content-->
+  <div id="post-content" class="post-block content-block view"></div>
+  </div>
+
+
+</div>
+</div>
+
+<script type="module" src="/js/viewPostPage.js"></script>

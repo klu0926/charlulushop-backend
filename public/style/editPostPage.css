@@ -7,6 +7,11 @@
   max-width: 700px;
 }
 
+.viewPage-container {
+  width: 100%;
+  padding: 0;
+}
+
 .editPostPage-top-container {
   width: 100%;
 }
@@ -23,6 +28,10 @@
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
+}
+
+.post-cover-display.view {
+  cursor: auto;
 }
 
 .editPost-cover-display-title {
@@ -63,13 +72,22 @@
   color: black;
 }
 
+.post-block.view {
+  background-color: white;
+  border: none;
+  padding: 4px;
+  margin-top: 10px;
+}
+
 /* each block */
 .title-block {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  padding: 5px 15px;
+  font-weight: bold;
 }
 
 .des-block {
-  min-height: 4rem;
+  padding: 10px 15px;
 }
 
 .content-block {
@@ -99,10 +117,6 @@
 }
 
 /* quill container */
-.content-block.ql-container {
-  padding: 0;
-  margin: 0;
-}
 
 /* toolbar */
 .ql-toolbar {
@@ -113,9 +127,13 @@
 }
 
 /* quill editor*/
-.content-block .ql-editor {
-  padding: 20px;
+.ql-editor {
+  padding: 10px;
   width: 100%;
+}
+
+.view .ql-editor {
+  padding: 4px;
 }
 
 .content-block .ql-editor h1,
@@ -135,7 +153,7 @@
   font-size: 1rem;
   font-style: normal;
   padding: 0px;
-  left: 20;
+  left: 15;
 }
 
 .ql-container p {
@@ -143,5 +161,12 @@
 }
 
 @media screen and (min-width: 600px) {
-
+  .viewPage-container {
+    padding: 0.25in;
+    min-height: 8.27in;
+    box-shadow: 0 0 4px 0 var(--border);
+  }
+  .view .ql-editor {
+    padding: 0px;
+  }
 }

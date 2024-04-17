@@ -51,6 +51,7 @@ router.get('/status', isAuth, shopStatusController.getStatusPage)
 
 // post
 router.get('/posts/add', isAuth, postController.getAddPostPage)
+router.get('/posts/view/:id', isAuth, postController.getViewPostPage)
 router.get('/posts/:id', isAuth, postController.getPostPage)
 router.get('/posts/', isAuth, postController.getPostsPage)
 router.put('/posts/:id', isAuth, pictureUpload, imgurHandler.postCoverImage(), postController.putPost)

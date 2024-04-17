@@ -44,7 +44,6 @@ import coverChange from '/js/helpers/coverChange.js'
     } catch (err) {
       await sweetAlert.error('建立失敗', err.message || err)
     }
-
   }
 
   imageDisplay.onclick = () => {

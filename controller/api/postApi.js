@@ -47,7 +47,7 @@ const services = {
       throw err
     }
   },
-  putPost: async (id, title, description, status, coverUrl, order) => {
+  putPost: async (id, title, description, content, status, coverUrl) => {
     try {
       // check missing
       // check if missing anything
@@ -64,12 +64,11 @@ const services = {
       if (title) post.title = title
       if (description) post.description = description
       if (status) post.status = status
+      if (content) post.content = content
       if (coverUrl) post.cover = coverUrl
       await post.save()
 
       // update block
-      
-
       return post.toJSON()
     } catch (err) {
       throw err
@@ -91,5 +90,22 @@ const services = {
 }
 
 
+const postApiController = {
+  getPost: async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const post = await services.getPost(id)
+      if (!post) throw new Error('無法取得推文')
 
+      res.status(200).json(responseJSON(true, 'GET', post, 'Successfully GET Post', null))
+    } catch (err) {
+      console.error(err)
+      res.status(500).json(responseJSON(false, 'GET', null, 'Fail to GET Post', err.message))
+    }
+
+  }
+}
+
+
+module.exports = postApiController
 module.exports.services = services

@@ -1,20 +1,21 @@
 const fetch = require('node-fetch')
 const FormData = require('form-data');
-const responseJSON = require('../helpers/responseJSON')
 const sharp = require('sharp')
 const tinyfy = require('tinify')
 tinyfy.key = process.env.TINYFY_API_KEY;
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 const imgurHandler = {
-  postImage: (width = 500, height = 400) => {
+  postCoverImage: (width = 700, height = 394) => {
     return async (req, res, next) => {
       try {
-        // get file 
-        const file = req.files[0]
-
-        if (!file) throw new Error('imgur: 沒有照片檔案')
-
+        console.log('using imgur...')
+        // check if there is a file
+        const file = req.files?.[0] || null
+        if (!file) {
+          next()
+          return
+        }
         // resize image
         file.resizedBuffer = await sharp(file.buffer).resize(width, height).toBuffer()
 
@@ -41,7 +42,7 @@ const imgurHandler = {
         file.link = responseData.data.link
         next()
       } catch (err) {
-        res.status(500).json(responseJSON(false, 'POST', null, '沒有上傳照片', err.message))
+        throw err
       }
     }
 

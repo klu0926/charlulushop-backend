@@ -4,7 +4,11 @@
   justify-content: start;
   align-items: start;
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
+}
+
+.editPostPage-top-container {
+  width: 100%;
 }
 
 .post-cover-display {
@@ -12,7 +16,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  aspect-ratio: 5/4;
+  aspect-ratio: 16/9;
   background-color: var(--light);
   border-radius: 5px;
   background-position: center;
@@ -36,6 +40,8 @@
 }
 
 .post-section {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   margin-bottom: 15px;
 }
@@ -56,8 +62,6 @@
   border-radius: 5px;
   color: black;
 }
-.post-block:focus {
-}
 
 /* each block */
 .title-block {
@@ -65,9 +69,12 @@
 }
 
 .des-block {
+  min-height: 4rem;
 }
 
 .content-block {
+  display: flex;
+  justify-content: center;
   min-height: 200px;
 }
 
@@ -89,4 +96,52 @@
 
 .post-buttons-div select {
   color: var(--primary);
+}
+
+/* quill container */
+.content-block.ql-container {
+  padding: 0;
+  margin: 0;
+}
+
+/* toolbar */
+.ql-toolbar {
+  position: sticky;
+  top: 50px;
+  background-color: white;
+  z-index: 99;
+}
+
+/* quill editor*/
+.content-block .ql-editor {
+  padding: 20px;
+  width: 100%;
+}
+
+.content-block .ql-editor h1,
+.content-block .ql-editor h2,
+.content-block .ql-editor h3,
+.content-block .ql-editor h4 {
+  color: black;
+}
+
+/* quill image */
+.ql-snow .ql-editor img {
+  width: 100%;
+}
+
+/* quill placeholder text */
+.ql-editor.ql-blank::before {
+  font-size: 1rem;
+  font-style: normal;
+  padding: 0px;
+  left: 20;
+}
+
+.ql-container p {
+  font-size: 1rem;
+}
+
+@media screen and (min-width: 600px) {
+
 }

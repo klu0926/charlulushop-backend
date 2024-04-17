@@ -15,8 +15,6 @@
   const cors = require('cors')
   const flash = require('./helpers/flash')
 
-
-
   // view engine
   const { engine } = require('express-handlebars')
   app.engine(

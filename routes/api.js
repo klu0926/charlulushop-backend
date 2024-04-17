@@ -8,6 +8,7 @@ const orderApi = require('../controller/api/orderApi.js')
 const youtubeApi = require('../controller/api/youtubeApi.js')
 const shopStatusApi = require('../controller/api/shopStatusApi.js')
 const authenticationApi = require('../controller/api/authenticationApi.js')
+const postApi = require('../controller/api/postApi.js')
 
 
 // -------------------- API --------------------- //
@@ -54,7 +55,10 @@ router.get('/itemTags/:itemTagId', itemTagApi.getItemTag)
 router.post('/itemTags', itemTagApi.postItemTag)
 router.delete('/itemTags/:itemTagId', itemTagApi.deleteItemTag)
 
-// use item id
+// itemTag
 router.delete('/itemTags/:itemId', itemTagApi.deleteAllItemTag)
+
+// post
+router.get('/posts/:id', postApi.getPost)
 
 module.exports = router

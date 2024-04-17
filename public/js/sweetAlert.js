@@ -120,7 +120,7 @@ const sweetAlert = {
     setTimeout(() => {
       const alert = document.querySelector('.swal2-container')
       if (alert) {
-        sweetAlert.close()
+        swal.close()
       }
     }, timer)
   }

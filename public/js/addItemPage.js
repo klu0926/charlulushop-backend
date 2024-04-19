@@ -1,9 +1,11 @@
 import TagClass from '/js/TagClass.js'
+import sweetAlert from '/js/sweetAlert.js'
+import { initCropper } from '/js/helpers/cropper.js'
 
-(()=>{
+(() => {
   // cover
-  const imageInput = document.body.querySelector('#imageInput');
-  const imageDisplay = document.body.querySelector('#imageDisplay');
+  const coverInput = document.body.querySelector('#coverInput');
+  const coverDisplay = document.body.querySelector('#coverDisplay');
   // picture
   const pictureInput = document.body.querySelector('.pictureInput');
   const newPictureInput = pictureInput.cloneNode(true);
@@ -28,16 +30,21 @@ import TagClass from '/js/TagClass.js'
     this.parentElement.remove();
   }
 
-  function handleImageChange(e) {
+  async function handleCoverChange(e) {
     const file = e.target.files[0];
+    console.log('file:', file)
+
     if (file) {
       const reader = new FileReader();
       reader.onload = function (e) {
-        imageDisplay.style.backgroundImage = `url(${e.target.result})`;
+        // got the original data url
+        const dataUrl = e.target.result;
+        // use cropper
+        initCropper(dataUrl, coverDisplay, coverInput, true)
       };
       reader.readAsDataURL(file);
     } else {
-      console.error('No image file selected');
+      sweetAlert.error('找不到檔案')
     }
   }
 
@@ -46,7 +53,7 @@ import TagClass from '/js/TagClass.js'
   fetchTag.renderAllTags()
 
   // Action
-  imageInput.onchange = handleImageChange;
+  coverInput.onchange = handleCoverChange;
   addPictureBtn.onclick = handleAddPicture;
   deletePictureBtns.forEach((b) => {
     b.onclick = handleDeletePicture;

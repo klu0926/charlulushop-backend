@@ -10,7 +10,7 @@ import coverChange from '/js/helpers/coverChange.js'
   function handleImageChange(e) {
     try {
       const file = e.target.files[0];
-      coverChange(file, imageDisplay)
+      coverChange(file, imageDisplay, imageInput, true)
     } catch (err) {
       alert(err)
     }

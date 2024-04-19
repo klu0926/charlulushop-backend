@@ -1,21 +1,22 @@
 import TagClass from '/js/TagClass.js'
 import sweetAlert from '/js/sweetAlert.js'
 import HandleImage from '/js/handleImage.js'
+import { initCropper } from '/js/helpers/cropper.js'
 
-(()=>{
+(() => {
   // handle images
   const handleImage = new HandleImage()
   handleImage.handleAllPictureClick()
 
-  // display
-  const imageDisplay = document.body.querySelector('#imageDisplay');
+  // cover
+  const coverDisplay = document.body.querySelector('#coverDisplay');
+  const coverInputForm = document.body.querySelector('#coverInputForm');
+  const coverInput = document.body.querySelector('#coverInput');
   // picture
   const pictureInputForm = document.body.querySelector('#pictureInputForm');
   const pictureInput = document.body.querySelector('#pictureInput');
   const addPictureBtn = document.body.querySelector('#addPicture');
-  // cover
-  const coverInputForm = document.body.querySelector('#coverInputForm');
-  const coverInput = document.body.querySelector('#coverInput');
+
   // buttons
   const deletePictureInputBtns = document.body.querySelectorAll('.deleteInput');
   const deletePictureBtns = document.querySelectorAll('.deleteImage');
@@ -29,9 +30,9 @@ import HandleImage from '/js/handleImage.js'
   const tagsCount = document.querySelector('#tagsCount')
   const tagsInput = document.querySelector('#tagsInput')
 
-  function imageDisplayInit() {
-    const id = imageDisplay.dataset.id;
-    imageDisplay.style.backgroundImage = `url(/images/${id})`;
+  function coverDisplayInit() {
+    const id = coverDisplay.dataset.id;
+    coverDisplay.style.backgroundImage = `url(/images/${id})`;
   }
 
   function handleDeletePictureInput() {
@@ -59,7 +60,7 @@ import HandleImage from '/js/handleImage.js'
   }
 
   // post picture
-  async function postImage() {
+  async function handleAddPicture() {
     try {
       const url = '/images';
       const formData = new FormData(pictureInputForm);
@@ -72,28 +73,18 @@ import HandleImage from '/js/handleImage.js'
     window.location.reload();
   }
 
-  // update cover
-  async function putCover(imageId) {
-    try {
-      const url = `/images/${imageId}`;
-      const formData = new FormData(coverInputForm);
-      const response = await fetch(url, { method: 'PUT', body: formData });
-      const json = await response.json();
-      if (!json.ok) throw new Error(json.message);
-    } catch (err) {
-      alert(err);
-    }
-    window.location.reload();
-  }
-
-  function handlePictureChange(e) {
-    postImage()
-  }
-
   function handleCoverChange(e) {
-    const coverImageId = imageDisplay.dataset.id;
-    if (!coverImageId) return;
-    putCover(coverImageId)
+    const file = coverInput.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const dataUrl = e.target.result
+        initCropper(dataUrl, coverDisplay, coverInput, true)
+      }
+      reader.readAsDataURL(file)
+    } else {
+      sweetAlert.error('找不到檔案')
+    }
   }
 
   async function handleDeleteItem(e) {
@@ -121,10 +112,10 @@ import HandleImage from '/js/handleImage.js'
   // Init
   const tagClass = new TagClass(tagsContainer, tagLabelTemp, tagsInput, tagsCount)
   tagClass.renderAllTags()
-  imageDisplayInit();
+  coverDisplayInit();
 
   // Action
-  pictureInput.onchange = handlePictureChange;
+  pictureInput.onchange = handleAddPicture;
   coverInput.onchange = handleCoverChange;
   addPictureBtn.onclick = () => {
     pictureInput.click();

@@ -1,4 +1,6 @@
 import sweetAlert from '/js/sweetAlert.js'
+import { initCropper, asyncCropper } from '/js/helpers/cropper.js'
+
 let quill = null // quill instance
 
 function uploadImageHandler() {
@@ -13,6 +15,9 @@ function uploadImageHandler() {
     try {
       const file = e.target.files[0]
       if (!file) return
+
+      // how to use cropper here to crop image...
+
       const formData = new FormData()
       formData.append('picture', file)
 

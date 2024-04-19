@@ -1,20 +1,18 @@
 import sweetAlert from "./sweetAlert.js"
 
+// add onclick even for all class '.picture' elements
 class HandleImage {
   constructor() {
     this.pictures = document.querySelectorAll('.picture')
-
   }
   handleAllPictureClick() {
     try {
       this.pictures.forEach(p => {
         const url = p.src
-
         if (!url) throw new Error('url is undefined')
         p.onclick = () => {
           sweetAlert.image(url, '400')
         }
-
       })
     } catch (err) {
       console.error('[Error] handleAllPictureClick :' + err)

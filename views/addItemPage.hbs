@@ -6,14 +6,13 @@
       <p class="info">除了<span>補充照片</span>與<span>標籤</span>以外都是<span>必須的</span></p>
     </div>
   </div>
-
     <div class="addItemPage">
   <!--form start-->
-  <form action="/items" method="post" enctype="multipart/form-data">
+  <form id="add-item-form" action="/items" method="post" enctype="multipart/form-data">
     <!--cover-->
     <label for="coverDisplay"> 封面 </label>
     <div class="coverDisplay" id="coverDisplay">
-      <label class="coverDisplay-label" for="coverInput">上傳封面</label>
+      <span class="coverDisplay-span">上傳封面</span>
     </div>
     <input id="coverInput" class="d-none" type="file" name="cover" required />
     <!--pictures-->

@@ -35,10 +35,6 @@
   height: 400px;
   max-height: 100%;
 }
-.cropper-side-buttons i {
-  color: white;
-  font-size: 1.1rem;
-}
 
 .cropper-side-btn {
   display: flex;
@@ -46,14 +42,42 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
-  width: 50px;
-  min-height: 40px;
+  width: 40px;
+  min-height: 35px;
   border-radius: 0p;
   padding: 4px;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  background-color: white;
+}
+
+.cropper-side-btn:hover {
+  background-color: var(--primary);
+}
+
+.cropper-side-buttons i {
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.cropper-side-btn:hover i {
+  color: white;
+}
+
+.cropper-side-btn.crop {
+  color: white;
+  border: none;
+  background-color: var(--secondary);
 }
 
 .cropper-side-btn.close {
+  color: white;
+  border: none;
   background-color: var(--dark);
+}
+
+.cropper-side-btn.close i {
+  color: white;
 }
 
 .cropper-input-div {

@@ -9,17 +9,40 @@ const cropperHTML = `
       </div>
     </div>
     <div class="cropper-side-buttons">
-          <button id="cropper-close" class="cropper-side-btn close">關閉</button>
+          <button id="cropper-close" class="cropper-side-btn close">
+          <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <button id="cropper-move-up" class="cropper-side-btn" >
+          <i class="fa-solid fa-arrow-up"></i>
+          </button>
+
+          <button id="cropper-move-down" class="cropper-side-btn" >
+          <i class="fa-solid fa-arrow-down"></i>
+          </button>
+
+          <button id="cropper-move-left" class="cropper-side-btn" >
+          <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button id="cropper-move-right" class="cropper-side-btn" >
+          <i class="fa-solid fa-arrow-right"></i>
+          </button>
+
           <button id="cropper-zoom-in" class="cropper-side-btn" >
           <i class="fa-solid fa-magnifying-glass-plus"></i>
           </button>
+
           <button id="cropper-zoom-out" class="cropper-side-btn" >
           <i class="fa-solid fa-magnifying-glass-minus"></i>
           </button>
-         <button id="cropper-reset" class="cropper-side-btn" >重置</button>
-        <button id="crop" class="cropper-side-btn btn-secondary" >
-          <i class="fa-solid fa-camera"></i>
-          確定</button>
+
+         <button id="cropper-reset" class="cropper-side-btn" >
+         <i class="fa-solid fa-arrow-rotate-left"></i>
+         </button>
+
+         <button id="crop" class="cropper-side-btn crop" >
+          OK
+          </button>
     </div>
   </div>
 `
@@ -28,29 +51,19 @@ export function initCropper(imgUrl, outsideImage, outsideInput, isBackground = f
   init(imgUrl, outsideImage, outsideInput, isBackground)
 }
 
-export function asyncCropper(imgUrl, outsideImage, outsideInput, isBackground = false) {
-  return new Promise((resolve, reject) => {
-    init(imgUrl, outsideImage, outsideInput, isBackground)
-
-    function handleClick() {
-      resolve(true)
-    }
-    // Get the crop button
-    const crop = document.querySelector('#crop')
-    crop.onclick = handleClick
-  })
-}
-
 
 // isBackground is for setting div's background Url
 // normally it set the image's src
 function init(imgUrl, outsideImage, outsideInput, isBackground = false) {
   // create cropper element
+  console.log('create cropper wrapper...')
   const cropperWrapper = document.createElement('div')
   cropperWrapper.id = 'cropper-wrapper'
   cropperWrapper.classList.add('cropper-wrapper')
   cropperWrapper.innerHTML = cropperHTML
   document.body.appendChild(cropperWrapper)
+
+  console.log('cropperWrapper:', cropperWrapper)
 
   const cropperContainer = document.querySelector('#cropper-container')
   const image = document.querySelector('#cropper-input-image');
@@ -60,6 +73,12 @@ function init(imgUrl, outsideImage, outsideInput, isBackground = false) {
   const zoomOutButton = document.querySelector('#cropper-zoom-out');
   const resetButton = document.querySelector('#cropper-reset');
   const closeButton = document.querySelector('#cropper-close')
+  const moveUp = document.querySelector('#cropper-move-up')
+  const moveDown = document.querySelector('#cropper-move-down')
+  const moveLeft = document.querySelector('#cropper-move-left')
+  const moveRight = document.querySelector('#cropper-move-right')
+
+
   let getCropped = null
   let cropper = null
   let croppedImage = null
@@ -76,6 +95,7 @@ function init(imgUrl, outsideImage, outsideInput, isBackground = false) {
 
   cropper = new Cropper(image, {
     aspectRatio: 1 / 1,
+    viewMode: 1,
     ready() {
       // Function to get the cropped image
       getCropped = () => {
@@ -87,17 +107,27 @@ function init(imgUrl, outsideImage, outsideInput, isBackground = false) {
         }
       };
 
-      // Event listeners
+      // --- Buttons --- //
+      // wrapper
+      cropperWrapper.onclick = (e) => {
+        if (e.target === cropperWrapper) cropperWrapper.remove()
+      }
+      // close 
+      closeButton.onclick = () => cropperWrapper.remove()
+      // move
+      moveUp.onclick = () => cropper.move(0, 10)
+      moveDown.onclick = () => cropper.move(0, -10)
+      moveLeft.onclick = () => cropper.move(10, 0)
+      moveRight.onclick = () => cropper.move(-10, 0)
+      // zoom
       zoomInButton.onclick = () => cropper.zoom(0.1);
       zoomOutButton.onclick = () => cropper.zoom(-0.1);
+      // reset
       resetButton.onclick = () => {
         cropper.reset();
         getCropped();
       };
-      cropperWrapper.onclick = (e) => {
-        if (e.target === cropperWrapper) cropperWrapper.remove()
-      }
-      closeButton.onclick = () => cropperWrapper.remove()
+      // crop
       cropButton.onclick = async () => {
         try {
           const croppedImage = getCropped()

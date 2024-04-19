@@ -11,7 +11,7 @@
     <!--cover-->
     <label for="imageInput"> 封面 </label>
     <div class="coverDisplay" id="coverDisplay" data-id="{{item.cover.id}}">
-      <label class="coverDisplay-label" for="coverInput">上傳封面</label>
+      <span class="coverDisplay-span" >上傳封面</span>
     </div>
     <!--pictures-->
     <div class="inputGroup">
@@ -29,7 +29,9 @@
       <button id="addPicture" class="addPicture w-100" type="button">+</button>
     </div>
     <!--item put form-->
-    <form id="itemPutForm" action="/items/{{item.id}}?_method=PUT" method="POST">
+    <form id="itemPutForm" action="/items/{{item.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+       <!--cover (hidden)-->
+      <input id="coverInput" name="cover" type="file" class="d-none" />
       <!--name-->
       <div class="inputGroup">
         <label for="name"> 名字 </label>
@@ -45,9 +47,7 @@
       <!--des-->
       <div class="inputGroup">
         <label for="description"> 介紹 </label>
-        <textarea name="description" id="description" cols="30" rows="10" placeholder="商品介紹..." required>
-{{item.description}}</textarea
-        >
+        <textarea name="description" id="description" cols="30" rows="10" placeholder="商品介紹..." required>{{item.description}}</textarea>
       </div>
       <!--price and amount-->
       <div class="price-amount-div">
@@ -75,12 +75,11 @@
   </div>
 </div>
 
-<!--hidden picture input-->
+<!--hidden input-->
 <!--cover (link from cover display label)-->
-<form id="coverInputForm" action="/images" method="POST" class="d-none" enctype="multipart/form-data">
-  <input id="coverInput" name="cover" type="file" class="d-none" />
+{{!-- <form id="coverInputForm" action="/images" method="POST" class="d-none" enctype="multipart/form-data">
   <input type="text" name="itemId" value="{{item.id}}" />
-</form>
+</form> --}}
 
 <!--picture-->
 <form id="pictureInputForm" action="/images" method="POST" class="d-none" enctype="multipart/form-data">

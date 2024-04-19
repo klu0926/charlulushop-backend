@@ -10,7 +10,6 @@ import { initCropper } from '/js/helpers/cropper.js'
 
   // cover
   const coverDisplay = document.body.querySelector('#coverDisplay');
-  const coverInputForm = document.body.querySelector('#coverInputForm');
   const coverInput = document.body.querySelector('#coverInput');
   // picture
   const pictureInputForm = document.body.querySelector('#pictureInputForm');
@@ -115,8 +114,11 @@ import { initCropper } from '/js/helpers/cropper.js'
   coverDisplayInit();
 
   // Action
+  // coverInput.onclick = coverInput.value = null
+  coverInput.onchange = handleCoverChange
+  coverDisplay.onclick = () => { coverInput.click() }
+
   pictureInput.onchange = handleAddPicture;
-  coverInput.onchange = handleCoverChange;
   addPictureBtn.onclick = () => {
     pictureInput.click();
   };

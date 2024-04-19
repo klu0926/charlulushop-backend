@@ -62,6 +62,7 @@ const itemController = {
     try {
       const itemId = req.params.itemId
       const { name, description, price, amount, tags } = req.body
+      const cover = req.files?.cover?.[0]
 
       if (!itemId) throw new Error('Missing item id for update item')
       if (price && price < 0)
@@ -69,7 +70,7 @@ const itemController = {
       if (amount && amount < 0)
         throw new Error('Amount for item can not be lower than 0')
 
-      // update
+      // update item
       // using findOne and save(), because .update() only return number of row effected by the update, instead of the record itself
       const item = await Item.findOne({
         where: {
@@ -82,6 +83,19 @@ const itemController = {
       item.price = price
       item.amount = amount
       await item.save()
+
+      // update cover
+      if (cover) {
+        const oldCover = await Image.findOne({
+          where: {
+            itemId: item.id
+          }
+        })
+        if (!oldCover) throw new Error('找不到原始封面')
+
+        oldCover.imageData = cover.buffer
+        await oldCover.save()
+      }
 
       // change tag (itemTag)
       // delete all old itemTags

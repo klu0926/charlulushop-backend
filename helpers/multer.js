@@ -10,7 +10,7 @@ const upload = multer({ storage }).fields([
   },
   {
     name: 'picture',
-    maxCount: 5,
+    maxCount: 10,
   },
 ])
 module.exports = { coverUpload, pictureUpload, upload }

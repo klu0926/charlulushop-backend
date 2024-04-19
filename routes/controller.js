@@ -21,7 +21,7 @@ router.get('/', (req, res) => res.redirect('/items'))
 router.get('/items/add', isAuth, itemController.addItemPage)
 router.get('/items/:itemId', isAuth, itemController.getItem)
 router.get('/items', isAuth, itemController.getItems)
-router.put('/items/:itemId', isAuth, itemController.putItem)
+router.put('/items/:itemId', isAuth, upload, resize, itemController.putItem)
 router.post('/items', isAuth, upload, resize, itemController.postItem)
 router.delete('/items/:itemId', isAuth, itemController.deleteItem)
 

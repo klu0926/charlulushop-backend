@@ -18,6 +18,10 @@ import { initCropper } from '/js/helpers/cropper.js'
   const tagsCount = document.querySelector('#tagsCount')
   const tagsInput = document.querySelector('#tagsInput')
 
+  // form
+  const form = document.querySelector('#add-item-form')
+  const submit = document.querySelector('#submit')
+
   function handleAddPicture() {
     if (newPictureInput || pictureInputGroup) {
       const newInput = newPictureInput.cloneNode(true);
@@ -53,9 +57,13 @@ import { initCropper } from '/js/helpers/cropper.js'
   fetchTag.renderAllTags()
 
   // Action
+  coverDisplay.onclick = () => { coverInput.click() }
   coverInput.onchange = handleCoverChange;
   addPictureBtn.onclick = handleAddPicture;
   deletePictureBtns.forEach((b) => {
     b.onclick = handleDeletePicture;
   });
+  form.onsubmit = () => {
+    sweetAlert.loading('上架商品...')
+  }
 })()

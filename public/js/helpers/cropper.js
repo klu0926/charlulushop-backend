@@ -4,7 +4,7 @@ const cropperHTML = `
 <div id="cropper-container" class="cropper-container">
   <div class="cropper-input-div" >
       <img id="cropper-input-image" class="cropper-image" src="" alt="cropper-input">
-      <div class="cropper-small-div">
+      <div class="cropper-small-div d-none">
       <img id="cropper-small-image" class="cropper-small-image" src="" alt="cropper-input">
       </div>
     </div>
@@ -63,8 +63,6 @@ function init(imgUrl, outsideImage, outsideInput, isBackground = false) {
   cropperWrapper.innerHTML = cropperHTML
   document.body.appendChild(cropperWrapper)
 
-  console.log('cropperWrapper:', cropperWrapper)
-
   const cropperContainer = document.querySelector('#cropper-container')
   const image = document.querySelector('#cropper-input-image');
   const imageSmall = document.querySelector('#cropper-small-image');
@@ -77,8 +75,6 @@ function init(imgUrl, outsideImage, outsideInput, isBackground = false) {
   const moveDown = document.querySelector('#cropper-move-down')
   const moveLeft = document.querySelector('#cropper-move-left')
   const moveRight = document.querySelector('#cropper-move-right')
-
-
   let getCropped = null
   let cropper = null
   let croppedImage = null
@@ -100,12 +96,16 @@ function init(imgUrl, outsideImage, outsideInput, isBackground = false) {
       // Function to get the cropped image
       getCropped = () => {
         croppedImage = cropper.getCroppedCanvas().toDataURL("image/png");
-        // set ouput image
         if (croppedImage) {
-          imageSmall.src = croppedImage;
           return croppedImage;
         }
       };
+      //  Function move and cropped
+      function cropperMove(x, y){
+        if (!cropper.ready) return;
+        cropper.move(x, y)
+        getCropped();
+      }
 
       // --- Buttons --- //
       // wrapper
@@ -115,10 +115,10 @@ function init(imgUrl, outsideImage, outsideInput, isBackground = false) {
       // close 
       closeButton.onclick = () => cropperWrapper.remove()
       // move
-      moveUp.onclick = () => cropper.move(0, 10)
-      moveDown.onclick = () => cropper.move(0, -10)
-      moveLeft.onclick = () => cropper.move(10, 0)
-      moveRight.onclick = () => cropper.move(-10, 0)
+      moveUp.onclick = () => cropperMove(0, 10)
+      moveDown.onclick = () => cropperMove(0, -10)
+      moveLeft.onclick = () => cropperMove(10, 0)
+      moveRight.onclick = () => cropperMove(-10, 0)
       // zoom
       zoomInButton.onclick = () => cropper.zoom(0.1);
       zoomOutButton.onclick = () => cropper.zoom(-0.1);
@@ -162,12 +162,10 @@ function init(imgUrl, outsideImage, outsideInput, isBackground = false) {
       getCropped();
     },
     cropend() {
-      if (!cropper.ready) return;
-      getCropped();
+    //...
     },
     zoom() {
-      if (!cropper.ready) return;
-      getCropped();
+    //...
     }
   });
   return cropper

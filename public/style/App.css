@@ -574,11 +574,6 @@ button.back:hover i {
   color: white;
   transition: none;
 }
-
-.d-none {
-  display: none !important;
-}
-
 .error-info {
   display: flex;
   flex-direction: column;

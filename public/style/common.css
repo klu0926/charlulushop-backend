@@ -1,3 +1,22 @@
+/* display*/
+.d-none {
+  display: none !important;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+
+
 /* margin */
 .my-1 {
   margin-top: 5px;
@@ -34,17 +53,4 @@
 /* width */
 .w-100{
   width: 100%;
-}
-
-/* display*/
-.d-flex {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.d-flex-start {
-  display: flex;
-  align-items: center;
-  justify-content: start;
 }

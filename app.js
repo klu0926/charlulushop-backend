@@ -32,6 +32,7 @@ const corsOption = {
   origin: [
     'http://localhost:3001',
     'https://klu0926.github.io',
+    'https://charlulustory.uk/'
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   allowedHeaders: ['Content-Type', 'Authorization'],

@@ -32,7 +32,7 @@ const corsOption = {
   origin: [
     'http://localhost:3001',
     'https://klu0926.github.io',
-    'https://charlulustory.uk'
+    'charlulustory.uk'
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -61,7 +61,7 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(methodOverride('_method'))
-app.use(routes) 
+app.use(routes)
 
 app.listen(port, () => {
   console.log('-----------------------------')
